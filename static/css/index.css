@@ -164,6 +164,6 @@ p {
 #real-world-grasping .grasping-intro { margin-bottom: 2rem; line-height: 1.7; }
 #real-world-grasping .grasping-task + .grasping-task { margin-top: 3rem; }
 #real-world-grasping .grasping-task-description { margin-bottom: 1.5rem; }
-#real-world-grasping .grasping-single { width: calc(100% - 10px); max-width: 720px; margin: 0 auto; }
+#real-world-grasping .grasping-single { width: calc(100% - 12px); margin: 0 auto; }
 #real-world-grasping figcaption { padding: .75rem .25rem 1rem; }
 #real-world-grasping .grasping-speed { display: inline-block; margin-left: .5rem; color: #666; font-size: .85rem; }
