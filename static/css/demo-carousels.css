@@ -1,0 +1,186 @@
+/* Layout additions; colors, typefaces and carousel controls use the original template. */
+.demo-section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.demo-container--wide {
+  width: 92%;
+  max-width: none !important;
+}
+
+.demo-container--compact {
+  width: 68%;
+  max-width: none !important;
+}
+
+.media-frame {
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+}
+
+.overview-player {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.overview-player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 854 / 480;
+  object-fit: contain;
+}
+
+.paper-figure-link {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.paper-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.paper-figure-section .content {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.realworld-gallery {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.realworld-example {
+  flex: var(--video-ratio, 1.777777778) 1 0;
+  min-width: 0;
+}
+
+.realworld-example p {
+  margin-top: 0.75rem;
+}
+
+.demo-carousel {
+  margin-bottom: 1rem;
+  /* Keep focus on the arrow from scrolling the clipped row sideways. */
+  overflow: clip;
+}
+
+.demo-carousel .slider {
+  padding-bottom: 30px;
+}
+
+/* Bulma's automatic height can become stale when video metadata arrives. */
+.demo-carousel .slider-container {
+  height: auto !important;
+  align-items: flex-start;
+}
+
+.demo-carousel .slider-navigation-next,
+.demo-carousel .slider-navigation-previous {
+  margin-top: -36px;
+}
+
+.demo-carousel .slider-pagination {
+  display: flex;
+}
+
+.demo-carousel .slider-page {
+  border: 1px solid #dbdbdb;
+}
+
+.demo-media {
+  width: 100%;
+  aspect-ratio: var(--media-aspect, 4 / 3);
+}
+
+.demo-media > img,
+.demo-media > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Match navigation video heights while retaining each video's native ratio. */
+#navigation-carousel .item {
+  width: fit-content;
+  margin: 5px auto;
+}
+
+#navigation-carousel .demo-media {
+  height: var(--navigation-media-height, 190px);
+  width: calc(var(--navigation-media-height, 190px) * var(--media-aspect));
+}
+
+.comparison-prompt {
+  margin: 0 5px 1.25rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.demo-carousel[data-demo-carousel="comparison"] .slider-container {
+  height: var(--comparison-panel-height, auto) !important;
+}
+
+.demo-carousel[data-demo-carousel="comparison"] .slider-navigation-next,
+.demo-carousel[data-demo-carousel="comparison"] .slider-navigation-previous {
+  top: var(--comparison-video-middle, 50%);
+  margin-top: -21px;
+}
+
+.comparison-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.comparison-model {
+  min-width: 0;
+}
+
+.comparison-model .title {
+  margin: 0 5px 1rem;
+}
+
+.demo-carousel :is(.slider-navigation-next, .slider-navigation-previous, .slider-page):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -3px;
+}
+
+@media screen and (max-width: 900px) {
+  .demo-container--compact {
+    width: 92%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .comparison-model .title {
+    font-size: clamp(0.7rem, 2.9vw, 1rem);
+    white-space: nowrap;
+  }
+
+  .demo-carousel .slider-navigation-next,
+  .demo-carousel .slider-navigation-previous {
+    width: 32px;
+    height: 32px;
+    margin-top: -31px;
+  }
+
+  .demo-carousel[data-demo-carousel="comparison"] .slider-navigation-next,
+  .demo-carousel[data-demo-carousel="comparison"] .slider-navigation-previous {
+    margin-top: -16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-carousel .slider-container {
+    transition-duration: 0ms !important;
+  }
+}
