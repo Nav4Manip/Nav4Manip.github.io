@@ -1,5 +1,37 @@
-body {
-  font-family: 'Noto Sans', sans-serif;
+@font-face {
+  font-family: 'Linux Libertine';
+  src: url('../webfonts/linux-libertine/linux-libertine-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Linux Libertine';
+  src: url('../webfonts/linux-libertine/linux-libertine-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Linux Libertine';
+  src: url('../webfonts/linux-libertine/linux-libertine-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Linux Libertine';
+  src: url('../webfonts/linux-libertine/linux-libertine-bold-italic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+body, button, input, optgroup, select, textarea {
+  font-family: 'Linux Libertine', Georgia, serif;
 }
 
 
@@ -28,7 +60,7 @@ p {
 }
 
 .teaser {
-  font-family: 'Google Sans', sans-serif;
+  font-family: 'Linux Libertine', Georgia, serif;
 }
 
 
@@ -52,11 +84,11 @@ p {
 }
 
 .publication-title {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Linux Libertine', Georgia, serif;
 }
 
 .publication-authors {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Linux Libertine', Georgia, serif;
 }
 
 .publication-venue {
