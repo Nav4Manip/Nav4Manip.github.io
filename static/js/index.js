@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (element.dataset.carouselReady) return;
     element.dataset.carouselReady = 'true';
     const grouped = element.dataset.demoCarousel === 'comparison';
+    const grasping = element.dataset.demoCarousel === 'grasping';
     const visibleCount = Number(element.dataset.slidesToShow) || 1;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     // Bulma treats data attributes as strings; clone counts must stay numeric.
@@ -94,18 +95,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const track = element.querySelector('.slider-container');
 
     function updateComparisonLayout(index) {
-      if (!grouped) return;
+      if (!grouped && !grasping) return;
       const slide = Array.from(track.children).find(node => Number(node.dataset.sliderIndex) === Number(index));
-      const panel = slide && slide.querySelector('[data-comparison-group]');
+      const panel = slide && (grouped ? slide.querySelector('[data-comparison-group]') : slide);
       const media = panel && panel.querySelector('.demo-media');
       if (!panel || !media) return;
       const bounds = media.getBoundingClientRect();
       const sliderBounds = element.querySelector('.slider').getBoundingClientRect();
-      element.style.setProperty('--comparison-panel-height', `${Math.ceil(panel.getBoundingClientRect().height)}px`);
+      if (grouped) element.style.setProperty('--comparison-panel-height', `${Math.ceil(panel.getBoundingClientRect().height)}px`);
       element.style.setProperty('--comparison-video-middle', `${bounds.top - sliderBounds.top + bounds.height / 2}px`);
     }
 
-    if (grouped && window.ResizeObserver) {
+    if ((grouped || grasping) && window.ResizeObserver) {
       const observer = new ResizeObserver(() => updateComparisonLayout(carousel.state.next));
       track.querySelectorAll('[data-comparison-group]').forEach(panel => observer.observe(panel));
     }

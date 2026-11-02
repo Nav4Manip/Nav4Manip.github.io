@@ -167,3 +167,11 @@ p {
 #real-world-grasping .grasping-single { width: calc(100% - 12px); margin: 0 auto; }
 #real-world-grasping figcaption { padding: .75rem .25rem 1rem; }
 #real-world-grasping .grasping-speed { display: inline-block; margin-left: .5rem; color: #666; font-size: .85rem; }
+
+/* Center grasping arrows on the picture, clear of the video controls. */
+#real-world-grasping .slider-navigation-next,
+#real-world-grasping .slider-navigation-previous {
+  top: var(--comparison-video-middle, 50%);
+  margin-top: 0;
+  transform: translateY(-50%);
+}
