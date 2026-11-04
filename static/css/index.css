@@ -219,10 +219,14 @@ p {
 }
 
 /* Four real-world recordings stay together in one row. */
-.real-navigation-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.5rem, 1.5vw, 1.5rem); }
+.real-navigation-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.5rem, 1.5vw, 1.5rem); width: 78%; max-width: 1100px; margin: 0 auto; }
 .real-navigation-example { margin: 0; min-width: 0; }
 .real-navigation-media { aspect-ratio: 9 / 16; background: #111; }
 .real-navigation-media video { display: block; width: 100%; height: 100%; object-fit: contain; }
 .real-navigation-example figcaption { margin-top: .75rem; font-size: clamp(.75rem, 1.3vw, 1.125rem); }
 
 .real-navigation-speed { margin-bottom: .5rem; font-size: 1rem; }
+
+@media screen and (max-width: 900px) {
+  .real-navigation-gallery { width: 100%; }
+}
