@@ -110,19 +110,19 @@ window.PROJECT_PAGE_CONFIG = {
       "height": 480
     },
     "realworld-1": {
-      "src": "./static/video/realworld/1064031782.mp4",
+      "src": "./static/video/realworld/1064031782.mp4?v=silent-20261104",
       "poster": "./static/images/realworld/1064031782.jpg",
       "width": 1280,
       "height": 720
     },
     "realworld-2": {
-      "src": "./static/video/realworld/1751186873.mp4",
+      "src": "./static/video/realworld/1751186873.mp4?v=silent-20261104",
       "poster": "./static/images/realworld/1751186873.jpg",
       "width": 1280,
       "height": 720
     },
     "realworld-3": {
-      "src": "./static/video/realworld/1937928961.mp4",
+      "src": "./static/video/realworld/1937928961.mp4?v=silent-20261104",
       "poster": "./static/images/realworld/1937928961.jpg",
       "width": 1280,
       "height": 720
