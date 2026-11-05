@@ -79,7 +79,7 @@
     <a class="paper-figure-link" href="./static/images/figures/nav4manip-method-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav4Manip method diagram at full size">
       <img class="paper-figure" src="./static/images/figures/nav4manip-method-20261104.png" alt="Nav4Manip architecture with navigation, affordance estimation, manipulation, and selective RLAIF feedback">
     </a>
-    <div class="content has-text-justified"><p><strong>Overview of <span data-method-name>Nav4Manip</span>.</strong> <span data-navigation-name>Nav4Manip-N</span> jointly predicts navigation actions and manipulation-aware endpoint affordances. The bird&#x27;s-eye-view (BEV) map shows the robot and endpoint candidates in ground-plane coordinates. The two affordance heatmaps visualize manipulation success rates across candidate object positions and robot navigation endpoints, respectively, indicating where the object can be placed and where the robot should navigate for successful manipulation. Co-tuning, RFT, and counterfactual RLAIF progressively improve the policy, whose terminal pose is handed directly to Nav4Manip-M at inference.</p></div><br>
+    <div class="content has-text-justified"><p>Our framework trains its navigation model in three stages: <b>multi-task co-tuning</b> learns navigation behavior and manipulation-aware affordance prediction; <b>rejection sampling fine-tuning (RFT)</b> rejects low-quality policy-generated paths and fine-tunes the model on retained manipulation-successful trajectories; and <b>reinforcement learning from AI feedback (RLAIF)</b> uses execution-grounded counterfactual preferences to further improve navigation decisions.</p></div><br>
   </div></div></div>
 </section>
 
@@ -89,7 +89,7 @@
     <a class="paper-figure-link" href="./static/images/figures/nav4manip-data-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav-N-Manip and Nav4Manip-Pairs data generation diagram at full size">
       <img class="paper-figure" src="./static/images/figures/nav4manip-data-20261104.png" alt="Data generation pipeline from scene assets and manipulation affordances to navigation rendering, language annotation, and paired trajectory data">
     </a>
-    <div class="content has-text-justified"><p><strong>Nav4Manip-Pairs data-generation pipeline.</strong> The pipeline constructs paired navigation trajectories, manipulation-validated endpoints, and aligned vision–language annotations.</p></div><br>
+    <div class="content has-text-justified"><p>We establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and rollout-derived affordance supervision.</p></div><br>
   </div></div></div>
 </section>
 
