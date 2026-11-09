@@ -17,11 +17,4 @@
       else if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); activate(tabs[event.key === 'Home' ? 0 : tabs.length - 1], true); }
     });
   });
-  document.getElementById('load-explorer').addEventListener('click', () => {
-    const frame = document.createElement('iframe');
-    frame.title = 'Interactive grasp planning and replay';
-    frame.src = './rebuttal/grasp-explorer/';
-    frame.allow = 'fullscreen';
-    document.getElementById('explorer-shell').replaceChildren(frame);
-  }, { once: true });
 })();
