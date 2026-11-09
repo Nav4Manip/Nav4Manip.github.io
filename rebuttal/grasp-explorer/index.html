@@ -75,7 +75,7 @@
             <label id="single-paths-option" hidden><input id="show-paths" type="checkbox" checked>All paths</label>
             <label id="single-axes-option" hidden><input id="show-axes" type="checkbox">End-effector axes</label>
             <label id="comparison-axes-option"><input id="compare-axes" type="checkbox" checked>End-effector axes</label>
-            <label id="comparison-robot-option"><input id="compare-robot" type="checkbox">Reference robot</label>
+            <label id="comparison-robot-option"><input id="compare-robot" type="checkbox" checked>Reference robot</label>
           </div><button id="scene-detail-toggle" type="button">Load original scene</button><p class="comparison-source-note">Compressed scene by default; recorded paths are unchanged.</p></div>
               <div id="comparison-tools" class="advanced-group">
                 <label class="advanced-label" for="comparison-source">Path source</label><select id="comparison-source" class="source-select">
@@ -118,7 +118,7 @@
         </div>
         <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
         <div id="comparison-context" class="comparison-context">
-          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; bottle remains at its initial pose.</span>
+          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; robot and bottle are static references. Use single replay for motion.</span>
         </div>
         <div class="scene-footer">
           <div class="scene-caption"><div id="scene-name" class="scene-name">Experiment scene</div><span id="cutaway-state" class="cutaway-state" role="status">Loading room shell</span></div>
@@ -281,7 +281,7 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-fast"></script>
+  <script type="module" src="./app.js?v=20261110-fast-robot"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

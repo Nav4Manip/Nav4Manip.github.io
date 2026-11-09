@@ -1207,7 +1207,7 @@ function updateModeUI() {
     const transparent = fadeRobot ? true : entry.transparent;
     if (entry.material.transparent !== transparent) entry.material.needsUpdate = true;
     entry.material.transparent = transparent;
-    entry.material.opacity = fadeRobot ? 0.14 : entry.opacity;
+    entry.material.opacity = fadeRobot ? Math.min(entry.opacity, 0.75) : entry.opacity;
     entry.material.depthWrite = fadeRobot ? false : entry.depthWrite;
   }
   if (active && state.manifest) {
@@ -1251,6 +1251,7 @@ function focusComparison() {
     for (const pose of entry.path.poses) bounds.expandByPoint(new THREE.Vector3(...pose.slice(0, 3)));
   }
   bounds.union(new THREE.Box3().setFromObject(objectRoot));
+  if ($('compare-robot').checked && robotRoot.visible) bounds.union(new THREE.Box3().setFromObject(robotRoot));
   if (bounds.isEmpty()) return;
   bounds.expandByScalar(0.035);
   const sphere = bounds.getBoundingSphere(new THREE.Sphere());
@@ -1690,7 +1691,8 @@ function updateLabels() {
   const placed = [];
   for (const item of visibleLabels) {
     const baseX = item.anchorX;
-    const baseY = item.anchorY - item.height / 2 - 12;
+    // Keep pose labels below the base so they do not cover the robot's body.
+    const baseY = item.anchorY + item.height / 2 + 12;
     const candidates = [[0, 0]];
     for (let ring = 1; ring <= 4; ring++) {
       const dx = ring * (item.width + 8);
@@ -1702,7 +1704,7 @@ function updateLabels() {
       const halfWidth = item.width / 2;
       const halfHeight = item.height / 2;
       const x = THREE.MathUtils.clamp(baseX + dx, halfWidth + 8, Math.max(halfWidth + 8, width - halfWidth - 8));
-      const y = THREE.MathUtils.clamp(baseY + dy, topMargin + halfHeight, Math.max(topMargin + halfHeight, height - halfHeight - 76));
+      const y = THREE.MathUtils.clamp(baseY + dy, topMargin + halfHeight, Math.max(topMargin + halfHeight, height - halfHeight - 40));
       let overlap = 0;
       for (const other of placed) {
         const intersectX = Math.max(0, (item.width + other.width) / 2 + 6 - Math.abs(x - other.x));
