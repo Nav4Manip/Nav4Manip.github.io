@@ -22,6 +22,8 @@
   
   <link rel="stylesheet" href="./static/css/index.css?v=navigation-compact-20261104">
   <link rel="stylesheet" href="./static/css/demo-carousels.css">
+  <link rel="stylesheet" href="./static/css/rebuttal.css">
+  <script defer src="./static/js/rebuttal.js"></script>
   
   <link rel="icon" href="data:,">
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -51,6 +53,34 @@
             
           </div>
         </div>
+    </div>
+  </div>
+</section>
+
+<section class="review-section" id="reviewer-responses" aria-label="Reviewer responses">
+  <div class="review-inner">
+    <div class="review-heading"><span class="review-kicker">REBUTTAL</span><p>Reviewer responses and supporting evidence</p></div>
+    <div class="review-tabs" role="tablist" aria-label="Reviewer responses">
+      <button type="button" role="tab" id="tab-yd4j" aria-controls="review-yd4j" aria-selected="true" tabindex="0">Yd4J</button>
+      <button type="button" role="tab" id="tab-qjfp" aria-controls="review-qjfp" aria-selected="false" tabindex="-1">qjfP</button>
+      <button type="button" role="tab" id="tab-aqr4" aria-controls="review-aqr4" aria-selected="false" tabindex="-1">AQR4</button>
+    </div>
+    <div class="review-panel" id="review-yd4j" role="tabpanel" aria-labelledby="tab-yd4j" tabindex="0">
+      <div class="review-panel-heading"><div><span class="review-eyebrow">AFFORDANCE EVIDENCE</span><h2>Same object. Four docking poses.</h2></div><span class="review-badge">Interactive replay</span></div>
+      <p>Explore recorded grasp attempts and plans at four base poses. Each pose uses the same bottle initialization and 29 grasp candidates.</p>
+      <div class="review-stats"><div><strong>29/29</strong><span>A · reference</span></div><div><strong>16/29</strong><span>B · 5 cm lateral shift</span></div><div><strong>0/29</strong><span>C · out of reach</span></div><div><strong>0/29</strong><span>D · pre-grasp IK</span></div></div>
+      <p class="review-note"><strong>Failure stages.</strong> At B, 12 attempts reached contact but failed lift planning; one was rejected during prescreening. At C and D, no grasp was executed. No independent physical-validation failure is identified in this batch.</p>
+      <p class="review-note"><strong>Scope.</strong> Rates count the 29 candidate attempts at each pose, including prescreen rejects. These examples do not establish the original dataset’s pre-cell filtering rate or endpoint-ranking bias.</p>
+      <div class="explorer-shell" id="explorer-shell"><div class="explorer-placeholder" id="explorer-placeholder"><strong>Explore the recorded trajectories</strong><span>Interactive 3D scene · approximately 360 MB on first load</span><button type="button" id="load-explorer">Load 3D explorer</button></div></div>
+      <p class="explorer-link"><a href="./rebuttal/grasp-explorer/" target="_blank" rel="noopener">Open the explorer in a new tab ↗</a></p>
+    </div>
+    <div class="review-panel" id="review-qjfp" role="tabpanel" aria-labelledby="tab-qjfp" tabindex="0" hidden>
+      <span class="review-eyebrow">TRAINING AND TRANSFER</span><h2>Training and evaluation</h2>
+      <div class="review-response-grid"><div><h3>Feedback stages</h3><p>The manipulation policy is fixed during navigation feedback training. Execution outcomes guide navigator updates.</p></div><div><h3>RFT ablation</h3><p>End-to-end success is 31.01% after co-tuning, 31.79% after RFT, and 52.13% after two RLAIF rounds. A no-RFT RLAIF comparison is needed to isolate RFT’s contribution.</p></div><div><h3>Affordance and transfer</h3><p>Same-pose verifier–WAM correlation and cross-WAM transfer remain to be measured; no additional results are claimed here.</p></div></div>
+    </div>
+    <div class="review-panel" id="review-aqr4" role="tabpanel" aria-labelledby="tab-aqr4" tabindex="0" hidden>
+      <span class="review-eyebrow">TRAINING AND DEPLOYMENT</span><h2>Simulation and presentation</h2>
+      <div class="review-response-grid"><div><h3>Simulator dependence</h3><p>Feedback data collection uses simulation. RFT revisits intermediate trajectory states; RLAIF compares decisions from the same task initialization.</p></div><div><h3>Frozen manipulation policy</h3><p>The manipulation model is held fixed during feedback-based navigation training. Real-robot demonstrations are used in its post-training.</p></div><div><h3>Experimental details</h3><p>Training, dataset generation, and deployment protocols are described in the paper and appendices.</p></div></div>
     </div>
   </div>
 </section>
