@@ -76,7 +76,7 @@
             <label id="single-axes-option" hidden><input id="show-axes" type="checkbox">End-effector axes</label>
             <label id="comparison-axes-option"><input id="compare-axes" type="checkbox" checked>End-effector axes</label>
             <label id="comparison-robot-option"><input id="compare-robot" type="checkbox">Reference robot</label>
-          </div></div>
+          </div><button id="scene-detail-toggle" type="button">Load original scene</button><p class="comparison-source-note">Compressed scene by default; recorded paths are unchanged.</p></div>
               <div id="comparison-tools" class="advanced-group">
                 <label class="advanced-label" for="comparison-source">Path source</label><select id="comparison-source" class="source-select">
             <option value="planned" selected>cuRobo lift plan</option>
@@ -281,7 +281,7 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-cases"></script>
+  <script type="module" src="./app.js?v=20261110-fast"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

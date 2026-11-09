@@ -9,6 +9,7 @@ import { computeReachabilityProof, createReachabilityVisual } from './reachabili
 
 const $ = (id) => document.getElementById(id);
 const rootURL = new URL('./', window.location.href);
+const compressedSceneURL = 'https://raw.githubusercontent.com/Nav4Manip/Nav4Manip.github.io/ca59b8b524b89a63cd11e3fec4fb08a88bd84c5e/rebuttal/grasp-explorer/assets/scene-optimized.glb';
 const statusLabels = { success: 'Success', planning_rejected: 'Planning rejected', physics_failed: 'Execution did not pass' };
 const outcomeLabels = { success: 'Success', ik_failed: 'IK-FAIL', prescreen_ik_failed: 'IK-FAIL (Prescreen)', lift_plan_failed: 'Lift planning failed', reach_rejected: 'Prescreen', prescreen_rejected: 'Prescreen rejected', physical_validation_failed: 'Physical validation failed' };
 const statusAliases = { rejected: 'planning_rejected', planning_reject: 'planning_rejected', physical_failure: 'physics_failed', failed: 'physics_failed' };
@@ -62,7 +63,7 @@ function resourceURL(path) {
 }
 
 async function readJSON(path) {
-  const response = await fetch(resourceURL(path), { cache: 'no-cache' });
+  const response = await fetch(resourceURL(path));
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   try { return await response.json(); }
   catch { throw new Error(`${path}  not  is valid  JSON. `); }
@@ -307,7 +308,7 @@ function initializeGraphics() {
 
   const manager = new THREE.LoadingManager();
   manager.setURLModifier((url) => {
-    if (url.startsWith('blob:') || url.startsWith('data:')) return url;
+    if (url === compressedSceneURL || url.startsWith('blob:') || url.startsWith('data:')) return url;
     return resourceURL(url);
   });
   loader = new GLTFLoader(manager);
@@ -342,11 +343,14 @@ function initializeGraphics() {
   animationId = requestAnimationFrame(animate);
 }
 
-async function loadModel(path) {
+async function loadModel(path, originalScene = false) {
   try {
     let modelURL = resourceURL(path);
     let temporaryURL;
-    if (path === 'assets/scene.glb') {
+    if (path === 'assets/scene.glb' && !originalScene) {
+      // Geometry-compressed scene; trajectory and experiment data are unchanged.
+      modelURL = compressedSceneURL;
+    } else if (path === 'assets/scene.glb') {
       const parts = await Promise.all(Array.from({ length: 6 }, async (_, i) => {
         const part = `scene.glb.part${String(i).padStart(2, '0')}`;
         // Pin the full-resolution scene to an immutable commit in the assets branch.
@@ -370,6 +374,31 @@ async function loadModel(path) {
     return gltf.scene;
   } catch (error) {
     throw new Error(`${path} LoadingFailure: ${errorMessage(error)}`);
+  }
+}
+
+let optimizedScene, originalScene;
+async function toggleSceneDetail() {
+  if (!state.ready || !optimizedScene) return;
+  const button = $('scene-detail-toggle');
+  button.disabled = true;
+  try {
+    if (sceneAsset === optimizedScene && !originalScene) {
+      button.textContent = 'Loading original scene…';
+      notice('Loading original scene (285 MB)…');
+      originalScene = await loadModel(state.manifest.scene.file, true);
+    }
+    scene.remove(sceneAsset);
+    sceneAsset = sceneAsset === optimizedScene ? originalScene : optimizedScene;
+    scene.add(sceneAsset);
+    configureCutaway();
+    invalidate();
+    notice();
+  } catch (error) {
+    notice(`Original scene could not be loaded: ${errorMessage(error)}`);
+  } finally {
+    button.textContent = sceneAsset === optimizedScene ? 'Load original scene' : 'Use compressed scene';
+    button.disabled = false;
   }
 }
 
@@ -1823,6 +1852,7 @@ function bindUI() {
   $('view-top').addEventListener('click', focusTop);
   $('show-paths').addEventListener('change', refreshPaths);
   $('show-cutaway').addEventListener('change', applyCutaway);
+  $('scene-detail-toggle').addEventListener('click', toggleSceneDetail);
   $('mode-comparison').addEventListener('click', () => setViewMode('comparison'));
   $('mode-single').addEventListener('click', () => setViewMode('single'));
   $('mode-reachability').addEventListener('click', enterReachability);
@@ -1998,6 +2028,7 @@ async function start() {
     const failure = results.find((result) => result.status === 'rejected');
     if (failure) throw failure.reason;
     sceneAsset = results[0].value;
+    optimizedScene = sceneAsset;
     const robot = results[1].value;
     const object = results[2].value;
     bindJoints(robot, results[3].value);
