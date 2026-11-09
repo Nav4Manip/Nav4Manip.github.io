@@ -348,8 +348,10 @@ async function loadModel(path) {
     let temporaryURL;
     if (path === 'assets/scene.glb') {
       const parts = await Promise.all(Array.from({ length: 6 }, async (_, i) => {
-        const part = `assets/scene.glb.part${String(i).padStart(2, '0')}`;
-        const response = await fetch(resourceURL(part));
+        const part = `scene.glb.part${String(i).padStart(2, '0')}`;
+        // Pin the full-resolution scene to an immutable commit in the assets branch.
+        const sceneBase = 'https://raw.githubusercontent.com/Nav4Manip/Nav4Manip.github.io/0cbb54e25572a5ee5b3e2ceef651c8659f4799d5/rebuttal/grasp-explorer/assets/';
+        const response = await fetch(new URL(part, sceneBase));
         if (!response.ok) throw new Error(`Scene part ${i}: HTTP ${response.status}`);
         return response.arrayBuffer();
       }));
