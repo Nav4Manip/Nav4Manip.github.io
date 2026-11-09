@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,11 +45,10 @@
           <p><kbd>Space</kbd> Play / pause<br><kbd>←</kbd> <kbd>→</kbd> Comparison ±2% / replay ±0.2 s<br><kbd>G</kbd> Scene <kbd>F</kbd> Focus paths <kbd>T</kbd> Top view<br><kbd>A</kbd>–<kbd>D</kbd> Select a docking pose</p>
         </details>
         <details class="outcome-guide">
-          <summary>Failure codes</summary>
-          <p><b>IK-FAIL</b>: pre-grasp IK failed; no grasp was executed (29 at D).</p>
-          <p><b>Prescreen IK-FAIL</b>: all 29 candidates at C failed pre-grasp IK; no grasp was executed. One B candidate was rejected for an unspecified reason.</p>
-          <p><b>LIFTPLANFAIL</b>: 12 B attempts made contact but failed lift planning; their executed prefixes are recorded.</p>
-          <p><b>Physical validation failure</b>: no independent physical-validation failure was identified in this batch; the 12 lift-planning failures are not confirmed slips.</p>
+          <summary>Failure cases</summary>
+          <p><b>Case 2 · Physical validation:</b> a plan is executed but fails validation. No independently confirmed example is present in this batch.</p>
+          <p><b>Case 3 · No feasible action:</b> none of the tested candidates yields a feasible action at the dock. C and D illustrate this case.</p>
+          <p><b>B · Candidate-level failures:</b> 12 lift-planning failures and one prescreen rejection; 16 candidates succeeded. These do not make B a case 3 dock.</p>
           <p class="validation-rule">Success requires a 0.5 s hold after lifting, including at least 0.2 s of contact and ≥3 cm clearance at the end.</p>
         </details>
       </aside>
@@ -102,12 +101,12 @@
         <div id="scene-labels" class="scene-labels" aria-label="Docking poses"><svg id="label-leaders" class="label-leaders" aria-hidden="true"></svg></div>
         <div id="reach-labels" class="reach-labels" aria-label="Distance evidence" hidden></div>
         <div id="c-failure-callout" class="c-failure-callout" role="note" hidden>
-          <strong>C: bottle out of reach; pre-grasp IK failed</strong>
+          <strong>Case 3 · C: pre-grasp IK failed</strong>
           <p>All 29 candidates failed pre-grasp IK; no grasp was executed.</p>
           <p>Conservative reach bound: remaining gap ≈  <b id="c-failure-gap">1.10 m</b> .</p>
         </div>
         <div id="d-failure-callout" class="c-failure-callout" role="note" hidden>
-          <strong>D: no valid full-pose IK solution found</strong>
+          <strong>Case 3 · D: full-pose IK failed</strong>
           <p>The shown position solution differs from the required orientation by  <b id="d-orientation-gap">176.6°</b>. </p>
           <p>All 29 candidates failed pre-grasp IK. The static witness below compares orientations.</p>
         </div>
@@ -282,7 +281,7 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261109-rawscene"></script>
+  <script type="module" src="./app.js?v=20261110-cases"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

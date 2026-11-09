@@ -1151,7 +1151,7 @@ function updateModeUI() {
   $('comparison-transport').hidden = !active;
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
-  $('static-title').textContent = reach ? 'C: pre-grasp IK prescreen failed' : 'D: static IK witness';
+  $('static-title').textContent = reach ? 'Case 3 · C: pre-grasp IK failed' : 'Case 3 · D: static IK witness';
   $('static-copy').textContent = reach ? 'Prescreen found no pre-grasp IK solution. The spheres show an independent conservative reach bound; no grasp was executed.' : 'A position-only solution does not establish the required orientation. Solid: position solution; dashed: requested pose.';
   $('comparison-context').hidden = !active;
   $('comparison-legend').hidden = !active;
