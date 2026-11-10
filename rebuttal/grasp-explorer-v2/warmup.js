@@ -25,6 +25,12 @@
       // Versioned model URLs are cache keys; change filenames when replacing assets. Cache failures never block viewing.
       if (storage) storage.put(url, response.clone()).catch(() => {});
     }
+    // Inflate while bytes arrive instead of waiting for the entire download.
+    // fetch already decodes a server-declared Content-Encoding: gzip.
+    if (response.body && typeof DecompressionStream !== 'undefined'
+        && !/gzip/i.test(response.headers.get('Content-Encoding') || '')) {
+      return new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+    }
     return response.arrayBuffer();
   }
 

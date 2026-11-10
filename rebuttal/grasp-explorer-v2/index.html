@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="./warmup.js?v=20261110-fast"></script>
+  <script src="./warmup.js?v=20261110-stream"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261110-fast">
+  <link rel="stylesheet" href="./style.css?v=20261110-stream">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -17,7 +17,7 @@
         <span class="wordmark" aria-label="3D">3D</span>
         <div class="header-copy">
           <h1 id="app-title">Grasp Explorer</h1>
-          <p id="dataset-description">Recorded grasp trajectories at four docking poses</p>
+          <p id="dataset-description">4 docking poses</p>
         </div>
       </div>
       <div class="dataset-meta">
@@ -29,7 +29,7 @@
     <main class="workspace">
       <aside class="points-panel" aria-labelledby="points-heading">
         <div class="panel-heading">
-          <h2 id="points-heading">Select a docking pose</h2>
+          <h2 id="points-heading">Docking pose</h2>
           <span id="point-count" class="subtle">—</span>
         </div>
         <p class="panel-intro">Select a pose below or in the scene.</p>
@@ -213,7 +213,7 @@
 
         <section id="failure-cases" class="failure-cases" aria-labelledby="failure-cases-heading" hidden>
           <div class="panel-heading"><h2 id="failure-cases-heading">Failure Cases</h2><span class="subtle">Recorded replay</span></div>
-          <p id="failure-case-intro" class="case-intro">Select Actual Failed Playback to check the physical criteria.</p>
+          <p id="failure-case-intro" class="case-intro">Recorded failed attempts.</p>
           <label class="sr-only" for="failure-case-list">Select a failure</label><select id="failure-case-list" class="source-select" disabled><option value="">Select a failure</option></select>
           <p id="failure-case-footnote" class="case-footnote">Compare the same grasp and seed at the other pose.</p>
         </section>
@@ -283,8 +283,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261110-fast"></script>
-  <script type="module" src="./app.js?v=20261110-fast"></script>
+  <script src="./layout.js?v=20261110-stream"></script>
+  <script type="module" src="./app.js?v=20261110-stream"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

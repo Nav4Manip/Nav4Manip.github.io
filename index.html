@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="./rebuttal/grasp-explorer-v2/warmup.js?v=20261110-fast"></script>
+  <script src="./rebuttal/grasp-explorer-v2/warmup.js?v=20261110-stream"></script>
   
   <meta name="description" content="Dexterous mobile manipulation with bidirectionally coupled co-evolution, the Nav-N-Manip benchmark, and Nav4Manip-Pairs.">
   
@@ -32,7 +32,7 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script defer src="./static/js/site-config.js?v=silent-20261104"></script>
-  <script defer src="./static/js/index.js?v=20261110-fast"></script>
+  <script defer src="./static/js/index.js?v=20261110-stream"></script>
 </head>
 <body>
 <section class="hero">
@@ -60,21 +60,20 @@
 
 <section class="review-section" id="reviewer-responses" aria-label="Reviewer responses">
   <div class="review-inner">
-    <div class="review-heading"><span class="review-kicker">REBUTTAL</span><p>Reviewer responses and supporting evidence</p></div>
+    <div class="review-heading"><span class="review-kicker">REBUTTAL</span></div>
     <div class="review-tabs" role="tablist" aria-label="Reviewer responses">
       <button type="button" role="tab" id="tab-yd4j" aria-controls="review-yd4j" aria-selected="true" tabindex="0">Yd4J</button>
       <button type="button" role="tab" id="tab-qjfp" aria-controls="review-qjfp" aria-selected="false" tabindex="-1">qjfP</button>
       <button type="button" role="tab" id="tab-aqr4" aria-controls="review-aqr4" aria-selected="false" tabindex="-1">AQR4</button>
     </div>
     <div class="review-panel" id="review-yd4j" role="tabpanel" aria-labelledby="tab-yd4j" tabindex="0">
-      <span class="review-eyebrow">AFFORDANCE EVALUATION</span>
-      <h2>Two failure cases</h2>
+      <h2>Failure cases</h2>
       <div class="case-grid">
-        <div><span>CASE 2</span><h3>Physical validation fails</h3><p>A planned manipulation fails physical validation.</p></div>
-        <div><span>CASE 3</span><h3>No feasible action found</h3><p>No feasible action found for a valid initialization at the dock.</p></div>
+        <div><span>CASE 2</span><h3>Physical validation fails</h3><p>A feasible plan fails execution: unstable contact or slipping.</p></div>
+        <div><span>CASE 3</span><h3>Planning fails</h3><p>No feasible plan at the dock: distance, obstruction, or pose constraints.</p></div>
       </div>
-      <p class="case-summary">Reported training-set candidate summary: <strong>19.72%</strong> case 2 · <strong>67.69%</strong> case 3 · <strong>12.59%</strong> success.</p>
-      <p class="case-scope">In the interactive example, C and D illustrate case 3 under the tested candidates. This batch has no independently confirmed case 2.</p>
+      <p class="case-summary">All training candidates: <strong>19.72%</strong> case 2 · <strong>67.69%</strong> case 3 · <strong>12.59%</strong> success.</p>
+      <p class="case-scope">Failures score 0 and remain in the denominator (Eq. 34). Invalid initializations: 0%. Explorer C/D: case 3.</p>
     </div>
     <div class="review-panel" id="review-qjfp" role="tabpanel" aria-labelledby="tab-qjfp" tabindex="0" hidden>
       <span class="review-eyebrow">TRAINING AND TRANSFER</span><h2>Training and evaluation</h2>
@@ -90,7 +89,7 @@
 <section class="explorer-section" id="grasp-explorer" aria-labelledby="explorer-title">
   <div class="review-inner">
     <div class="explorer-heading"><h2 id="explorer-title">Grasp Explorer</h2><a href="./rebuttal/grasp-explorer-v2/" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
-    <div class="explorer-shell" id="explorer-shell"><iframe title="Interactive grasp planning and replay" src="./rebuttal/grasp-explorer-v2/?v=20261110-fast" loading="eager" allow="fullscreen"></iframe></div>
+    <div class="explorer-shell" id="explorer-shell"><iframe title="Interactive grasp planning and replay" src="./rebuttal/grasp-explorer-v2/?v=20261110-stream" loading="eager" allow="fullscreen"></iframe></div>
   </div>
 </section>
 

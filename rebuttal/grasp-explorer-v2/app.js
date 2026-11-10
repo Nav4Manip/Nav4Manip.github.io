@@ -106,7 +106,17 @@ function notice(message = '') {
 function announce(message) { $('announcer').textContent = message; }
 function canonicalStatus(status) { return statusAliases[status] || status; }
 function outcomeCode(trial) { return trial.outcome?.code || trial.status; }
-function outcomeLabel(trial) { return outcomeLabels[outcomeCode(trial)] || statusLabels[trial.status]; }
+function failureCase(trial) {
+  const code = outcomeCode(trial);
+  if (code === 'physical_validation_failed') return 2;
+  if (['ik_failed', 'prescreen_ik_failed', 'lift_ik_failed', 'lift_plan_failed', 'reach_rejected', 'prescreen_rejected'].includes(code) || trial.status === 'planning_rejected') return 3;
+  return null;
+}
+function outcomeLabel(trial) {
+  const label = outcomeLabels[outcomeCode(trial)] || statusLabels[trial.status];
+  const category = failureCase(trial);
+  return category ? `Case ${category} · ${label}` : label;
+}
 function formatNumber(value, digits = 2) {
   return Number.isFinite(value) ? value.toLocaleString('zh-CN', { maximumFractionDigits: digits }) : '—';
 }
@@ -328,6 +338,10 @@ function initializeGraphics() {
     return resourceURL(url);
   });
   loader = new GLTFLoader(manager);
+  // Decode in parallel without blocking page interaction.
+  if (typeof Worker !== 'undefined' && (navigator.hardwareConcurrency || 2) > 2) {
+    try { MeshoptDecoder.useWorkers(2); } catch { MeshoptDecoder.useWorkers(0); }
+  }
   loader.setMeshoptDecoder(MeshoptDecoder);
   const resize = () => {
     const rect = $('canvas-host').getBoundingClientRect();
@@ -543,12 +557,13 @@ function renderTrialList() {
   $('trial-list').replaceChildren();
   $('status-counts').replaceChildren();
   $('trial-count').textContent = `${state.point.trials.length} attempts`;
-  const outcomes = new Set(state.point.trials.map(outcomeCode));
-  for (const status of outcomes) {
-    const label = outcomeLabels[status] || statusLabels[status];
-    const count = state.point.trials.filter((trial) => outcomeCode(trial) === status).length;
-    const item = node('span', 'status-count');
-    item.append(node('span', `status-dot ${status}`), document.createTextNode(`${label} ${count}`));
+  const categories = new Map();
+  for (const trial of state.point.trials) {
+    const category = trial.status === 'success' ? 'Success' : failureCase(trial) ? `Case ${failureCase(trial)}` : 'Unclassified';
+    categories.set(category, (categories.get(category) || 0) + 1);
+  }
+  for (const [label, count] of categories) {
+    const item = node('span', 'status-count', `${label} ${count}`);
     $('status-counts').append(item);
   }
   if (!state.point.trials.length) $('trial-list').append(node('p', 'empty-copy', "There are no attempts recorded for this stop and the success rate cannot be calculated."));
@@ -714,7 +729,7 @@ function renderDPoseComparison(witness) {
   host.append(svg);
   $('d-pose-heading').textContent = `${state.point.id} · Position vs. required orientation`;
   $('d-pose-explanation').textContent = `Left: position solution. Right: required pre-grasp pose. Position error ${formatPositionError(witness.positionErrorM)}; orientation difference ${formatNumber(witness.orientationErrorDeg, 1)}°. The witness was not executed.`;
-  $('d-failure-heading').textContent = `${state.point.id} · Static IK witness`;
+  $('d-failure-heading').textContent = `${state.point.id} · Case 3: pose constraints`;
   const rejected = state.point.trials.filter((trial) => outcomeCode(trial) === 'ik_failed' || outcomeCode(trial) === 'prescreen_ik_failed').length;
   $('d-failure-summary').textContent = `${rejected} of ${state.point.trials.length} pre-grasp IK attempts failed. This static witness is not an executed attempt.`;
 }
@@ -751,7 +766,7 @@ function renderFailureCases(trajectories = new Map()) {
   container.disabled = !state.failureCases.length;
   if (!state.failureCases.length) return;
   $('failure-cases-heading').textContent = `${state.point.id} · Failed attempts`;
-  $('failure-case-intro').textContent = `${state.failureCases.length} failed attempts with recorded replay.`;
+  $('failure-case-intro').textContent = `${state.failureCases.length} recorded failures.`;
   $('failure-case-footnote').hidden = !state.failureCases.some((trial) => pairedTrial(state.point, trial));
   const placeholder = node('option', '', "Select a failure"); placeholder.value = ''; container.append(placeholder);
   for (const trial of state.failureCases) {
@@ -884,7 +899,7 @@ function initializeReachability() {
   $('reachability-heading').textContent = `${point.id} · ${allRejected ? "Pre-grasp IK failed" : "Conservative distance bound"}`;
   $('mode-reachability').textContent = `${point.id} · Distance bound`;
   $('reachability-lens').setAttribute('aria-label', `${point.id} · Conservative distance bound`);
-  $('c-failure-heading').textContent = `${point.id} · Out of reach`;
+  $('c-failure-heading').textContent = `${point.id} · Case 3: out of reach`;
   $('c-failure-summary').textContent = allRejected
     ? `All ${point.trials.length} candidates failed pre-grasp IK; no grasp was executed.`
     : "The blue-orange ball is a conservative geometric envelope; this figure shows the independent distance boundary, and the test results are based on the actual records.";
@@ -1365,11 +1380,12 @@ async function selectPoint(point) {
   const result = statistics(point);
   $('selected-point-heading').textContent = `${point.id} · ${pointLabel(point)}`;
   $('point-kind').textContent = kindLabels[point.kind] || point.kind || "Experimental stops";
-  $('point-description').textContent = point.description || "No stop description provided.";
+  $('point-description').textContent = point.id === 'A' ? '' : point.id === 'B' ? 'Case 3: lift planning failed.' : point.description || '';
+  $('point-description').hidden = !$('point-description').textContent;
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
   $('success-fraction').textContent = `${result.successes} / ${result.attempts} attempts`;
-  $('statistic-note').textContent = [point.statistics?.metric || "Successes/All Attempts (with Planning Rejection)", point.statistics?.note].filter(Boolean).join(' ');
+  $('statistic-note').textContent = 'Successes / all attempts; failures count as 0.';
   $('data-warning').hidden = !result.mismatch;
   $('data-warning').textContent = `Claim stats are inconsistent with the attempt list. Currently pressing${result.attempts}attempted to record recalculation, success${result.successes}times.`;
   const failuresByCode = new Map();
@@ -2123,13 +2139,13 @@ async function start() {
     const manifest = state.manifest;
     $('app-title').textContent = manifest.title || "Grasp Explorer";
     document.title = manifest.title || "Grasp Explorer";
-    if (manifest.description) $('dataset-description').textContent = manifest.description;
+    $('dataset-description').textContent = '4 docking poses · recorded trajectories';
     $('scene-name').textContent = manifest.scene.name || "Recorded scene";
     $('point-count').textContent = `${manifest.points.length}`;
     const total = manifest.points.reduce((sum, point) => sum + point.trials.length, 0);
     const replays = manifest.points.reduce((sum, point) => sum + point.trials.filter((trial) => trial.file).length, 0);
     $('dataset-summary').textContent = `${manifest.points.length} poses / ${total} attempts / ${replays} replays`;
-    setLoading('Loading scene and robot', 'The scene and robot will appear together when loading is complete.');
+    setLoading('Loading scene and robot', 'Preparing the complete scene…');
     const initialTrial = preferredTrial(manifest.points[0]);
     const initialReplay = initialTrial?.file
       ? readJSON(initialTrial.file).then(raw => ({ raw }), error => ({ error }))
@@ -2140,6 +2156,7 @@ async function start() {
     ]);
     const failure = results.find((result) => result.status === 'rejected');
     if (failure) throw failure.reason;
+    MeshoptDecoder.useWorkers(0);
     sceneAsset = results[0].value;
     const robot = results[1].value;
     const object = results[2].value;
