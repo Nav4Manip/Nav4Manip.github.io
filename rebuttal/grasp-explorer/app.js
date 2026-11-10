@@ -1178,6 +1178,7 @@ function updateModeUI() {
   $('c-prescreen-explanation').hidden = state.point?.id !== 'C';
   $('comparison-panel').hidden = !active;
   $('comparison-transport').hidden = !active;
+  $('quick-replay').disabled = !state.trajectory?.joints || !state.bindings.length || state.duration <= 0;
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
   $('static-title').textContent = reach ? 'Case 3 · C: pre-grasp IK failed' : 'Case 3 · D: static IK witness';
@@ -1857,6 +1858,12 @@ function bindUI() {
   $('scene-detail-toggle').addEventListener('click', toggleSceneDetail);
   $('mode-comparison').addEventListener('click', () => setViewMode('comparison'));
   $('mode-single').addEventListener('click', () => setViewMode('single'));
+  $('quick-replay').addEventListener('click', () => {
+    if (!state.trajectory?.joints || !state.bindings.length || state.duration <= 0) return;
+    setViewMode('single');
+    applyTime(0);
+    setPlaying(true);
+  });
   $('mode-reachability').addEventListener('click', enterReachability);
   $('physics-window').addEventListener('change', renderPhysicsPanel);
   $('physics-first-contact').addEventListener('click', () => {

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261109-blue">
+  <link rel="stylesheet" href="./style.css?v=20261110-replay">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -259,6 +259,7 @@
     <footer id="reachability-transport" class="static-transport" aria-label="Static distance bound" hidden><strong id="static-title">C Pre-grasp IK prescreenFailure</strong><span id="static-copy">No grasp was executed. The spheres and red gap show an independent geometric bound.</span></footer>
     <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls">
       <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
+      <button id="quick-replay" type="button" disabled>Play robot replay</button>
       <div class="comparison-timeline-block">
         <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
         <input id="comparison-progress" class="timeline" type="range" min="0" max="1" step="0.001" value="0.55" disabled aria-label="Normalized path progress" aria-valuetext="55%; not synchronized time">
@@ -281,7 +282,7 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-fast-robot"></script>
+  <script type="module" src="./app.js?v=20261110-replay"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

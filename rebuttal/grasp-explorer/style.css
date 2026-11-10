@@ -178,6 +178,8 @@
 .record-details[open] .status-counts{padding-bottom:10px}.diagnostics .record-details>summary h2{font-size:12px}
 .diagnostics .record-details[open]>:not(summary){margin-left:20px;margin-right:20px}.diagnostics .record-details[open]{padding-bottom:17px}
 .transport-buttons{min-width:96px}.transport{gap:20px}.comparison-transport>.primary-button{min-width:96px}
+.comparison-transport #quick-replay{padding:10px 13px;white-space:nowrap;font-size:11px}
+@media(max-width:620px){.comparison-transport{grid-template-columns:1fr auto}.comparison-transport #quick-replay{grid-column:2;grid-row:1;padding:9px 10px}}
 .physics-actions{padding-top:1px}.physics-actions #physics-paired{font-size:11px;padding:7px 12px}
 .physics-chart-heading{justify-content:flex-start}.static-transport{gap:16px}
 @media(max-width:950px){.trials-section,.is-comparing .trials-section{min-height:0;max-height:none}.diagnostics{padding:0}.record-details>summary{padding:16px 22px}.transport-buttons{min-width:96px}}
@@ -215,3 +217,4 @@
 .d-pose-explanation{font-size:11px;line-height:1.75;color:#526e81;padding:2px 13px 3px}
 .has-analysis .ik-axis-key{bottom:calc(var(--analysis-height,280px) + 55px)}
 @media(max-width:620px){.d-pose-facts{gap:8px;font-size:9px}.d-pose-facts b{font-size:11px}.d-orientation-chart text{font-size:15px}.d-orientation-chart .pose-frame-title{font-size:15px}.d-orientation-chart .pose-angle-label{font-size:13px}.d-orientation-chart .pose-angle-value{font-size:28px}.d-pose-explanation{font-size:10px}}
+@media(max-width:620px){.comparison-transport{grid-template-columns:1fr auto}}
