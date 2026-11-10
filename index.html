@@ -23,8 +23,8 @@
   
   <link rel="stylesheet" href="./static/css/index.css?v=navigation-compact-20261104">
   <link rel="stylesheet" href="./static/css/demo-carousels.css">
-  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-top-controls">
-  <script defer src="./static/js/rebuttal.js?v=20261110-cases"></script>
+  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-crosswam">
+  <script defer src="./static/js/rebuttal.js?v=20261110-crosswam"></script>
   
   <link rel="icon" href="data:,">
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -76,8 +76,27 @@
       <p class="case-scope">Failures score 0 and remain in the denominator (Eq. 34). Invalid initializations: 0%. Explorer C/D: case 3.</p>
     </div>
     <div class="review-panel" id="review-qjfp" role="tabpanel" aria-labelledby="tab-qjfp" tabindex="0" hidden>
-      <span class="review-eyebrow">TRAINING AND TRANSFER</span><h2>Training and evaluation</h2>
-      <div class="review-response-grid"><div><h3>Feedback stages</h3><p>A frozen WAM provides feedback for navigator training.</p></div><div><h3>RFT ablation</h3><p>SR@E2E: co-tuning 31.01% · +RFT 31.79% · +RLAIF 52.13%. The no-RFT ablation is pending.</p></div><div><h3>Affordance and transfer</h3><p>Verifier–WAM correlation and cross-WAM transfer are pending.</p></div></div>
+      <section class="cross-wam" aria-labelledby="cross-wam-title">
+        <div class="cross-wam-heading">
+          <div><h2 id="cross-wam-title">Q4 · Cross-WAM</h2><p>One navigator · three task-specific WAMs</p></div>
+          <div class="cross-wam-actions"><button type="button" id="cross-wam-play">Play all</button><button type="button" id="cross-wam-restart">Restart</button></div>
+        </div>
+        <div class="cross-wam-grid">
+          <figure class="cross-wam-card">
+            <figcaption><h3>WAM 1 · Snack bag</h3><span>Success</span></figcaption>
+            <video controls muted playsinline preload="none" data-poster="./static/rebuttal-videos/cross-wam/snack-bag.jpg" width="960" height="540" aria-label="WAM 1 successful snack bag grasp" data-cross-wam-video><source src="./static/rebuttal-videos/cross-wam/snack-bag.mp4" type="video/mp4"></video>
+          </figure>
+          <figure class="cross-wam-card">
+            <figcaption><h3>WAM 2 · Snack can</h3><span>Success</span></figcaption>
+            <video controls muted playsinline preload="none" data-poster="./static/rebuttal-videos/cross-wam/snack-can.jpg" width="960" height="540" aria-label="WAM 2 successful snack can grasp" data-cross-wam-video><source src="./static/rebuttal-videos/cross-wam/snack-can.mp4" type="video/mp4"></video>
+          </figure>
+          <figure class="cross-wam-card">
+            <figcaption><h3>WAM 3 · Yogurt carton</h3><span>Success</span></figcaption>
+            <video controls muted playsinline preload="none" data-poster="./static/rebuttal-videos/cross-wam/yogurt.jpg" width="960" height="540" aria-label="WAM 3 successful yogurt carton grasp" data-cross-wam-video><source src="./static/rebuttal-videos/cross-wam/yogurt.mp4" type="video/mp4"></video>
+          </figure>
+        </div>
+        <p class="cross-wam-caption">Overlaid grasp rollouts.</p>
+      </section>
     </div>
     <div class="review-panel" id="review-aqr4" role="tabpanel" aria-labelledby="tab-aqr4" tabindex="0" hidden>
       <span class="review-eyebrow">TRAINING AND DEPLOYMENT</span><h2>Simulation and presentation</h2>
