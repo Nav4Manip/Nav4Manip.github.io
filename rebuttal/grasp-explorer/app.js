@@ -721,6 +721,7 @@ function pairedTrial() {
 async function openPhysicalCase(point, trial) {
   if (state.point !== point) await selectPoint(point);
   if (state.point !== point) return;
+  setPhysicsExpanded(true);
   setViewMode('single');
   await selectTrial(trial);
   if (state.point !== point || state.trial !== trial || !state.physics) return;
