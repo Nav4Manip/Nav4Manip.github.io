@@ -1,0 +1,9 @@
+Three.js 0.170.0
+Source: https://registry.npmjs.org/three/-/three-0.170.0.tgz
+Local ES modules; bare three imports rewritten to ./three.module.js.
+
+MeshoptDecoder 1.3.0
+Source: https://registry.npmjs.org/meshoptimizer/-/meshoptimizer-1.3.0.tgz
+Upstream: https://github.com/zeux/meshoptimizer
+File: meshopt_decoder.module.js (embedded WASM; no runtime network dependency)
+License: LICENSE.meshoptimizer (MIT)
