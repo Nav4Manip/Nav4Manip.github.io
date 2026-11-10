@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=20261110-together">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -62,8 +62,8 @@
             <summary>Options</summary>
             <div class="advanced-menu">
               <div class="advanced-group"><span class="advanced-label">View mode</span><div class="mode-switch" role="group" aria-label="View mode">
-            <button id="mode-comparison" type="button" aria-pressed="true">Compare paths</button>
-            <button id="mode-single" type="button" aria-pressed="false">Single replay</button>
+            <button id="mode-comparison" type="button" aria-pressed="false">Compare paths</button>
+            <button id="mode-single" type="button" aria-pressed="true">Single replay</button>
             <button id="mode-reachability" type="button" aria-pressed="false" hidden>Distance Evidence</button>
           </div></div>
               <div class="advanced-group"><span class="advanced-label">View</span><div class="view-buttons" role="group" aria-label="View">
@@ -118,7 +118,7 @@
           <button id="retry-button" type="button" hidden>Retry</button>
         </div>
         <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
-        <div id="comparison-context" class="comparison-context">
+        <div id="comparison-context" class="comparison-context" hidden>
           <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; bottle remains at its initial pose.</span>
         </div>
         <div class="scene-footer">
@@ -126,7 +126,7 @@
           <div class="world-key" aria-label="Z up; units: meters"><span class="axis-dot axis-z"></span>Z up<span class="key-separator"></span>meters</div>
         </div>
         <div id="path-key" class="path-key" hidden><span></span>Colored lines: attempts<span class="current-path-key"></span>Bold: selected attempt</div>
-        <section id="diversity-lens" class="diversity-lens" aria-label="Path comparison">
+        <section id="diversity-lens" class="diversity-lens" aria-label="Path comparison" hidden>
           <div class="lens-heading"><h2>Path comparison</h2></div>
           <div id="lens-body">
 
@@ -149,8 +149,8 @@
           <p id="physics-explanation" class="physics-explanation"></p>
           <p class="measurement-note">Metrics use recorded frames. A negative conservative height alone does not prove table penetration.</p>
         </section>
-        <section id="reachability-lens" class="diagnostic-lens reachability-lens" aria-label="Conservative Distance Evidence" hidden>
-          <div class="lens-heading"><h2 id="reachability-heading">Conservative Distance Evidence</h2><span class="evidence-result">Static distance bound; no execution</span></div>
+        <section id="reachability-lens" class="diagnostic-lens reachability-lens is-collapsed" aria-label="Conservative Distance Evidence" hidden>
+          <div class="lens-heading"><h2 id="reachability-heading">Conservative Distance Evidence</h2><span class="evidence-result">Not executed</span><button id="reach-toggle" type="button" aria-expanded="false">Show evidence</button></div>
           <div class="reach-proof-flow"><span>Official Candidate<b id="reach-flow-candidates">—</b></span><i>→</i><span>Available candidates for pre-screening<b id="reach-flow-usable">—</b></span><i>→</i><span><b id="reach-flow-execution">This diagram does not perform physical actions</b></span></div>
           <svg id="c-distance-ruler" class="c-distance-ruler" viewBox="0 0 620 88" role="img" aria-label="Distance bounds shown to scale">
             <title id="c-distance-ruler-title">Generates a static distance scale based on the true geometric radius and center distance.</title>
@@ -166,8 +166,8 @@
           <p id="reach-explanation" class="reach-explanation"></p>
           <p class="measurement-note">The bounding spheres provide a conservative geometric bound, not an IK result or trajectory.</p>
         </section>
-        <section id="d-pose-lens" class="diagnostic-lens d-pose-lens" aria-label="Static position solution versus required posture orientation" hidden>
-          <div class="lens-heading"><h2 id="d-pose-heading">Position vs. orientation</h2><span class="evidence-result">Static comparison; not executed</span></div>
+        <section id="d-pose-lens" class="diagnostic-lens d-pose-lens is-collapsed" aria-label="Static position solution versus required posture orientation" hidden>
+          <div class="lens-heading"><h2 id="d-pose-heading">Position vs. orientation</h2><span class="evidence-result">Not executed</span><button id="pose-toggle" type="button" aria-expanded="false">Show comparison</button></div>
           <div class="d-pose-facts"><span>Palm position<b>Collision-free position solution</b></span><span>Full pose<b>See recorded attempts</b></span><span>Witness<b>Not executed</b></span></div>
           <div id="d-orientation-chart" class="d-orientation-chart"></div>
           <p id="d-pose-explanation" class="d-pose-explanation"></p>
@@ -217,7 +217,7 @@
           <p id="failure-case-footnote" class="case-footnote">Compare the same grasp and seed at the other pose.</p>
         </section>
 
-        <section id="comparison-panel" class="comparison-panel" aria-labelledby="comparison-heading">
+        <section id="comparison-panel" class="comparison-panel" aria-labelledby="comparison-heading" hidden>
           <div class="panel-heading"><h2 id="comparison-heading">Trajectory comparison</h2><span id="comparison-count" class="subtle">0 / 6 paths</span></div>
           <p class="comparison-scope">Compare recorded paths; up to six may be selected.</p>
           <details class="comparison-explanation"><summary>Interpretation</summary><p class="randomness-note">Grasp and seed vary together; this shows plan diversity, not planner randomness in isolation.</p></details>
@@ -258,7 +258,7 @@
     </main>
 
     <footer id="reachability-transport" class="static-transport" aria-label="Static Diagnostic Evidence" hidden><strong id="static-title">Static Diagnostic Evidence</strong><span id="static-copy">Diagnostic diagrams are shown based on the corresponding real evidence.</span></footer>
-    <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls">
+    <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls" hidden>
       <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
       <div class="comparison-timeline-block">
         <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
@@ -267,7 +267,7 @@
       </div>
 
     </footer>
-    <footer id="single-transport" class="transport" aria-label="Replay controls" hidden>
+    <footer id="single-transport" class="transport" aria-label="Replay controls">
       <div class="transport-buttons">
         <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button>
 
@@ -282,8 +282,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js"></script>
-  <script type="module" src="./app.js?v=20261110-v2"></script>
+  <script src="./layout.js?v=20261110-together"></script>
+  <script type="module" src="./app.js?v=20261110-together"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

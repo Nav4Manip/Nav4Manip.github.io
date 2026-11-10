@@ -26,7 +26,5 @@
   summary.textContent = 'Prescreen details';
   while (detailsSection.firstChild) details.append(detailsSection.firstChild);
   details.prepend(summary); detailsSection.append(details);
-  const env = document.createElement('div'); env.id = 'environment-status'; env.className = 'environment-status';
-  env.innerHTML = '<span>Loading environment…</span><button type="button" hidden>Retry</button>';
-  document.getElementById('viewer').append(env);
+
 })();

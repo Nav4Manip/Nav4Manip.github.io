@@ -294,3 +294,10 @@
 .point-kind-note,#back-to-comparison{display:none!important}
 .environment-status{top:48px}
 .physics-lens.is-collapsed>:not(.lens-heading){display:none} #physics-toggle{font-size:10px;padding:5px 8px;white-space:nowrap}
+
+/* Keep the C/D visualizations visible; details remain expandable. */
+.reachability-lens.is-collapsed>:not(.lens-heading),.d-pose-lens.is-collapsed>:not(.lens-heading){display:none}
+#reach-toggle,#pose-toggle{font-size:10px;padding:5px 8px;white-space:nowrap}
+#c-failure-summary,#d-failure-summary{display:none}
+.c-failure-callout{width:auto;min-width:190px;max-width:min(300px,calc(100% - 150px));padding:8px 10px}
+.c-failure-callout p{margin-top:2px;line-height:1.45}

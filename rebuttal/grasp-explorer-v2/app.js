@@ -699,7 +699,7 @@ function renderDPoseComparison(witness) {
   host.append(svg);
   $('d-pose-heading').textContent = `${state.point.id} · Position vs. required orientation`;
   $('d-pose-explanation').textContent = `Left: position solution. Right: required pre-grasp pose. Position error ${formatPositionError(witness.positionErrorM)}; orientation difference ${formatNumber(witness.orientationErrorDeg, 1)}°. The witness was not executed.`;
-  $('d-failure-heading').textContent = `${state.point.id} · Position witness vs. required pose`;
+  $('d-failure-heading').textContent = `${state.point.id} · Static IK witness`;
   const rejected = state.point.trials.filter((trial) => outcomeCode(trial) === 'ik_failed' || outcomeCode(trial) === 'prescreen_ik_failed').length;
   $('d-failure-summary').textContent = `${rejected} of ${state.point.trials.length} pre-grasp IK attempts failed. This static witness is not an executed attempt.`;
 }
@@ -869,7 +869,7 @@ function initializeReachability() {
   $('reachability-heading').textContent = `${point.id} · ${allRejected ? "Pre-grasp IK failed" : "Conservative distance bound"}`;
   $('mode-reachability').textContent = `${point.id} · Distance bound`;
   $('reachability-lens').setAttribute('aria-label', `${point.id} · Conservative distance bound`);
-  $('c-failure-heading').textContent = `${point.id} · Arm and object bounds are separated`;
+  $('c-failure-heading').textContent = `${point.id} · Out of reach`;
   $('c-failure-summary').textContent = allRejected
     ? `All ${point.trials.length} candidates failed pre-grasp IK; no grasp was executed.`
     : "The blue-orange ball is a conservative geometric envelope; this figure shows the independent distance boundary, and the test results are based on the actual records.";
@@ -1235,7 +1235,7 @@ function updateModeUI() {
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
   $('static-title').textContent = reach ? `${state.point.id} · Distance bound` : `${state.point?.id || ''} · Static IK witness`;
-  $('static-copy').textContent = reach ? "Bounding spheres and the gap show an independent distance bound; no motion was executed." : "Solid: position solution. Dashed: required pose. The witness was not executed.";
+  $('static-copy').textContent = reach ? "Static evidence · no execution" : "Static witness · no execution";
   $('comparison-context').hidden = !active;
   $('comparison-legend').hidden = !active;
   $('diversity-lens').hidden = !active;
@@ -1927,6 +1927,17 @@ function bindUI() {
   $('show-paths').addEventListener('change', refreshPaths);
   $('show-cutaway').addEventListener('change', applyCutaway);
   $('replay-choice').addEventListener('change', (event) => { const trial = state.point?.trials.find(t => t.id === event.target.value); if (!trial) return; setViewMode('single'); selectTrial(trial).then(() => { if (state.trial === trial && state.viewMode === 'single') setPlaying(true); }); });
+  for (const [buttonId, panelId, shown, hidden] of [
+    ['reach-toggle', 'reachability-lens', 'Hide evidence', 'Show evidence'],
+    ['pose-toggle', 'd-pose-lens', 'Hide comparison', 'Show comparison'],
+  ]) {
+    $(buttonId).addEventListener('click', () => {
+      const collapsed = $(panelId).classList.toggle('is-collapsed');
+      $(buttonId).setAttribute('aria-expanded', String(!collapsed));
+      $(buttonId).textContent = collapsed ? hidden : shown;
+      updateAnalysisLayout();
+    });
+  }
   $('physics-toggle').addEventListener('click', () => { const panel = $('physics-lens'); const collapsed = panel.classList.toggle('is-collapsed'); $('physics-toggle').setAttribute('aria-expanded', String(!collapsed)); $('physics-toggle').textContent = collapsed ? 'Show metrics' : 'Hide metrics'; updateAnalysisLayout(); });
   $('mode-comparison').addEventListener('click', () => setViewMode('comparison'));
   $('mode-single').addEventListener('click', () => setViewMode('single'));
@@ -2098,18 +2109,28 @@ async function start() {
     const total = manifest.points.reduce((sum, point) => sum + point.trials.length, 0);
     const replays = manifest.points.reduce((sum, point) => sum + point.trials.filter((trial) => trial.file).length, 0);
     $('dataset-summary').textContent = `${manifest.points.length} poses / ${total} attempts / ${replays} replays`;
-    setLoading("Loading recorded scene", "Read environmental, robotic, and detergent models; first loading may take a moment.");
-    const scenePromise = loadModel(manifest.scene.file).then(value => ({ value }), error => ({ error }));
+    setLoading('Loading scene and robot', 'The scene and robot will appear together when loading is complete.');
+    const initialTrial = preferredTrial(manifest.points[0]);
+    const initialReplay = initialTrial?.file
+      ? readJSON(initialTrial.file).then(raw => ({ raw }), error => ({ error }))
+      : null;
     const results = await Promise.allSettled([
-      loadModel(manifest.robot.file), loadModel(manifest.object.file), readJSON(manifest.robot.kinematics),
+      loadModel(manifest.scene.file), loadModel(manifest.robot.file), loadModel(manifest.object.file), readJSON(manifest.robot.kinematics),
       readJSON('data/experiment.json').catch(() => null), readJSON('data/prescreen.json').catch(() => null),
     ]);
     const failure = results.find((result) => result.status === 'rejected');
     if (failure) throw failure.reason;
-    const robot = results[0].value;
-    const object = results[1].value;
-    bindJoints(robot, results[2].value);
-    state.comparisonModel = createComparisonModel(results[2].value);
+    sceneAsset = results[0].value;
+    const robot = results[1].value;
+    const object = results[2].value;
+    bindJoints(robot, results[3].value);
+    state.comparisonModel = createComparisonModel(results[3].value);
+    if (initialReplay) {
+      const prefetched = await initialReplay;
+      if (prefetched.raw) state.cache.set(trialKey(manifest.points[0], initialTrial), Promise.resolve(validateTrajectory(prefetched.raw, initialTrial.file)));
+    }
+    scene.add(sceneAsset);
+    configureCutaway();
     robotRoot.add(robot);
     const robotMaterials = new Set();
     robot.traverse((child) => {
@@ -2117,8 +2138,8 @@ async function start() {
     });
     state.robotMaterials = [...robotMaterials].map((material) => ({ material, opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite }));
     objectRoot.add(object);
-    state.experiment = results[3].value;
-    state.prescreen = results[4].value;
+    state.experiment = results[4].value;
+    state.prescreen = results[5].value;
     initializeReachability();
     setPose(objectRoot, manifest.object.initialPose);
     const cameraConfig = manifest.scene.camera;
@@ -2129,10 +2150,6 @@ async function start() {
     makeMarkers();
     state.ready = true;
     $('loading-panel').hidden = true;
-    const env = $('environment-status'), envText = env.querySelector('span'), envRetry = env.querySelector('button');
-    const attachEnvironment = async (pending) => { env.hidden = false; envText.textContent = 'Loading environment…'; envRetry.hidden = true; const result = await pending; if (result.error) { envText.textContent = 'Environment failed to load'; envRetry.hidden = false; return; } sceneAsset = result.value; scene.add(sceneAsset); configureCutaway(); env.hidden = true; invalidate(); };
-    envRetry.addEventListener('click', () => attachEnvironment(loadModel(manifest.scene.file).then(value => ({ value }), error => ({ error }))));
-    attachEnvironment(scenePromise);
     await selectPoint(manifest.points[0]);
   } catch (error) {
     setPlaying(false);
