@@ -227,10 +227,16 @@ function validateTrajectory(raw, file) {
   return trajectory;
 }
 
+function cacheTrajectory(key, promise) {
+  state.cache.set(key, promise);
+  promise.catch(() => { if (state.cache.get(key) === promise) state.cache.delete(key); });
+  return promise;
+}
+
 function getTrajectory(point, trial) {
   const key = trialKey(point, trial);
   if (!state.cache.has(key)) {
-    state.cache.set(key, readJSON(trial.file).then((raw) => validateTrajectory(raw, trial.file)));
+    cacheTrajectory(key, readJSON(trial.file).then((raw) => validateTrajectory(raw, trial.file)));
   }
   return state.cache.get(key);
 }
@@ -347,7 +353,9 @@ async function loadModel(path, originalScene = false) {
   try {
     let modelURL = resourceURL(path);
     let temporaryURL;
-    if (path === 'assets/scene.glb' && !originalScene) {
+    if (path === 'assets/robot.glb') {
+      modelURL = resourceURL(`${path}?v=20261110-fastrobot`);
+    } else if (path === 'assets/scene.glb' && !originalScene) {
       // Geometry-compressed scene; trajectory and experiment data are unchanged.
       modelURL = compressedSceneURL;
     } else if (path === 'assets/scene.glb') {
@@ -378,6 +386,36 @@ async function loadModel(path, originalScene = false) {
 }
 
 let optimizedScene, originalScene;
+let environmentLoading = false;
+async function loadEnvironment() {
+  if (environmentLoading || optimizedScene) return;
+  environmentLoading = true;
+  $('environment-status').hidden = false;
+  $('environment-message').textContent = 'Loading environment…';
+  $('environment-retry').hidden = true;
+  let environment;
+  try {
+    environment = await loadModel(state.manifest.scene.file);
+    sceneAsset = environment;
+    scene.add(environment);
+    configureCutaway();
+    optimizedScene = environment;
+    $('scene-detail-toggle').disabled = false;
+    $('environment-status').hidden = true;
+    invalidate();
+  } catch (error) {
+    if (environment) scene.remove(environment);
+    sceneAsset = undefined;
+    state.shellNodes = [];
+    $('show-cutaway').disabled = true;
+    $('environment-message').textContent = 'Environment unavailable.';
+    $('environment-status').title = errorMessage(error);
+    $('environment-retry').hidden = false;
+  } finally {
+    environmentLoading = false;
+  }
+}
+
 async function toggleSceneDetail() {
   if (!state.ready || !optimizedScene) return;
   const button = $('scene-detail-toggle');
@@ -400,6 +438,20 @@ async function toggleSceneDetail() {
     button.textContent = sceneAsset === optimizedScene ? 'Load original scene' : 'Use compressed scene';
     button.disabled = false;
   }
+}
+
+async function loadRecordedTrajectories(point, recorded, token) {
+  const results = new Array(recorded.length);
+  let next = 0;
+  async function worker() {
+    while (token === state.pointToken && next < recorded.length) {
+      const index = next++;
+      try { results[index] = { status: 'fulfilled', value: await getTrajectory(point, recorded[index]) }; }
+      catch (reason) { results[index] = { status: 'rejected', reason }; }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(8, recorded.length) }, worker));
+  return results;
 }
 
 function bindJoints(model, kinematics) {
@@ -1374,7 +1426,7 @@ async function selectPoint(point) {
   }
   announce(`Select a docking pose ${point.id}, Success ${result.successes} ,  ${result.attempts} attempts. `);
   const recorded = point.trials.filter((trial) => trial.file);
-  const results = await Promise.allSettled(recorded.map((trial) => getTrajectory(point, trial)));
+  const results = await loadRecordedTrajectories(point, recorded, token);
   if (token !== state.pointToken) return;
   let failures = 0;
   results.forEach((result, index) => {
@@ -1886,6 +1938,7 @@ function focusTop() {
 }
 
 function bindUI() {
+  $('environment-retry').addEventListener('click', loadEnvironment);
   $('failure-case-list').addEventListener('change', (event) => {
     const point = state.manifest.points.find((item) => item.id === 'B');
     const trial = point.trials.find((item) => item.sourceRawId === event.target.value);
@@ -2075,20 +2128,25 @@ async function start() {
     $('point-count').textContent = `${manifest.points.length} `;
     const total = manifest.points.reduce((sum, point) => sum + point.trials.length, 0);
     $('dataset-summary').textContent = `${manifest.points.length} Pose / ${total} attempts`;
-    setLoading('Loading recorded scene', 'Loading scene, robot, and bottle. Initial download may take a while.');
+    setLoading('Loading replay', 'Loading robot, bottle, and recorded data.');
+    loadEnvironment();
+    const initialTrial = preferredTrial(manifest.points[0]);
+    const initialRaw = initialTrial?.file ? readJSON(initialTrial.file).then(
+      (raw) => ({ raw }), (error) => ({ error }),
+    ) : null;
     const results = await Promise.allSettled([
-      loadModel(manifest.scene.file), loadModel(manifest.robot.file), loadModel(manifest.object.file), readJSON(manifest.robot.kinematics), readJSON('data/experiment.json'), readJSON('data/prescreen.json'),
+      loadModel(manifest.robot.file), loadModel(manifest.object.file), readJSON(manifest.robot.kinematics), readJSON('data/experiment.json'), readJSON('data/prescreen.json'),
     ]);
     const failure = results.find((result) => result.status === 'rejected');
     if (failure) throw failure.reason;
-    sceneAsset = results[0].value;
-    optimizedScene = sceneAsset;
-    const robot = results[1].value;
-    const object = results[2].value;
-    bindJoints(robot, results[3].value);
-    state.comparisonModel = createComparisonModel(results[3].value);
-    scene.add(sceneAsset);
-    configureCutaway();
+    const robot = results[0].value;
+    const object = results[1].value;
+    bindJoints(robot, results[2].value);
+    state.comparisonModel = createComparisonModel(results[2].value);
+    if (initialRaw) cacheTrajectory(trialKey(manifest.points[0], initialTrial), initialRaw.then(({ raw, error }) => {
+      if (error) throw error;
+      return validateTrajectory(raw, initialTrial.file);
+    }));
     robotRoot.add(robot);
     const robotMaterials = new Set();
     robot.traverse((child) => {
@@ -2096,8 +2154,8 @@ async function start() {
     });
     state.robotMaterials = [...robotMaterials].map((material) => ({ material, opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite }));
     objectRoot.add(object);
-    state.experiment = results[4].value;
-    state.prescreen = results[5].value;
+    state.experiment = results[3].value;
+    state.prescreen = results[4].value;
     initializeReachability();
     setPose(objectRoot, manifest.object.initialPose);
     const cameraConfig = manifest.scene.camera;

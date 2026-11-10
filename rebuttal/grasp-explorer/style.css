@@ -282,6 +282,8 @@
 .points-panel .success-stat>strong{display:none}
 .points-panel .success-stat{justify-content:flex-start}
 .points-panel .statistic-note{text-align:left}
+.environment-status{position:absolute;right:12px;top:12px;z-index:12;display:flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid var(--line);border-radius:5px;background:#f8fbfff2;color:#506e7f;font-size:11px}
+.environment-status button{padding:3px 6px;font-size:10px}
 @media(min-width:701px){
   .app{height:100dvh;min-height:650px;max-height:1600px}
   .workspace{display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-areas:"side scene";min-height:0}
