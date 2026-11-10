@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261110-top-controls2">
+  <link rel="stylesheet" href="./style.css?v=20261110-compact">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -62,16 +62,11 @@
     <main class="workspace">
       <aside class="points-panel" aria-labelledby="points-heading">
         <div class="panel-heading">
-          <h2 id="points-heading">Select a docking pose</h2>
+          <h2 id="points-heading">Docking poses</h2>
           <span id="point-count" class="subtle">—</span>
         </div>
-        <p class="panel-intro">Select a pose below or in the scene.</p>
         <div id="point-list" class="point-list" aria-label="Pose" tabindex="-1">
           <p class="empty-copy">Loading poses.</p>
-        </div>
-        <div class="point-note">
-          <span class="small-caption">Metric</span>
-          <p id="statistics-definition">Successes / 29 candidates; prescreen rejects count as failures.</p>
         </div>
         <details class="help-details">
           <summary>Controls</summary>
@@ -180,6 +175,7 @@
           <p id="point-description" class="point-description">Select a pose to inspect attempts.</p>
           <div class="success-stat"><strong id="success-rate">—</strong><div><span>Success rate</span><b id="success-fraction">— / — attempts</b></div></div>
           <p id="statistic-note" class="statistic-note">Based on recorded outcomes.</p>
+          <details class="metric-details"><summary>Success criteria</summary><p>After lifting, hold for 0.5 s, with at least 0.2 s of contact and ≥3 cm final clearance.</p></details>
           <p id="data-warning" class="data-warning" role="alert" hidden></p>
           <p id="failure-summary" class="failure-summary"></p>
 
@@ -187,12 +183,12 @@
         </section>
 
         <section id="c-prescreen-explanation" class="c-prescreen-explanation" hidden>
-          <div class="panel-heading"><h2>C: failure stage</h2></div>
+          <details><summary>C: prescreen details</summary>
           <p id="c-prescreen-summary"></p>
           <p id="c-example-name" class="c-example-name"></p>
           <table class="c-example-table"><thead><tr><th>Same grasp template</th><th>A </th><th>C </th></tr></thead><tbody><tr><td>Bottle to arm base</td><td id="c-example-a-distance"></td><td id="c-example-c-distance"></td></tr><tr><td>Outcome</td><td>Prescreen passed<br>Success</td><td>Pre-grasp IK failed<br>Not executed</td></tr></tbody></table>
           <p>Conservative geometry leaves an approximately 1.10 m gap even after accounting for the bottle.</p>
-          <details class="prescreen-detail"><summary>Prescreen details</summary>
+          <details class="prescreen-detail"><summary>Method and source</summary>
             <ol><li>Check approach and retreat directions.</li><li>Check pre-grasp IK; reject the probe if no solution is found.</li><li>Only successful probes proceed to replay, collision, and lift IK checks.</li></ol>
             <p id="c-probe-description"></p>
             <p id="c-native-summary" class="native-summary"></p>
@@ -200,13 +196,14 @@
             <p>Four workers repeated the same 348 IK queries; these are not independent trials. The denominator remains 29.</p>
             <a href="./data/prescreen.json" target="_blank" rel="noopener">View source and log excerpts</a>
           </details>
+          </details>
         </section>
 
         <section id="failure-cases" class="failure-cases" aria-labelledby="failure-cases-heading" hidden>
           <div class="panel-heading"><h2 id="failure-cases-heading">B: failure cases</h2><span class="subtle">Recorded replay</span></div>
-          <p class="case-intro">Choose a case to replay. All three failed lift planning.</p>
+          <p class="case-intro">Select a failed lift plan to replay.</p>
           <label class="sr-only" for="failure-case-list">Select a failure</label><select id="failure-case-list" class="source-select" disabled><option value="">Select a failure</option></select>
-          <p class="case-footnote">Compare the matching successful grasp at A.</p>
+          <p class="case-footnote">Compare the same grasp at A.</p>
         </section>
 
         <section id="comparison-panel" class="comparison-panel" aria-labelledby="comparison-heading">
@@ -284,7 +281,7 @@
 
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-top-controls2"></script>
+  <script type="module" src="./app.js?v=20261110-compact"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

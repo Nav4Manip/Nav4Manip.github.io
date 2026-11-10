@@ -254,3 +254,20 @@
   .transport .loop-option{grid-column:1;grid-row:2}
   .comparison-progress-note{display:none}
 }
+
+/* Keep the dock selector and outcome summary concise. */
+.points-panel{padding:16px 12px;gap:0}
+.point-list{gap:5px;margin-top:12px}
+.point-button{grid-template-columns:26px minmax(0,1fr);gap:7px;padding:8px 7px;align-items:center}
+.point-letter{width:26px;height:26px;font-size:11px}
+.point-body{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.point-label{font-size:11px;line-height:1.3}
+.point-result{margin-top:0;flex:none}
+.point-percent{font-size:13px}
+.point-overview,.is-comparing .point-overview{padding:16px 18px}
+.point-overview .point-description{margin-top:8px}
+.point-overview .success-stat{margin-top:10px}
+.point-overview .statistic-note{margin-top:8px;line-height:1.5}
+.metric-details{margin-top:7px;color:var(--muted);font-size:10px;line-height:1.55}
+.metric-details summary,.c-prescreen-explanation>details>summary{cursor:pointer;color:#3d5e71}
+.metric-details p{margin-top:5px}

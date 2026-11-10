@@ -531,8 +531,8 @@ function renderPointList() {
     const outcome = node('span', 'point-result');
     const rate = node('span', 'point-percent', percentage(result.successes, result.attempts));
     rate.style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
-    outcome.append(rate, node('span', 'point-fraction', `${result.successes} / ${result.attempts}`));
-    body.append(outcome, node('span', 'point-kind-note', kindLabels[point.kind] || point.kind || ' experiment Pose'));
+    outcome.append(rate);
+    body.append(outcome);
     button.append(body);
     button.addEventListener('click', () => selectPoint(point));
     $('point-list').append(button);
@@ -1335,11 +1335,18 @@ async function selectPoint(point) {
   const result = statistics(point);
   $('selected-point-heading').textContent = `${point.id} · ${pointLabel(point)}`;
   $('point-kind').textContent = kindLabels[point.kind] || point.kind || ' experiment Pose';
-  $('point-description').textContent = point.description || 'No pose description available.';
+  const briefDescriptions = {
+    A: '',
+    B: '5 cm shift; lift-planning failures followed contact.',
+    C: 'Pre-grasp IK failed; conservative reach gap ≈1.10 m.',
+    D: 'Full-pose IK failed; a position-only witness exists.',
+  };
+  $('point-description').textContent = briefDescriptions[point.id] ?? point.description ?? '';
+  $('point-description').hidden = !$('point-description').textContent;
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
   $('success-fraction').textContent = `${result.successes} / ${result.attempts} attempts`;
-  $('statistic-note').textContent = [point.statistics?.metric || 'Success / All attempts (Planning rejected)', point.statistics?.note].filter(Boolean).join('. ');
+  $('statistic-note').textContent = `${result.attempts} candidates; prescreen rejects count as failures.`;
   $('data-warning').hidden = !result.mismatch;
   $('data-warning').textContent = `Statistics disagree with the recorded attempts; calculated ${result.successes} successes from ${result.attempts} records.`;
   const failuresByCode = new Map();
