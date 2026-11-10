@@ -280,6 +280,8 @@
 .points-panel .help-details,.points-panel .outcome-guide{flex:0 0 auto}
 .points-panel .help-details{margin-top:12px}
 .points-panel .success-stat>strong{display:none}
+.points-panel .success-stat{justify-content:flex-start}
+.points-panel .statistic-note{text-align:left}
 @media(min-width:701px){
   .app{height:100dvh;min-height:650px;max-height:1600px}
   .workspace{display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-areas:"side scene";min-height:0}
