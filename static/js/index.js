@@ -53,13 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
-    video.preload = slot.classList.contains('demo-media') ? 'metadata' : 'none';
+    video.preload = 'none';
     video.style.width = '100%';
     video.style.height = slot.classList.contains('demo-media') ? '100%' : 'auto';
     video.style.objectFit = 'contain';
     video.style.display = 'block';
     video.setAttribute('aria-label', slot.getAttribute('aria-label').replace(': video placeholder', ''));
-    if (entry.poster) video.poster = entry.poster;
+    if (entry.poster) video.dataset.poster = entry.poster;
     video.src = entry.src;
     slot.replaceChildren(video);
   });
@@ -219,4 +219,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.querySelectorAll('[data-demo-carousel]').forEach(initializeDemoCarousel);
+  // Keep below-the-fold videos from competing with the interactive scene.
+  if ('IntersectionObserver' in window) {
+    const mediaObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const video = entry.target;
+        video.preload = 'metadata';
+        if (video.dataset.poster) { video.poster = video.dataset.poster; delete video.dataset.poster; }
+        mediaObserver.unobserve(video);
+      }
+    }, { rootMargin: '150px' });
+    document.querySelectorAll('video').forEach(video => mediaObserver.observe(video));
+  } else {
+    document.querySelectorAll('video[data-poster]').forEach(video => { video.poster = video.dataset.poster; });
+  }
 });

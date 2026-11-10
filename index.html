@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script src="./rebuttal/grasp-explorer-v2/warmup.js?v=20261110-fast"></script>
   
   <meta name="description" content="Dexterous mobile manipulation with bidirectionally coupled co-evolution, the Nav-N-Manip benchmark, and Nav4Manip-Pairs.">
   
@@ -31,7 +32,7 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script defer src="./static/js/site-config.js?v=silent-20261104"></script>
-  <script defer src="./static/js/index.js?v=grasping-centered-20261102"></script>
+  <script defer src="./static/js/index.js?v=20261110-fast"></script>
 </head>
 <body>
 <section class="hero">
@@ -89,14 +90,14 @@
 <section class="explorer-section" id="grasp-explorer" aria-labelledby="explorer-title">
   <div class="review-inner">
     <div class="explorer-heading"><h2 id="explorer-title">Grasp Explorer</h2><a href="./rebuttal/grasp-explorer-v2/" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
-    <div class="explorer-shell" id="explorer-shell"><iframe title="Interactive grasp planning and replay" src="./rebuttal/grasp-explorer-v2/?v=20261110-together" loading="eager" allow="fullscreen"></iframe></div>
+    <div class="explorer-shell" id="explorer-shell"><iframe title="Interactive grasp planning and replay" src="./rebuttal/grasp-explorer-v2/?v=20261110-fast" loading="eager" allow="fullscreen"></iframe></div>
   </div>
 </section>
 
 <section class="hero teaser" id="overview">
   <div class="container is-max-desktop"><div class="hero-body">
     <div class="overview-player media-frame">
-      <video muted id="overview-video" controls playsinline preload="metadata" poster="./static/images/overview/467601245.jpg" width="854" height="480" aria-label="Nav4Manip overview">
+      <video muted id="overview-video" controls playsinline preload="none" data-poster="./static/images/overview/467601245.jpg" width="854" height="480" aria-label="Nav4Manip overview">
         <source src="./static/video/overview/467601245.mp4?v=silent-20261104" type="video/mp4">
       </video>
     </div>
@@ -115,7 +116,7 @@
   <div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
     <br><h2 class="title is-3">Method</h2>
     <a class="paper-figure-link" href="./static/images/figures/nav4manip-method-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav4Manip method diagram at full size">
-      <img class="paper-figure" src="./static/images/figures/nav4manip-method-20261104.png" alt="Nav4Manip architecture with navigation, affordance estimation, manipulation, and selective RLAIF feedback">
+      <img loading="lazy" decoding="async" class="paper-figure" src="./static/images/figures/nav4manip-method-20261104.png" alt="Nav4Manip architecture with navigation, affordance estimation, manipulation, and selective RLAIF feedback">
     </a>
     <div class="content has-text-justified"><p>Our framework trains its navigation model in three stages: <b>multi-task co-tuning</b> learns navigation behavior and manipulation-aware affordance prediction; <b>rejection sampling fine-tuning (RFT)</b> rejects low-quality policy-generated paths and fine-tunes the model on retained manipulation-successful trajectories; and <b>reinforcement learning from AI feedback (RLAIF)</b> uses execution-grounded counterfactual preferences to further improve navigation decisions.</p></div><br>
   </div></div></div>
@@ -125,7 +126,7 @@
   <div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
     <br><h2 class="title is-3">Nav-N-Manip and Nav4Manip-Pairs</h2>
     <a class="paper-figure-link" href="./static/images/figures/nav4manip-data-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav-N-Manip and Nav4Manip-Pairs data generation diagram at full size">
-      <img class="paper-figure" src="./static/images/figures/nav4manip-data-20261104.png" alt="Data generation pipeline from scene assets and manipulation affordances to navigation rendering, language annotation, and paired trajectory data">
+      <img loading="lazy" decoding="async" class="paper-figure" src="./static/images/figures/nav4manip-data-20261104.png" alt="Data generation pipeline from scene assets and manipulation affordances to navigation rendering, language annotation, and paired trajectory data">
     </a>
     <div class="content has-text-justified"><p>We establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and rollout-derived affordance supervision.</p></div><br>
   </div></div></div>
@@ -140,7 +141,7 @@
       <div class="realworld-example" style="--video-ratio: 1.777777778;">
         <div class="media-frame">
           <div class="demo-media" data-media-slot="realworld-1" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 1">
-            <img src="./static/images/realworld/1064031782.jpg" alt="Real-world demonstration 1" width="1280" height="720">
+            <img loading="lazy" decoding="async" src="./static/images/realworld/1064031782.jpg" alt="Real-world demonstration 1" width="1280" height="720">
           </div>
         </div>
         <p>Real-world demonstration</p>
@@ -148,7 +149,7 @@
       <div class="realworld-example" style="--video-ratio: 1.777777778;">
         <div class="media-frame">
           <div class="demo-media" data-media-slot="realworld-2" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 2">
-            <img src="./static/images/realworld/1751186873.jpg" alt="Real-world demonstration 2" width="1280" height="720">
+            <img loading="lazy" decoding="async" src="./static/images/realworld/1751186873.jpg" alt="Real-world demonstration 2" width="1280" height="720">
           </div>
         </div>
         <p>Real-world demonstration</p>
@@ -156,7 +157,7 @@
       <div class="realworld-example" style="--video-ratio: 1.777777778;">
         <div class="media-frame">
           <div class="demo-media" data-media-slot="realworld-3" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 3">
-            <img src="./static/images/realworld/1937928961.jpg" alt="Real-world demonstration 3" width="1280" height="720">
+            <img loading="lazy" decoding="async" src="./static/images/realworld/1937928961.jpg" alt="Real-world demonstration 3" width="1280" height="720">
           </div>
         </div>
         <p>Real-world demonstration</p>
@@ -171,7 +172,7 @@
       <figure class="real-navigation-example">
         <p class="real-navigation-speed has-text-centered">4× speed</p>
         <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" poster="./static/images/real-navigation/1.jpg" width="720" height="1280" aria-label="Navigation 1">
+          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/1.jpg" width="720" height="1280" aria-label="Navigation 1">
             <source src="./static/video/real-navigation/1.mp4" type="video/mp4">
           </video>
         </div>
@@ -180,7 +181,7 @@
       <figure class="real-navigation-example">
         <p class="real-navigation-speed has-text-centered">4× speed</p>
         <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" poster="./static/images/real-navigation/2.jpg" width="720" height="1280" aria-label="Navigation 2">
+          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/2.jpg" width="720" height="1280" aria-label="Navigation 2">
             <source src="./static/video/real-navigation/2.mp4" type="video/mp4">
           </video>
         </div>
@@ -189,7 +190,7 @@
       <figure class="real-navigation-example">
         <p class="real-navigation-speed has-text-centered">4× speed</p>
         <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" poster="./static/images/real-navigation/3.jpg" width="720" height="1280" aria-label="Navigation 3">
+          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/3.jpg" width="720" height="1280" aria-label="Navigation 3">
             <source src="./static/video/real-navigation/3.mp4" type="video/mp4">
           </video>
         </div>
@@ -198,7 +199,7 @@
       <figure class="real-navigation-example">
         <p class="real-navigation-speed has-text-centered">4× speed</p>
         <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" poster="./static/images/real-navigation/4.jpg" width="720" height="1280" aria-label="Navigation and Manipulation">
+          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/4.jpg" width="720" height="1280" aria-label="Navigation and Manipulation">
             <source src="./static/video/real-navigation/4.mp4" type="video/mp4">
           </video>
         </div>
@@ -217,35 +218,35 @@
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="mobile-manipulation-1" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 1" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="mobile-manipulation-2" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 2">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 2" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 2" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="mobile-manipulation-3" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 3">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 3" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 3" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="mobile-manipulation-4" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 4">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 4" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 4" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="mobile-manipulation-5" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 5">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 5" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 5" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
@@ -262,70 +263,70 @@
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-instruction-1" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 1">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 1" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 1" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-instruction-2" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 2">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 2" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 2" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-object-1" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 3">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 3" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 3" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-object-2" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 4">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 4" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 4" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-5" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 5">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 5" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 5" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-6" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 6">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 6" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 6" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-7" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 7">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 7" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 7" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-8" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 8">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 8" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 8" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-9" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 9">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 9" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 9" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="navigation-10" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 10">
-              <img src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 10" width="640" height="632" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 10" width="640" height="632" draggable="false">
             </div>
           </div>
       </div>
@@ -342,70 +343,70 @@
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-1" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 1" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-2" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 2">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 2" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 2" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-3" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 3">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 3" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 3" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-4" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 4">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 4" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 4" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-5" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 5">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 5" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 5" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-6" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 6">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 6" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 6" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-7" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 7">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 7" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 7" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-8" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 8">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 8" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 8" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-9" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 9">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 9" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 9" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
       <div class="carousel-panel">
           <div class="item">
             <div class="demo-media" data-media-slot="grasping-10" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 10">
-              <img src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 10" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 10" width="640" height="480" draggable="false">
             </div>
           </div>
       </div>
@@ -426,7 +427,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -434,7 +435,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -442,7 +443,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -455,7 +456,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-2-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -463,7 +464,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-2-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -471,7 +472,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -484,7 +485,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-3-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -492,7 +493,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-3-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -500,7 +501,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-r2r-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -523,7 +524,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -531,7 +532,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -539,7 +540,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -552,7 +553,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-2-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -560,7 +561,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-2-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -568,7 +569,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -581,7 +582,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-3-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -589,7 +590,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-3-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -597,7 +598,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-rxr-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -620,7 +621,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -628,7 +629,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -636,7 +637,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -649,7 +650,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-2-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -657,7 +658,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-2-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -665,7 +666,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -678,7 +679,7 @@
             <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-3-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, Nav4Manip-N">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -686,7 +687,7 @@
             <h3 class="title is-4">InternVLA-N1</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-3-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, InternVLA-N1">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -694,7 +695,7 @@
             <h3 class="title is-4">Uni-NaVid</h3>
             <div class="item">
             <div class="demo-media" data-media-slot="comparison-vlnverse-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, Uni-NaVid">
-              <img src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
+              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
             </div>
           </div>
           </div>
@@ -715,7 +716,7 @@
           <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="Yogurt Cartons, video 1 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx_merge" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx_merge.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Overlaid trials show manipulation generalization., 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx_merge.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Overlaid trials show manipulation generalization., 2x speed">
                   <source src="./static/video/grasping-11-1/amx_merge.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx_merge.mp4">Download video</a>
                 </video>
@@ -726,7 +727,7 @@
           <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="Yogurt Cartons, video 2 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx1" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx1.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 1, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx1.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 1, 2x speed">
                   <source src="./static/video/grasping-11-1/amx1.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx1.mp4">Download video</a>
                 </video>
@@ -737,7 +738,7 @@
           <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="Yogurt Cartons, video 3 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx2" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx2.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 2, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx2.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 2, 2x speed">
                   <source src="./static/video/grasping-11-1/amx2.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx2.mp4">Download video</a>
                 </video>
@@ -748,7 +749,7 @@
           <div class="carousel-panel" data-comparison-group="4" role="group" aria-label="Yogurt Cartons, video 4 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx3" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx3.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 3, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx3.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 3, 2x speed">
                   <source src="./static/video/grasping-11-1/amx3.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx3.mp4">Download video</a>
                 </video>
@@ -759,7 +760,7 @@
           <div class="carousel-panel" data-comparison-group="5" role="group" aria-label="Yogurt Cartons, video 5 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx4" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx4.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 4, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx4.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 4, 2x speed">
                   <source src="./static/video/grasping-11-1/amx4.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx4.mp4">Download video</a>
                 </video>
@@ -770,7 +771,7 @@
           <div class="carousel-panel" data-comparison-group="6" role="group" aria-label="Yogurt Cartons, video 6 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-amx5" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/amx5.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 5, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/amx5.jpg" width="1280" height="720" aria-label="Yogurt Cartons: Trial 5, 2x speed">
                   <source src="./static/video/grasping-11-1/amx5.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/amx5.mp4">Download video</a>
                 </video>
@@ -788,7 +789,7 @@
           <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="Soft-Packaged Snacks, video 1 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-ruan_merge" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/ruan_merge.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Overlaid trials show manipulation generalization., 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/ruan_merge.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Overlaid trials show manipulation generalization., 2x speed">
                   <source src="./static/video/grasping-11-1/ruan_merge.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/ruan_merge.mp4">Download video</a>
                 </video>
@@ -799,7 +800,7 @@
           <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="Soft-Packaged Snacks, video 2 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-ruan1" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/ruan1.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 1, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/ruan1.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 1, 2x speed">
                   <source src="./static/video/grasping-11-1/ruan1.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/ruan1.mp4">Download video</a>
                 </video>
@@ -810,7 +811,7 @@
           <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="Soft-Packaged Snacks, video 3 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-ruan2" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/ruan2.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 2, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/ruan2.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 2, 2x speed">
                   <source src="./static/video/grasping-11-1/ruan2.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/ruan2.mp4">Download video</a>
                 </video>
@@ -821,7 +822,7 @@
           <div class="carousel-panel" data-comparison-group="4" role="group" aria-label="Soft-Packaged Snacks, video 4 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-ruan3" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/ruan3.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 3, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/ruan3.jpg" width="1280" height="720" aria-label="Soft-Packaged Snacks: Trial 3, 2x speed">
                   <source src="./static/video/grasping-11-1/ruan3.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/ruan3.mp4">Download video</a>
                 </video>
@@ -839,7 +840,7 @@
           <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="Cylindrical Snack Containers, video 1 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong_merge" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong_merge.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Overlaid trials show manipulation generalization., 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong_merge.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Overlaid trials show manipulation generalization., 2x speed">
                   <source src="./static/video/grasping-11-1/tong_merge.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong_merge.mp4">Download video</a>
                 </video>
@@ -850,7 +851,7 @@
           <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="Cylindrical Snack Containers, video 2 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong1" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong1.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 1, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong1.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 1, 2x speed">
                   <source src="./static/video/grasping-11-1/tong1.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong1.mp4">Download video</a>
                 </video>
@@ -861,7 +862,7 @@
           <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="Cylindrical Snack Containers, video 3 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong2" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong2.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 2, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong2.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 2, 2x speed">
                   <source src="./static/video/grasping-11-1/tong2.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong2.mp4">Download video</a>
                 </video>
@@ -872,7 +873,7 @@
           <div class="carousel-panel" data-comparison-group="4" role="group" aria-label="Cylindrical Snack Containers, video 4 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong3" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong3.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 3, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong3.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 3, 2x speed">
                   <source src="./static/video/grasping-11-1/tong3.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong3.mp4">Download video</a>
                 </video>
@@ -883,7 +884,7 @@
           <div class="carousel-panel" data-comparison-group="5" role="group" aria-label="Cylindrical Snack Containers, video 5 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong4" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong4.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 4, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong4.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 4, 2x speed">
                   <source src="./static/video/grasping-11-1/tong4.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong4.mp4">Download video</a>
                 </video>
@@ -894,7 +895,7 @@
           <div class="carousel-panel" data-comparison-group="6" role="group" aria-label="Cylindrical Snack Containers, video 6 of 6">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-tong5" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/tong5.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 5, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/tong5.jpg" width="1280" height="720" aria-label="Cylindrical Snack Containers: Trial 5, 2x speed">
                   <source src="./static/video/grasping-11-1/tong5.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/tong5.mp4">Download video</a>
                 </video>
@@ -912,7 +913,7 @@
           <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="Zero-Shot Object Generalization, video 1 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-zs_merge" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/zs_merge.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Overlaid trials show manipulation generalization., 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/zs_merge.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Overlaid trials show manipulation generalization., 2x speed">
                   <source src="./static/video/grasping-11-1/zs_merge.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/zs_merge.mp4">Download video</a>
                 </video>
@@ -923,7 +924,7 @@
           <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="Zero-Shot Object Generalization, video 2 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-zs1" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/zs1.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 1, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/zs1.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 1, 2x speed">
                   <source src="./static/video/grasping-11-1/zs1.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/zs1.mp4">Download video</a>
                 </video>
@@ -934,7 +935,7 @@
           <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="Zero-Shot Object Generalization, video 3 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-zs2" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/zs2.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 2, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/zs2.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 2, 2x speed">
                   <source src="./static/video/grasping-11-1/zs2.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/zs2.mp4">Download video</a>
                 </video>
@@ -945,7 +946,7 @@
           <div class="carousel-panel" data-comparison-group="4" role="group" aria-label="Zero-Shot Object Generalization, video 4 of 4">
             <figure class="grasping-single">
               <div class="media-frame demo-media" data-media-slot="grasping-11-1-zs3" style="--media-aspect: 16 / 9;">
-                <video controls muted playsinline preload="none" poster="./static/images/grasping-11-1/zs3.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 3, 2x speed">
+                <video controls muted playsinline preload="none" data-poster="./static/images/grasping-11-1/zs3.jpg" width="1280" height="720" aria-label="Zero-Shot Object Generalization: Zero-shot success · Trial 3, 2x speed">
                   <source src="./static/video/grasping-11-1/zs3.mp4" type="video/mp4">
                   <a href="./static/video/grasping-11-1/zs3.mp4">Download video</a>
                 </video>

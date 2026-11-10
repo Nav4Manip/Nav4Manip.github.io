@@ -9,7 +9,7 @@ import { computeReachabilityProof, createReachabilityVisual, readPrescreenMetada
 
 const $ = (id) => document.getElementById(id);
 const rootURL = new URL('./', window.location.href);
-const assetBase = 'https://raw.githubusercontent.com/Nav4Manip/Nav4Manip.github.io/82b974545a361545baa93dff9e75c0eab3a2049c/rebuttal/grasp-explorer-v2/';
+const assetBase = new URL('./', import.meta.url).href;
 const statusLabels = { success: 'Success', planning_rejected: 'Planning rejected', physics_failed: 'Unsuccessful' };
 const outcomeLabels = { success: "Success", ik_failed: 'IK-FAIL', prescreen_ik_failed: "IK-FAIL (pre-screening)", lift_ik_failed: "Lift-pose IK failed", lift_plan_failed: "Lift planning failed", reach_rejected: "Pre-Screen Reject", prescreen_rejected: "Prescreen rejected", physical_validation_failed: "Physical validation failed" };
 const statusAliases = { rejected: 'planning_rejected', planning_reject: 'planning_rejected', physical_failure: 'physics_failed', failed: 'physics_failed' };
@@ -56,8 +56,8 @@ function node(tag, className, text) {
 
 function resourceURL(path) {
   if (typeof path !== 'string' || !path.trim()) throw new Error("The data is missing a local file path.");
-  if (/^assets\/(scene|robot|object)\.glb$/.test(path)) return assetBase + path;
-  if (['scene.glb','robot.glb','object.glb'].some(name => path === assetBase + 'assets/' + name)) return path;
+  if (/^assets\/(scene|robot|object)\.glb$/.test(path)) return assetBase + path.replace('.glb', '-20261110.glb.gz');
+  if (['scene-20261110.glb.gz','robot-20261110.glb.gz','object-20261110.glb.gz'].some(name => path === assetBase + 'assets/' + name)) return path;
   const url = new URL(path, rootURL);
   if (url.origin !== rootURL.origin || !url.pathname.startsWith(rootURL.pathname)) {
     throw new Error(`Resources must be located in the local delivery directory:${path}`);
@@ -361,7 +361,22 @@ function initializeGraphics() {
 
 async function loadModel(path) {
   try {
-    const gltf = await loader.loadAsync(resourceURL(path));
+    const url = resourceURL(path);
+    const warmed = window.__graspAssetWarmup?.get(url);
+    const bytes = warmed ? await warmed : await fetch(url).then(response => {
+      if (!response.ok) throw new Error(`Model download: HTTP ${response.status}`);
+      return response.arrayBuffer();
+    });
+    const header = new Uint8Array(bytes, 0, Math.min(2, bytes.byteLength));
+    let localBytes;
+    if (header[0] === 0x1f && header[1] === 0x8b) {
+      if (typeof DecompressionStream === 'undefined') throw new Error('Please use a browser with gzip decompression support.');
+      localBytes = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+    } else {
+      // ArrayBuffers shared by the parent page belong to another JavaScript realm.
+      localBytes = bytes instanceof ArrayBuffer ? bytes : new Uint8Array(bytes).slice().buffer;
+    }
+    const gltf = await loader.parseAsync(localBytes, new URL('./', url).href);
     gltf.scene.traverse((child) => {
       if (child.isMesh) {
         child.castShadow = false;
@@ -1370,7 +1385,8 @@ async function selectPoint(point) {
   applyComparisonProgress(state.comparison.progress);
   updateSelectionButtons();
   const initial = preferredTrial(point);
-  if (initial) selectTrial(initial).then(() => { if (state.point === point && state.trial === initial && state.viewMode === 'single') setPlaying(true); });
+  let initialPlayback = Promise.resolve();
+  if (initial) initialPlayback = selectTrial(initial).then(() => { if (state.point === point && state.trial === initial && state.viewMode === 'single') setPlaying(true); });
   else {
     $('trial-title').textContent = "No attempts";
     $('trial-reason').textContent = "No attempts for this pose.";
@@ -1381,6 +1397,10 @@ async function selectPoint(point) {
     updateTimeline();
   }
   announce(`Pose ${point.id}: ${result.successes} successes of ${result.attempts} attempts.`);
+  // Display the selected replay before warming the remaining comparison paths.
+  await initialPlayback;
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  if (token !== state.pointToken) return;
   const recorded = point.trials.filter((trial) => trial.file);
   const results = await Promise.allSettled(recorded.map((trial) => getTrajectory(point, trial)));
   if (token !== state.pointToken) return;
