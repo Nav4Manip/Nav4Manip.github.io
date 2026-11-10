@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261110-replay-view">
+  <link rel="stylesheet" href="./style.css?v=20261110-top-controls2">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -24,6 +24,40 @@
         <p id="dataset-summary">Loading experiment data</p>
       </div>
     </header>
+
+    <div class="explorer-modebar">
+      <div class="mode-switch" role="group" aria-label="Explorer mode">
+        <button id="mode-single" type="button" aria-pressed="true">Replay</button>
+        <button id="mode-comparison" type="button" aria-pressed="false">Compare paths</button>
+        <button id="mode-reachability" type="button" aria-pressed="false" hidden>C: distance bound</button>
+      </div>
+      <label id="replay-choice-label" class="replay-choice">Replay <select id="replay-choice" aria-label="Select replay" disabled><option>Loading replays</option></select></label>
+    </div>
+    <footer id="reachability-transport" class="static-transport" aria-label="Static distance bound" hidden><strong id="static-title">C Pre-grasp IK prescreenFailure</strong><span id="static-copy">No grasp was executed. The spheres and red gap show an independent geometric bound.</span></footer>
+    <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls" hidden>
+      <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
+      <div class="comparison-timeline-block">
+        <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
+        <input id="comparison-progress" class="timeline" type="range" min="0" max="1" step="0.001" value="0.55" disabled aria-label="Normalized path progress" aria-valuetext="55%; not synchronized time">
+        <div class="comparison-progress-note">Each path is normalized independently from 0–100%<span>Axes: X red / Y green / Z blue</span></div>
+      </div>
+
+    </footer>
+    <footer id="single-transport" class="transport" aria-label="Replay controls" hidden>
+      <div class="transport-buttons">
+        <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button>
+
+      </div>
+      <div class="timeline-block">
+        <div class="timeline-top"><span id="current-stage">Waiting for trajectory</span><span class="time-readout"><output id="current-time">0.00</output><span> / </span><output id="duration">0.00</output><span> s</span></span></div>
+        <input id="timeline" class="timeline" type="range" min="0" max="1" step="0.001" value="0" disabled aria-label="Replay time" aria-valuetext="No trajectory">
+        <div id="stage-track" class="stage-track" aria-hidden="true"></div>
+      </div>
+
+      <label class="loop-option"><input id="replay-loop" type="checkbox" checked>Loop</label>
+
+      <div id="frame-indicator" class="frame-indicator">No trajectory loaded</div>
+    </footer>
 
     <main class="workspace">
       <aside class="points-panel" aria-labelledby="points-heading">
@@ -55,48 +89,7 @@
 
       <section id="viewer" class="viewer" aria-label="3D scene">
         <div id="canvas-host" class="canvas-host"></div>
-        <div class="viewer-toolbar">
-          <button id="back-to-comparison" type="button" hidden>Back to comparison</button>
-          <details id="viewer-options" class="viewer-more">
-            <summary>Options</summary>
-            <div class="advanced-menu">
-              <div class="advanced-group"><span class="advanced-label">View mode</span><div class="mode-switch" role="group" aria-label="View mode">
-            <button id="mode-comparison" type="button" aria-pressed="true">Compare paths</button>
-            <button id="mode-single" type="button" aria-pressed="false">Single replay</button>
-            <button id="mode-reachability" type="button" aria-pressed="false" hidden>C: distance bound</button>
-          </div></div>
-              <div class="advanced-group"><span class="advanced-label">View</span><div class="view-buttons" role="group" aria-label="View">
-            <button id="view-scene" type="button" title="Scene overview (G)">Scene overview</button>
-            <button id="view-target" type="button" title="Focus on paths and bottle (F)">Focus paths</button>
-            <button id="view-top" type="button" title="Top view (T)">Top view</button>
-          </div></div>
-              <div class="advanced-group"><div class="view-options">
-            <label><input id="show-cutaway" type="checkbox" checked disabled title="Hide room shell only">Cutaway</label>
-            <label id="single-paths-option" hidden><input id="show-paths" type="checkbox" checked>All paths</label>
-            <label id="single-axes-option" hidden><input id="show-axes" type="checkbox">End-effector axes</label>
-            <label id="comparison-axes-option"><input id="compare-axes" type="checkbox" checked>End-effector axes</label>
-            <label id="comparison-robot-option"><input id="compare-robot" type="checkbox" checked>Reference robot</label>
-          </div><button id="scene-detail-toggle" type="button">Load original scene</button><p class="comparison-source-note">Compressed scene by default; recorded paths are unchanged.</p></div>
-              <div id="comparison-tools" class="advanced-group">
-                <label class="advanced-label" for="comparison-source">Path source</label><select id="comparison-source" class="source-select">
-            <option value="planned" selected>cuRobo lift plan</option>
-            <option value="actual">Recorded execution</option>
-          </select><p id="comparison-source-note" class="comparison-source-note">Native lift plan only; excludes approach and closure.</p>
-                <div class="comparison-actions"><button id="comparison-auto" type="button">Select 6 diverse paths</button><button id="comparison-peak" type="button">Find maximum separation</button><button id="comparison-clear" type="button">Clear</button></div>
-                <label class="skeleton-option"><input id="compare-context" type="checkbox" checked>Show all successful paths <span id="comparison-total"></span></label><label class="skeleton-option"><input id="compare-skeleton" type="checkbox">Show arm skeletons</label>
-                <span class="advanced-label">Comparison chart</span><div class="lens-tabs" role="group" aria-label="Comparison chart"><button id="lens-profile" type="button" aria-pressed="true">Separation / orientation</button><button id="lens-projection" type="button" aria-pressed="false">Top view / Side viewprojection</button></div><button id="lens-toggle" type="button" aria-expanded="true" aria-controls="lens-body">Collapse</button>
-              </div>
-              <div id="playback-tools" class="advanced-group">
-                <label>Range <select id="physics-window"><option value="contact" selected>Near contact</option><option value="full">Full record</option></select></label><div class="physics-actions"><button id="physics-first-contact" type="button">First contact</button><button id="physics-peak" type="button">Max. clearance</button><button id="physics-end" type="button">End of record</button></div><div class="speed-control"><label for="playback-speed">Speed</label><select id="playback-speed" aria-label="Replay speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div><button id="replay-button" class="icon-button" type="button" disabled title="Replay" aria-label="Replay"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6.5a6 6 0 1 1-1 6M5 2.5v4.5H.5"/></svg></button>
-              </div>
-              <div id="comparison-reset-tools" class="advanced-group"><button id="comparison-reset" type="button" disabled>Reset progress</button></div>
-              <div id="ik-diagnostic" class="ik-diagnostic" hidden>
-            <button id="ik-witness-button" type="button" aria-pressed="false">Position IK witness (not executed)</button>
-            <p id="ik-witness-summary"></p>
-          </div>
-            </div>
-          </details>
-        </div>
+
 
         <div id="scene-labels" class="scene-labels" aria-label="Docking poses"><svg id="label-leaders" class="label-leaders" aria-hidden="true"></svg></div>
         <div id="reach-labels" class="reach-labels" aria-label="Distance evidence" hidden></div>
@@ -118,7 +111,7 @@
         </div>
         <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
         <div id="comparison-context" class="comparison-context">
-          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; robot and bottle are static references. Use single replay for motion.</span>
+          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; robot and bottle are static references. Select Replay for motion.</span>
         </div>
         <div class="scene-footer">
           <div class="scene-caption"><div id="scene-name" class="scene-name">Experiment scene</div><span id="cutaway-state" class="cutaway-state" role="status">Loading room shell</span></div>
@@ -238,6 +231,39 @@
 
 
 
+        <section class="advanced-controls" aria-label="View and analysis controls">
+          <h2>View and analysis</h2>
+              <div class="advanced-group"><span class="advanced-label">View</span><div class="view-buttons" role="group" aria-label="View">
+            <button id="view-scene" type="button" title="Scene overview (G)">Scene overview</button>
+            <button id="view-target" type="button" title="Focus on paths and bottle (F)">Focus paths</button>
+            <button id="view-top" type="button" title="Top view (T)">Top view</button>
+          </div></div>
+              <div class="advanced-group"><div class="view-options">
+            <label><input id="show-cutaway" type="checkbox" checked disabled title="Hide room shell only">Cutaway</label>
+            <label id="single-paths-option" hidden><input id="show-paths" type="checkbox">All paths</label>
+            <label id="single-axes-option" hidden><input id="show-axes" type="checkbox">End-effector axes</label>
+            <label id="comparison-axes-option"><input id="compare-axes" type="checkbox" checked>End-effector axes</label>
+            <label id="comparison-robot-option"><input id="compare-robot" type="checkbox" checked>Reference robot</label>
+          </div><button id="scene-detail-toggle" type="button">Load original scene</button><p class="comparison-source-note">Compressed scene by default; recorded paths are unchanged.</p></div>
+              <div id="comparison-tools" class="advanced-group">
+                <label class="advanced-label" for="comparison-source">Path source</label><select id="comparison-source" class="source-select">
+            <option value="planned" selected>cuRobo lift plan</option>
+            <option value="actual">Recorded execution</option>
+          </select><p id="comparison-source-note" class="comparison-source-note">Native lift plan only; excludes approach and closure.</p>
+                <div class="comparison-actions"><button id="comparison-auto" type="button">Select 6 diverse paths</button><button id="comparison-peak" type="button">Find maximum separation</button><button id="comparison-clear" type="button">Clear</button></div>
+                <label class="skeleton-option"><input id="compare-context" type="checkbox" checked>Show all successful paths <span id="comparison-total"></span></label><label class="skeleton-option"><input id="compare-skeleton" type="checkbox">Show arm skeletons</label>
+                <span class="advanced-label">Comparison chart</span><div class="lens-tabs" role="group" aria-label="Comparison chart"><button id="lens-profile" type="button" aria-pressed="true">Separation / orientation</button><button id="lens-projection" type="button" aria-pressed="false">Top view / Side viewprojection</button></div><button id="lens-toggle" type="button" aria-expanded="true" aria-controls="lens-body">Collapse</button>
+              </div>
+              <div id="playback-tools" class="advanced-group">
+                <label>Range <select id="physics-window"><option value="contact" selected>Near contact</option><option value="full">Full record</option></select></label><div class="physics-actions"><button id="physics-first-contact" type="button">First contact</button><button id="physics-peak" type="button">Max. clearance</button><button id="physics-end" type="button">End of record</button></div><div class="speed-control"><label for="playback-speed">Speed</label><select id="playback-speed" aria-label="Replay speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div><button id="replay-button" class="icon-button" type="button" disabled title="Replay" aria-label="Replay"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6.5a6 6 0 1 1-1 6M5 2.5v4.5H.5"/></svg></button>
+              </div>
+              <div id="comparison-reset-tools" class="advanced-group"><button id="comparison-reset" type="button" disabled>Reset progress</button></div>
+              <div id="ik-diagnostic" class="ik-diagnostic" hidden>
+            <button id="ik-witness-button" type="button" aria-pressed="false">Position IK witness (not executed)</button>
+            <p id="ik-witness-summary"></p>
+          </div>
+        </section>
+
         <section class="trials-section" aria-labelledby="trials-heading"><details id="all-trials" class="record-details"><summary class="panel-heading trials-heading"><h2 id="trials-heading">All attempts</h2><span id="trial-count" class="subtle">—</span></summary>
           <div id="status-counts" class="status-counts" aria-label="Attempt categories"></div>
           <div id="trial-list" class="trial-list" aria-label="Attempt list"><p class="empty-copy">Loading attempts.</p></div>
@@ -256,33 +282,9 @@
       </aside>
     </main>
 
-    <footer id="reachability-transport" class="static-transport" aria-label="Static distance bound" hidden><strong id="static-title">C Pre-grasp IK prescreenFailure</strong><span id="static-copy">No grasp was executed. The spheres and red gap show an independent geometric bound.</span></footer>
-    <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls">
-      <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
-      <button id="quick-replay" type="button" disabled>Play robot replay</button>
-      <div class="comparison-timeline-block">
-        <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
-        <input id="comparison-progress" class="timeline" type="range" min="0" max="1" step="0.001" value="0.55" disabled aria-label="Normalized path progress" aria-valuetext="55%; not synchronized time">
-        <div class="comparison-progress-note">Each path is normalized independently from 0–100%<span>Axes: X red / Y green / Z blue</span></div>
-      </div>
-
-    </footer>
-    <footer id="single-transport" class="transport" aria-label="Replay controls" hidden>
-      <div class="transport-buttons">
-        <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button>
-
-      </div>
-      <div class="timeline-block">
-        <div class="timeline-top"><span id="current-stage">Waiting for trajectory</span><span class="time-readout"><output id="current-time">0.00</output><span> / </span><output id="duration">0.00</output><span> s</span></span></div>
-        <input id="timeline" class="timeline" type="range" min="0" max="1" step="0.001" value="0" disabled aria-label="Replay time" aria-valuetext="No trajectory">
-        <div id="stage-track" class="stage-track" aria-hidden="true"></div>
-      </div>
-
-      <div id="frame-indicator" class="frame-indicator">No trajectory loaded</div>
-    </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-replay-view2"></script>
+  <script type="module" src="./app.js?v=20261110-top-controls2"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

@@ -220,3 +220,37 @@
 @media(max-width:620px){.comparison-transport{grid-template-columns:1fr auto}}
 .physics-lens.is-collapsed>:not(.lens-heading){display:none}
 #physics-toggle{font-size:10px;padding:5px 8px;white-space:nowrap}
+
+/* Keep the mode and playback controls at the top of the embedded viewer. */
+.app-header{flex-basis:68px;padding:10px 18px}
+.explorer-modebar{display:flex;align-items:center;gap:16px;flex:0 0 auto;padding:9px 18px;background:var(--surface);border-bottom:1px solid var(--line)}
+.explorer-modebar .mode-switch{flex:none;box-shadow:none}
+.explorer-modebar .mode-switch button{padding:8px 14px;font-size:11px}
+.replay-choice{display:flex;align-items:center;gap:7px;min-width:0;color:var(--muted);font-size:11px}
+.replay-choice select{max-width:250px;padding:7px 9px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);font-size:11px}
+.transport,.comparison-transport,.static-transport{position:relative;bottom:auto;flex:0 0 auto;min-height:0;padding:8px 18px;gap:16px;box-shadow:none;border-top:0;border-bottom:1px solid var(--line)}
+.transport .timeline-block,.comparison-transport .comparison-timeline-block{min-width:0}
+.transport .timeline,.comparison-transport .timeline{margin:3px 0}
+.transport .stage-track{display:none}
+.loop-option{display:flex;align-items:center;gap:4px;white-space:nowrap;font-size:11px;color:var(--muted)}
+.loop-option input{accent-color:var(--teal)}
+.advanced-controls{padding:16px 20px;border-bottom:1px solid var(--line);font-size:11px}
+.advanced-controls h2{font-size:12px;font-weight:600}
+.advanced-controls .advanced-group:last-child{border:0}
+.advanced-controls .view-buttons,.advanced-controls .view-options{flex-wrap:wrap}
+.advanced-controls .view-options{white-space:normal;gap:9px}
+.advanced-controls .comparison-actions,.advanced-controls .physics-actions{flex-wrap:wrap}
+.advanced-controls #scene-detail-toggle{font-size:10px;padding:6px 8px;margin-top:8px}
+@media(max-width:950px){.app-header{min-height:68px}.transport,.comparison-transport,.static-transport{position:relative;bottom:auto;min-height:0}}
+@media(max-width:620px){
+  .app-header{padding:10px 14px}
+  .explorer-modebar{padding:8px 12px;gap:8px;flex-wrap:wrap}
+  .explorer-modebar .mode-switch button{padding:7px 9px;font-size:10px}
+  .replay-choice select{max-width:175px}
+  .transport,.comparison-transport{padding:8px 12px;min-height:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px}
+  .transport .timeline-block,.comparison-transport .comparison-timeline-block{grid-column:2;grid-row:1}
+  .transport-buttons{grid-column:1;grid-row:1}
+  .transport .frame-indicator{display:none}
+  .transport .loop-option{grid-column:1;grid-row:2}
+  .comparison-progress-note{display:none}
+}

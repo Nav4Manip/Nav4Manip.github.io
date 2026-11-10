@@ -26,7 +26,7 @@ const state = {
   diagnosticMode: false, previousAxesChecked: null,
   experiment: null, prescreen: null, physics: null, physicsPlot: null,
   reachabilityMode: false, reachabilityProof: null, reachabilityVisual: null, reachLabels: [],
-  viewMode: 'comparison', comparisonModel: null,
+  viewMode: 'single', comparisonModel: null,
   comparison: { source: 'planned', progress: 0.55, playing: false, candidates: [], entries: [], selectedIds: [], visuals: [], colors: new Map(), loading: false, analysis: null, allAnalysis: null },
   homePosition: new THREE.Vector3(4, -5, 3), homeTarget: new THREE.Vector3(0, 0, 0.8),
 };
@@ -581,7 +581,21 @@ function renderTrialList() {
   }
 }
 
+function renderReplayChoices() {
+  const select = $('replay-choice');
+  select.replaceChildren();
+  const trials = state.point.trials.filter((trial) => trial.file);
+  for (const trial of trials) {
+    const option = node('option', '', `${trial.label || trial.id} · ${outcomeLabel(trial)}`);
+    option.value = trial.id;
+    select.append(option);
+  }
+  if (!trials.length) select.append(node('option', '', 'No recorded replay'));
+  select.disabled = !trials.length;
+}
+
 function updateSelectionButtons() {
+  if (state.trial?.file) $('replay-choice').value = state.trial.id;
   for (const button of $('point-list').querySelectorAll('button[data-point-id]')) {
     button.setAttribute('aria-pressed', String(button.dataset.pointId === state.point?.id));
   }
@@ -1174,19 +1188,20 @@ function updateModeUI() {
   document.querySelector('.app').classList.toggle('has-diagnostic-analysis', reach || physicsActive() || dPoseActive());
   document.querySelector('.app')?.classList?.toggle('is-comparing', comparisonMode);
   document.querySelector('.app')?.classList?.toggle('has-diversity-lens', active);
-  $('mode-comparison').setAttribute('aria-pressed', String(comparisonMode && !reach));
-  $('mode-single').setAttribute('aria-pressed', String(!comparisonMode && !reach));
-  $('mode-single').disabled = reach;
+  $('mode-comparison').setAttribute('aria-pressed', String(comparisonMode && !isStatic));
+  $('mode-single').setAttribute('aria-pressed', String(!comparisonMode && !isStatic));
+  const hasReplayMode = ['A', 'B'].includes(state.point?.id);
+  $('mode-single').disabled = !hasReplayMode;
+  $('mode-comparison').disabled = !hasReplayMode;
+  $('replay-choice-label').hidden = !hasReplayMode || active;
   $('mode-reachability').hidden = state.point?.id !== 'C';
   $('mode-reachability').setAttribute('aria-pressed', String(reach));
-  $('back-to-comparison').hidden = !['A', 'B'].includes(state.point?.id) || active;
   $('comparison-tools').hidden = !active;
   $('comparison-reset-tools').hidden = !active;
   $('playback-tools').hidden = !physicsActive();
   $('c-prescreen-explanation').hidden = state.point?.id !== 'C';
   $('comparison-panel').hidden = !active;
   $('comparison-transport').hidden = !active;
-  $('quick-replay').disabled = !state.trajectory?.joints || !state.bindings.length || state.duration <= 0;
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
   $('static-title').textContent = reach ? 'Case 3 · C: pre-grasp IK failed' : 'Case 3 · D: static IK witness';
@@ -1273,14 +1288,28 @@ function focusComparison() {
   invalidate();
 }
 
+function focusReplay() {
+  if (!state.ready || !camera || !robotRoot) return;
+  const bounds = new THREE.Box3().setFromObject(robotRoot).union(new THREE.Box3().setFromObject(objectRoot));
+  if (bounds.isEmpty()) return;
+  const sphere = bounds.getBoundingSphere(new THREE.Sphere());
+  const halfFov = Math.min(THREE.MathUtils.degToRad(camera.fov / 2), Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect));
+  const distance = Math.max(1.2, sphere.radius / Math.sin(halfFov) * 1.18);
+  const direction = new THREE.Vector3(-0.7, -1, 0.65).normalize();
+  controls.target.copy(sphere.center);
+  camera.position.copy(sphere.center).addScaledVector(direction, distance);
+  controls.update();
+  invalidate();
+}
+
 async function selectPoint(point) {
   leavePositionIK();
   const token = ++state.pointToken;
   state.trialToken++;
   setPlaying(false);
   state.point = point;
-  state.viewMode = 'comparison';
-  $('viewer-options').open = false;
+  state.viewMode = ['A', 'B'].includes(point.id) ? 'single' : 'comparison';
+  if (state.viewMode === 'single') setPhysicsExpanded(false);
   $('all-trials').open = false;
   $('trial-details').open = false;
   state.reachabilityMode = point.id === 'C' && Boolean(state.reachabilityVisual);
@@ -1320,12 +1349,13 @@ async function selectPoint(point) {
   renderPositionIKButton();
   renderFailureCases();
   renderTrialList();
+  renderReplayChoices();
   renderComparisonSummary();
   updateModeUI();
   applyComparisonProgress(state.comparison.progress);
   updateSelectionButtons();
   const initial = preferredTrial(point);
-  if (initial) selectTrial(initial);
+  if (initial) selectTrial(initial, { autoplay: state.viewMode === 'single' });
   else {
     $('trial-title').textContent = 'No attempts';
     $('trial-reason').textContent = 'No attempts for this pose.';
@@ -1486,7 +1516,7 @@ function renderMetrics(trial, trajectory = null) {
   }
 }
 
-async function selectTrial(trial) {
+async function selectTrial(trial, { autoplay = false } = {}) {
   leavePositionIK();
   const token = ++state.trialToken;
   const point = state.point;
@@ -1536,6 +1566,10 @@ async function selectTrial(trial) {
     setPlaybackAvailability(playable);
     renderStages(trajectory);
     applyTime(0);
+    if (autoplay && playable && state.viewMode === 'single' && !state.diagnosticMode && !state.reachabilityMode) {
+      setPlaying(true);
+      requestAnimationFrame(() => { if (token === state.trialToken && state.viewMode === 'single') focusReplay(); });
+    }
     announce(` ${trial.label || trial.id}, ${outcomeLabel(trial)},  ${trajectory.frameCount} frame. `);
   } catch (error) {
     if (token !== state.trialToken || state.point !== point) return;
@@ -1796,7 +1830,10 @@ function animate(now) {
   lastFrameTime = now;
   if (state.playing) {
     applyTime(state.time + elapsed * state.speed);
-    if (state.time >= state.duration) setPlaying(false);
+    if (state.time >= state.duration) {
+      if ($('replay-loop').checked) applyTime(0);
+      else setPlaying(false);
+    }
   }
   if (comparisonActive() && state.comparison.playing) {
     const progress = Math.min(1, state.comparison.progress + elapsed / 8);
@@ -1842,20 +1879,10 @@ function focusTop() {
 }
 
 function bindUI() {
-  $('back-to-comparison').addEventListener('click', () => setViewMode('comparison'));
   $('failure-case-list').addEventListener('change', (event) => {
     const point = state.manifest.points.find((item) => item.id === 'B');
     const trial = point.trials.find((item) => item.sourceRawId === event.target.value);
     if (trial) openPhysicalCase(point, trial);
-  });
-  document.addEventListener('pointerdown', (event) => {
-    if (!$('viewer-options').contains(event.target)) $('viewer-options').open = false;
-  });
-  $('viewer-options').addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') { $('viewer-options').open = false; $('viewer-options').querySelector('summary').focus(); }
-  });
-  $('viewer-options').addEventListener('click', (event) => {
-    if (event.target.closest('button')) $('viewer-options').open = false;
   });
   $('retry-button').addEventListener('click', () => window.location.reload());
   $('view-scene').addEventListener('click', focusScene);
@@ -1865,13 +1892,14 @@ function bindUI() {
   $('show-cutaway').addEventListener('change', applyCutaway);
   $('scene-detail-toggle').addEventListener('click', toggleSceneDetail);
   $('mode-comparison').addEventListener('click', () => setViewMode('comparison'));
-  $('mode-single').addEventListener('click', () => setViewMode('single'));
-  $('quick-replay').addEventListener('click', () => {
-    if (!state.trajectory?.joints || !state.bindings.length || state.duration <= 0) return;
+  $('mode-single').addEventListener('click', () => {
     setPhysicsExpanded(false);
     setViewMode('single');
-    applyTime(0);
-    setPlaying(true);
+    if (state.trial?.file) selectTrial(state.trial, { autoplay: true });
+  });
+  $('replay-choice').addEventListener('change', (event) => {
+    const trial = state.point?.trials.find((item) => item.id === event.target.value);
+    if (trial?.file) selectTrial(trial, { autoplay: true });
   });
   $('physics-toggle').addEventListener('click', () => setPhysicsExpanded($('physics-lens').classList.contains('is-collapsed')));
   $('mode-reachability').addEventListener('click', enterReachability);
