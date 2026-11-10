@@ -23,7 +23,7 @@
   
   <link rel="stylesheet" href="./static/css/index.css?v=navigation-compact-20261104">
   <link rel="stylesheet" href="./static/css/demo-carousels.css">
-  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-review-quotes">
+  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-collapsed-quotes">
   <script defer src="./static/js/rebuttal.js?v=20261110-coevolution"></script>
   
   <link rel="icon" href="data:,">
@@ -67,8 +67,8 @@
       <button type="button" role="tab" id="tab-aqr4" aria-controls="review-aqr4" aria-selected="false" tabindex="-1">AQR4</button>
     </div>
     <div class="review-panel" id="review-yd4j" role="tabpanel" aria-labelledby="tab-yd4j" tabindex="0">
+      <details class="reviewer-question"><summary>Reviewer comment</summary><blockquote class="reviewer-comment"><p>What exactly causes rejection before an affordance evaluation cell is created?</p><p>Appendix D.2 and Eq. 34 make clear how failures within recorded evaluation cells contribute to the score. The remaining ambiguity concerns rejection before cell creation. Can an initial object configuration that is physically valid and belongs to the intended task distribution be omitted because the current dock admits no feasible manipulation target? Please distinguish invalid initializations, rejected action candidates within a task, and entire valid initializations for which the dock permits no feasible action.</p><p>If the last category can be excluded, how is it accounted for when comparing candidate docks? The frequency of such exclusions and their effect on the selected endpoints would help determine whether the scores remain comparable across docks.</p></blockquote></details>
       <h2>Failure cases</h2>
-      <blockquote class="reviewer-comment"><p>What exactly causes rejection before an affordance evaluation cell is created?</p><p>Appendix D.2 and Eq. 34 make clear how failures within recorded evaluation cells contribute to the score. The remaining ambiguity concerns rejection before cell creation. Can an initial object configuration that is physically valid and belongs to the intended task distribution be omitted because the current dock admits no feasible manipulation target? Please distinguish invalid initializations, rejected action candidates within a task, and entire valid initializations for which the dock permits no feasible action.</p><p>If the last category can be excluded, how is it accounted for when comparing candidate docks? The frequency of such exclusions and their effect on the selected endpoints would help determine whether the scores remain comparable across docks.</p></blockquote>
       <div class="case-grid">
         <div><span>CASE 2</span><h3>Physical validation fails</h3><p>A feasible plan fails execution: unstable contact or slipping.</p></div>
         <div><span>CASE 3</span><h3>Planning fails</h3><p>No feasible plan at the dock: distance, obstruction, or pose constraints.</p></div>
@@ -78,7 +78,7 @@
     </div>
     <div class="review-panel" id="review-qjfp" role="tabpanel" aria-labelledby="tab-qjfp" tabindex="0" hidden>
       <section class="coevolution" data-coevolution="qjfp" aria-labelledby="qjfp-coevolution-title">
-        <blockquote class="reviewer-comment"><p>Questionable co-evolution claim. The manipulation WAM remains frozen after post-training, while only the navigation VLM is further fine-tuned. Although manipulation feedback improves navigation, the paper does not demonstrate how navigation improvements lead to updates of the manipulation policy. The authors should better justify the term co-evolution.</p></blockquote>
+        <details class="reviewer-question"><summary>Reviewer comment</summary><blockquote class="reviewer-comment"><p>Questionable co-evolution claim. The manipulation WAM remains frozen after post-training, while only the navigation VLM is further fine-tuned. Although manipulation feedback improves navigation, the paper does not demonstrate how navigation improvements lead to updates of the manipulation policy. The authors should better justify the term co-evolution.</p></blockquote></details>
         <div class="cross-wam-heading"><div><h2 id="qjfp-coevolution-title">Co-evolution</h2><p>End-to-end navigation + grasping · 10 trials per task</p></div></div>
         <div class="coevolution-results"><table><thead><tr><th scope="col">Task</th><th scope="col">Fixed-dock training</th><th scope="col">Navigation-dock training</th></tr></thead><tbody>
           <tr><th scope="row">Snack bag</th><td>20%</td><td>30%</td></tr>
@@ -93,7 +93,7 @@
         <p class="cross-wam-caption">Grasp overlays.</p>
       </section>
       <section class="cross-wam" aria-labelledby="cross-wam-title">
-        <blockquote class="reviewer-comment"><p>Limited generalization across manipulation policies. The framework is primarily evaluated using a single post-trained WAM. It remains unclear whether the learned navigation policy can transfer to other manipulation models. Cross-WAM evaluation would strengthen the generalization claims.</p></blockquote>
+        <details class="reviewer-question"><summary>Reviewer comment</summary><blockquote class="reviewer-comment"><p>Limited generalization across manipulation policies. The framework is primarily evaluated using a single post-trained WAM. It remains unclear whether the learned navigation policy can transfer to other manipulation models. Cross-WAM evaluation would strengthen the generalization claims.</p></blockquote></details>
         <div class="cross-wam-heading">
           <div><h2 id="cross-wam-title">Cross-WAM</h2><p>One navigator · three task-specific WAMs</p></div>
           <div class="cross-wam-actions"><button type="button" id="cross-wam-play" data-play-group>Play all</button><button type="button" id="cross-wam-restart" data-restart-group>Restart</button></div>
@@ -117,7 +117,7 @@
     </div>
     <div class="review-panel" id="review-aqr4" role="tabpanel" aria-labelledby="tab-aqr4" tabindex="0" hidden>
       <section class="coevolution" data-coevolution="aqr4" aria-labelledby="aqr4-coevolution-title">
-        <blockquote class="reviewer-comment"><p>The paper emphasize on bidirectional training. However, the manipulation policy is fixed after the first stage training. Only the navigation policy is improved with a frozen manipulation policy.</p></blockquote>
+        <details class="reviewer-question"><summary>Reviewer comment</summary><blockquote class="reviewer-comment"><p>The paper emphasize on bidirectional training. However, the manipulation policy is fixed after the first stage training. Only the navigation policy is improved with a frozen manipulation policy.</p></blockquote></details>
         <div class="cross-wam-heading"><div><h2 id="aqr4-coevolution-title">Co-evolution</h2><p>End-to-end navigation + grasping · 10 trials per task</p></div></div>
         <div class="coevolution-results"><table><thead><tr><th scope="col">Task</th><th scope="col">Fixed-dock training</th><th scope="col">Navigation-dock training</th></tr></thead><tbody>
           <tr><th scope="row">Snack bag</th><td>20%</td><td>30%</td></tr>
