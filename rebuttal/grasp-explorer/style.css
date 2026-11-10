@@ -218,3 +218,5 @@
 .has-analysis .ik-axis-key{bottom:calc(var(--analysis-height,280px) + 55px)}
 @media(max-width:620px){.d-pose-facts{gap:8px;font-size:9px}.d-pose-facts b{font-size:11px}.d-orientation-chart text{font-size:15px}.d-orientation-chart .pose-frame-title{font-size:15px}.d-orientation-chart .pose-angle-label{font-size:13px}.d-orientation-chart .pose-angle-value{font-size:28px}.d-pose-explanation{font-size:10px}}
 @media(max-width:620px){.comparison-transport{grid-template-columns:1fr auto}}
+.physics-lens.is-collapsed>:not(.lens-heading){display:none}
+#physics-toggle{font-size:10px;padding:5px 8px;white-space:nowrap}

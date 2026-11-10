@@ -657,6 +657,13 @@ function comparisonActive() { return state.viewMode === 'comparison' && !state.d
 function physicsActive() { return state.viewMode === 'single' && !state.diagnosticMode && !state.reachabilityMode && Boolean(state.physics); }
 function dPoseActive() { return state.diagnosticMode && state.point?.id === 'D'; }
 
+function setPhysicsExpanded(expanded) {
+  $('physics-lens').classList.toggle('is-collapsed', !expanded);
+  $('physics-toggle').setAttribute('aria-expanded', String(expanded));
+  $('physics-toggle').textContent = expanded ? 'Hide metrics' : 'Show metrics';
+  updateAnalysisLayout();
+}
+
 function updateAnalysisLayout() {
   const panel = state.reachabilityMode ? $('reachability-lens') : dPoseActive() ? $('d-pose-lens') : physicsActive() ? $('physics-lens') : comparisonActive() ? $('diversity-lens') : null;
   const app = document.querySelector('.app');
@@ -1860,10 +1867,12 @@ function bindUI() {
   $('mode-single').addEventListener('click', () => setViewMode('single'));
   $('quick-replay').addEventListener('click', () => {
     if (!state.trajectory?.joints || !state.bindings.length || state.duration <= 0) return;
+    setPhysicsExpanded(false);
     setViewMode('single');
     applyTime(0);
     setPlaying(true);
   });
+  $('physics-toggle').addEventListener('click', () => setPhysicsExpanded($('physics-lens').classList.contains('is-collapsed')));
   $('mode-reachability').addEventListener('click', enterReachability);
   $('physics-window').addEventListener('change', renderPhysicsPanel);
   $('physics-first-contact').addEventListener('click', () => {
