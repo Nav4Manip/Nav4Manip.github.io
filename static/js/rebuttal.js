@@ -1,32 +1,71 @@
 (() => {
   const tabs = [...document.querySelectorAll('.review-tabs [role="tab"]')];
-  const videos = [...document.querySelectorAll('[data-cross-wam-video]')];
-  const play = document.getElementById('cross-wam-play');
-  const restart = document.getElementById('cross-wam-restart');
-  function updatePlayback() {
-    const active = videos.some(video => !video.paused && !video.ended);
-    if (play) play.textContent = active ? 'Pause all' : 'Play all';
-  }
-  function pauseVideos() {
-    videos.forEach(video => video.pause());
-    updatePlayback();
-  }
-  play?.addEventListener('click', () => {
-    if (videos.some(video => !video.paused && !video.ended)) pauseVideos();
-    else videos.forEach(video => {
-      if (video.ended) video.currentTime = 0;
-      video.play().catch(updatePlayback);
-    });
+  const clips = {
+    'snack-bag': { fixed: ['failure', 'success'], navigation: ['success', 'failure'] },
+    'snack-can': { fixed: ['failure'], navigation: ['success', 'failure'] },
+    yogurt: { fixed: ['failure', 'success'], navigation: ['success', 'failure'] },
+  };
+  document.querySelectorAll('[data-coevolution]').forEach(section => {
+    const task = section.querySelector('[data-coevolution-task]');
+    const cards = [...section.querySelectorAll('[data-coevolution-model]')];
+    function loadClip(card) {
+      const model = card.dataset.coevolutionModel;
+      const outcome = card.querySelector('[data-outcome]').value;
+      const video = card.querySelector('video');
+      const path = model === 'navigation' && outcome === 'success'
+        ? `./static/rebuttal-videos/cross-wam/${task.value}`
+        : `./static/rebuttal-videos/co-evolution/${task.value}-${model}-${outcome}`;
+      video.pause();
+      video.preload = 'none';
+      video.src = `${path}.mp4`;
+      video.dataset.poster = `${path}.jpg`;
+      if (section.getClientRects().length) video.poster = video.dataset.poster;
+    }
+    function selectTask() {
+      cards.forEach(card => {
+        const outcome = card.querySelector('[data-outcome]');
+        outcome.replaceChildren(...clips[task.value][card.dataset.coevolutionModel].map(value => {
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = value === 'success' ? 'Success' : 'Failure';
+          return option;
+        }));
+        outcome.disabled = outcome.options.length === 1;
+        loadClip(card);
+      });
+    }
+    task.addEventListener('change', selectTask);
+    cards.forEach(card => card.querySelector('[data-outcome]').addEventListener('change', () => loadClip(card)));
+    selectTask();
   });
-  restart?.addEventListener('click', () => {
+
+  const groups = [...document.querySelectorAll('[data-video-group]')].map(group => {
+    const section = group.closest('section');
+    const videos = [...group.querySelectorAll('video')];
+    const play = section.querySelector('[data-play-group]');
+    const restart = section.querySelector('[data-restart-group]');
+    function update() {
+      play.textContent = videos.some(video => !video.paused && !video.ended)
+        ? group.dataset.pauseLabel : group.dataset.playLabel;
+    }
+    function pause() { videos.forEach(video => video.pause()); update(); }
+    function start(reset = false) {
+      videos.forEach(video => {
+        if (reset || video.ended) video.currentTime = 0;
+        video.play().catch(update);
+      });
+    }
+    play.addEventListener('click', () => {
+      if (videos.some(video => !video.paused && !video.ended)) pause();
+      else start();
+    });
+    restart.addEventListener('click', () => start(true));
     videos.forEach(video => {
-      video.currentTime = 0;
-      video.play().catch(updatePlayback);
+      for (const event of ['play', 'pause', 'ended', 'error', 'emptied']) video.addEventListener(event, update);
     });
+    return { pause };
   });
-  videos.forEach(video => {
-    for (const event of ['play', 'pause', 'ended', 'error']) video.addEventListener(event, updatePlayback);
-  });
+  function pauseVideos() { groups.forEach(group => group.pause()); }
   function activate(tab, focus = false) {
     pauseVideos();
     tabs.forEach(item => {

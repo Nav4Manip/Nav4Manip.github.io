@@ -23,8 +23,8 @@
   
   <link rel="stylesheet" href="./static/css/index.css?v=navigation-compact-20261104">
   <link rel="stylesheet" href="./static/css/demo-carousels.css">
-  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-crosswam">
-  <script defer src="./static/js/rebuttal.js?v=20261110-crosswam"></script>
+  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261110-coevolution">
+  <script defer src="./static/js/rebuttal.js?v=20261110-coevolution"></script>
   
   <link rel="icon" href="data:,">
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -76,12 +76,26 @@
       <p class="case-scope">Failures score 0 and remain in the denominator (Eq. 34). Invalid initializations: 0%. Explorer C/D: case 3.</p>
     </div>
     <div class="review-panel" id="review-qjfp" role="tabpanel" aria-labelledby="tab-qjfp" tabindex="0" hidden>
+      <section class="coevolution" data-coevolution="qjfp" aria-labelledby="qjfp-coevolution-title">
+        <div class="cross-wam-heading"><div><h2 id="qjfp-coevolution-title">Q1 · Co-evolution</h2><p>End-to-end navigation + grasping · 10 trials per task</p></div></div>
+        <div class="coevolution-results"><table><thead><tr><th scope="col">Task</th><th scope="col">Fixed-dock training</th><th scope="col">Navigation-dock training</th></tr></thead><tbody>
+          <tr><th scope="row">Snack bag</th><td>20%</td><td>30%</td></tr>
+          <tr><th scope="row">Snack can</th><td>0%</td><td>20%</td></tr>
+          <tr><th scope="row">Yogurt carton</th><td>30%</td><td>40%</td></tr>
+        </tbody></table></div>
+        <div class="coevolution-controls"><label for="qjfp-task">Task <select id="qjfp-task" data-coevolution-task><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label><div class="cross-wam-actions"><button type="button" data-play-group>Play both</button><button type="button" data-restart-group>Restart</button></div></div>
+        <div class="coevolution-grid" data-video-group data-play-label="Play both" data-pause-label="Pause both">
+          <figure class="cross-wam-card" data-coevolution-model="fixed"><figcaption><h3>Fixed-dock WAM</h3><select aria-label="Fixed-dock WAM example" data-outcome></select></figcaption><video controls muted playsinline preload="none" width="960" height="540" aria-label="Fixed-dock WAM grasp overlay"></video></figure>
+          <figure class="cross-wam-card" data-coevolution-model="navigation"><figcaption><h3>Navigation-dock WAM</h3><select aria-label="Navigation-dock WAM example" data-outcome></select></figcaption><video controls muted playsinline preload="none" width="960" height="540" aria-label="Navigation-dock WAM grasp overlay"></video></figure>
+        </div>
+        <p class="cross-wam-caption">Grasp overlays.</p>
+      </section>
       <section class="cross-wam" aria-labelledby="cross-wam-title">
         <div class="cross-wam-heading">
           <div><h2 id="cross-wam-title">Q4 · Cross-WAM</h2><p>One navigator · three task-specific WAMs</p></div>
-          <div class="cross-wam-actions"><button type="button" id="cross-wam-play">Play all</button><button type="button" id="cross-wam-restart">Restart</button></div>
+          <div class="cross-wam-actions"><button type="button" id="cross-wam-play" data-play-group>Play all</button><button type="button" id="cross-wam-restart" data-restart-group>Restart</button></div>
         </div>
-        <div class="cross-wam-grid">
+        <div class="cross-wam-grid" data-video-group data-play-label="Play all" data-pause-label="Pause all">
           <figure class="cross-wam-card">
             <figcaption><h3>WAM 1 · Snack bag</h3><span>Success</span></figcaption>
             <video controls muted playsinline preload="none" data-poster="./static/rebuttal-videos/cross-wam/snack-bag.jpg" width="960" height="540" aria-label="WAM 1 successful snack bag grasp" data-cross-wam-video><source src="./static/rebuttal-videos/cross-wam/snack-bag.mp4" type="video/mp4"></video>
@@ -99,8 +113,20 @@
       </section>
     </div>
     <div class="review-panel" id="review-aqr4" role="tabpanel" aria-labelledby="tab-aqr4" tabindex="0" hidden>
-      <span class="review-eyebrow">TRAINING AND DEPLOYMENT</span><h2>Simulation and presentation</h2>
-      <div class="review-response-grid"><div><h3>Simulator dependence</h3><p>Feedback uses resettable simulation: RFT revisits intermediate states; RLAIF matches initializations.</p></div><div><h3>Frozen manipulation policy</h3><p>The WAM uses real demonstrations for post-training and is frozen during navigation feedback.</p></div><div><h3>Experimental details</h3><p>Training and evaluation protocols are in the paper and appendices.</p></div></div>
+      <section class="coevolution" data-coevolution="aqr4" aria-labelledby="aqr4-coevolution-title">
+        <div class="cross-wam-heading"><div><h2 id="aqr4-coevolution-title">Q3 · Co-evolution</h2><p>End-to-end navigation + grasping · 10 trials per task</p></div></div>
+        <div class="coevolution-results"><table><thead><tr><th scope="col">Task</th><th scope="col">Fixed-dock training</th><th scope="col">Navigation-dock training</th></tr></thead><tbody>
+          <tr><th scope="row">Snack bag</th><td>20%</td><td>30%</td></tr>
+          <tr><th scope="row">Snack can</th><td>0%</td><td>20%</td></tr>
+          <tr><th scope="row">Yogurt carton</th><td>30%</td><td>40%</td></tr>
+        </tbody></table></div>
+        <div class="coevolution-controls"><label for="aqr4-task">Task <select id="aqr4-task" data-coevolution-task><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label><div class="cross-wam-actions"><button type="button" data-play-group>Play both</button><button type="button" data-restart-group>Restart</button></div></div>
+        <div class="coevolution-grid" data-video-group data-play-label="Play both" data-pause-label="Pause both">
+          <figure class="cross-wam-card" data-coevolution-model="fixed"><figcaption><h3>Fixed-dock WAM</h3><select aria-label="Fixed-dock WAM example" data-outcome></select></figcaption><video controls muted playsinline preload="none" width="960" height="540" aria-label="Fixed-dock WAM grasp overlay"></video></figure>
+          <figure class="cross-wam-card" data-coevolution-model="navigation"><figcaption><h3>Navigation-dock WAM</h3><select aria-label="Navigation-dock WAM example" data-outcome></select></figcaption><video controls muted playsinline preload="none" width="960" height="540" aria-label="Navigation-dock WAM grasp overlay"></video></figure>
+        </div>
+        <p class="cross-wam-caption">Grasp overlays.</p>
+      </section>
     </div>
   </div>
 </section>
