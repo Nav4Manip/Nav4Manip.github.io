@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261110-compact">
+  <link rel="stylesheet" href="./style.css?v=20261110-one-sidebar">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -68,108 +68,7 @@
         <div id="point-list" class="point-list" aria-label="Pose" tabindex="-1">
           <p class="empty-copy">Loading poses.</p>
         </div>
-        <details class="help-details">
-          <summary>Controls</summary>
-          <p>Drag to orbit, scroll to zoom, right-drag to pan.</p>
-          <p><kbd>Space</kbd> Play / pause<br><kbd>←</kbd> <kbd>→</kbd> Comparison ±2% / replay ±0.2 s<br><kbd>G</kbd> Scene <kbd>F</kbd> Focus paths <kbd>T</kbd> Top view<br><kbd>A</kbd>–<kbd>D</kbd> Select a docking pose</p>
-        </details>
-        <details class="outcome-guide">
-          <summary>Failure cases</summary>
-          <p><b>Case 2 · Physical validation:</b> a plan is executed but fails validation. No independently confirmed example is present in this batch.</p>
-          <p><b>Case 3 · No feasible action:</b> none of the tested candidates yields a feasible action at the dock. C and D illustrate this case.</p>
-          <p><b>B · Candidate-level failures:</b> 12 lift-planning failures and one prescreen rejection; 16 candidates succeeded. These do not make B a case 3 dock.</p>
-          <p class="validation-rule">Success requires a 0.5 s hold after lifting, including at least 0.2 s of contact and ≥3 cm clearance at the end.</p>
-        </details>
-      </aside>
-
-      <section id="viewer" class="viewer" aria-label="3D scene">
-        <div id="canvas-host" class="canvas-host"></div>
-
-
-        <div id="scene-labels" class="scene-labels" aria-label="Docking poses"><svg id="label-leaders" class="label-leaders" aria-hidden="true"></svg></div>
-        <div id="reach-labels" class="reach-labels" aria-label="Distance evidence" hidden></div>
-        <div id="c-failure-callout" class="c-failure-callout" role="note" hidden>
-          <strong>Case 3 · C: pre-grasp IK failed</strong>
-          <p>All 29 candidates failed pre-grasp IK; no grasp was executed.</p>
-          <p>Conservative reach bound: remaining gap ≈  <b id="c-failure-gap">1.10 m</b> .</p>
-        </div>
-        <div id="d-failure-callout" class="c-failure-callout" role="note" hidden>
-          <strong>Case 3 · D: full-pose IK failed</strong>
-          <p>The shown position solution differs from the required orientation by  <b id="d-orientation-gap">176.6°</b>. </p>
-          <p>All 29 candidates failed pre-grasp IK. The static witness below compares orientations.</p>
-        </div>
-        <div id="loading-panel" class="loading-panel" role="status" aria-live="polite">
-          <span id="loading-spinner" class="loading-spinner" aria-hidden="true"></span>
-          <strong id="loading-title">Loading experiment</strong>
-          <p id="loading-detail">Loading data and 3D assets.</p>
-          <button id="retry-button" type="button" hidden>Retry</button>
-        </div>
-        <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
-        <div id="comparison-context" class="comparison-context">
-          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; robot and bottle are static references. Select Replay for motion.</span>
-        </div>
-        <div class="scene-footer">
-          <div class="scene-caption"><div id="scene-name" class="scene-name">Experiment scene</div><span id="cutaway-state" class="cutaway-state" role="status">Loading room shell</span></div>
-          <div class="world-key" aria-label="Z up; units: meters"><span class="axis-dot axis-z"></span>Z up<span class="key-separator"></span>meters</div>
-        </div>
-        <div id="path-key" class="path-key" hidden><span></span>Colored lines: attempts<span class="current-path-key"></span>: Selected attempt</div>
-        <section id="diversity-lens" class="diversity-lens" aria-label="Path comparison">
-          <div class="lens-heading"><h2>Path comparison</h2></div>
-          <div id="lens-body">
-
-            <div id="lens-chart" class="lens-chart"></div>
-            <p id="lens-caption" class="lens-caption">Measured from recorded paths without rescaling.</p>
-          </div>
-          <div id="comparison-legend" class="comparison-legend" aria-label="Selected path legend"></div>
-        </section>
-        <section id="physics-lens" class="diagnostic-lens physics-lens" aria-label="Recorded execution metrics" hidden>
-          <div class="lens-heading"><h2 id="physics-heading">Execution metrics</h2><span id="physics-result" class="evidence-result"></span><button id="physics-toggle" type="button" aria-expanded="true">Hide metrics</button></div>
-          <div class="physics-readings">
-            <div><span>Hand–object contact</span><strong id="physics-contact">—</strong></div>
-            <div><span>Table clearance · ≥30 mm</span><strong id="physics-gap">—</strong></div>
-            <div><span>Conservative bottom clearance · ≥30 mm</span><strong id="physics-min-z">—</strong></div>
-            <div><span>Valid hold · ≥0.2 s</span><strong id="physics-hold">—</strong></div>
-          </div>
-          <div class="physics-chart-heading"><span><i class="physics-gap-key"></i>Table clearance <i class="physics-z-key"></i>Bottom clearance <i class="physics-threshold-key"></i>3 cm threshold</span></div>
-          <div id="physics-chart" class="physics-chart"></div>
-          <div class="physics-actions"><button id="physics-paired" type="button">Compare same grasp</button></div>
-          <p id="physics-explanation" class="physics-explanation"></p>
-          <p class="measurement-note">Metrics use recorded frames. A negative conservative height alone does not prove table penetration.</p>
-        </section>
-        <section id="reachability-lens" class="diagnostic-lens reachability-lens" aria-label="C: conservative distance bound" hidden>
-          <div class="lens-heading"><h2>C: pre-grasp IK failed</h2><span class="evidence-result">Static distance bound; no execution</span></div>
-          <div class="reach-proof-flow"><span>Pre-grasp IK prescreen <b>29 candidates failed</b></span><i>→</i><span>Valid candidates <b>0</b></span><i>→</i><span>Grasp execution <b>Not executed</b></span></div>
-          <svg id="c-distance-ruler" class="c-distance-ruler" viewBox="0 0 620 88" role="img" aria-label="Distance bounds shown to scale">
-            <title>Arm bound: 0.84 m; bottle bound: 0.17 m; center distance: 2.11 m; remaining gap: about 1.10 m.</title>
-            <line id="c-ruler-arm" y1="38" y2="38" class="ruler-arm"/>
-            <line id="c-ruler-gap" y1="38" y2="38" class="ruler-gap"/>
-            <line id="c-ruler-object" y1="38" y2="38" class="ruler-object"/>
-            <circle cx="30" cy="38" r="4" class="ruler-anchor"/><circle cx="590" cy="38" r="4" class="ruler-bottle"/>
-            <text x="30" y="17">Arm bound</text><text id="reach-arm-radius" x="30" y="62">—</text>
-            <text x="590" y="17" text-anchor="end">Bottle bound</text><text id="reach-object-radius" x="590" y="62" text-anchor="end">—</text>
-            <text id="c-ruler-gap-title" y="17" text-anchor="middle" class="ruler-gap-copy">Gap remains</text><text id="reach-gap" y="66" text-anchor="middle" class="ruler-gap-copy">—</text>
-          </svg>
-          <p id="reach-equation" class="reach-equation"></p>
-          <p class="reach-explanation">All 29 templates failed pre-grasp IK over 12 allowed orientations. The red gap is independent geometric evidence of distance-based unreachability.</p>
-          <p class="measurement-note">The bounding spheres provide a conservative geometric bound, not an IK result or trajectory.</p>
-        </section>
-        <section id="d-pose-lens" class="diagnostic-lens d-pose-lens" aria-label="D: full-pose IK failure" hidden>
-          <div class="lens-heading"><h2>D: position reached, orientation constrained</h2><span class="evidence-result">Static comparison, not executed</span></div>
-          <div class="d-pose-facts"><span>Pre-grasp position <b>Collision-free position solution</b></span><span>Required full pose <b>IK failed</b></span><span>Grasp execution <b>Not executed</b></span></div>
-          <div id="d-orientation-chart" class="d-orientation-chart"></div>
-          <p class="d-pose-explanation">A position-only IK solution and the requested pre-grasp orientation share a center but differ in orientation.</p>
-          <p class="measurement-note">The 176.6° difference is for this candidate’s static witness only. The reason for IK failure is not further resolved.</p>
-        </section>
-        <div id="ik-axis-key" class="ik-axis-key" hidden>
-          <strong>Static IK, not executed</strong>
-          <span class="ik-key-item"><i class="ik-solid-key"></i><span id="ik-witness-axis-label">Position IK</span></span>
-          <span class="ik-key-item"><i class="ik-dashed-key"></i><span id="ik-requested-axis-label">Required pose</span></span>
-          <span>X red / Y green / Z blue</span>
-          <span id="ik-angle-label" class="ik-angle-label"></span>
-        </div>
-      </section>
-
-      <aside class="inspector" aria-label="Trajectories and diagnostics">
+      <section class="inspector" aria-label="Trajectories and diagnostics">
         <section class="point-overview" aria-labelledby="selected-point-heading">
           <div class="panel-heading"><h2 id="selected-point-heading">Docking pose</h2><span id="point-kind" class="kind-label">Loading</span></div>
           <p id="point-description" class="point-description">Select a pose to inspect attempts.</p>
@@ -276,12 +175,114 @@
             <div id="provenance-copy"></div>
           </details>
         </details></section>
+      </section>
+        <details class="help-details">
+          <summary>Controls</summary>
+          <p>Drag to orbit, scroll to zoom, right-drag to pan.</p>
+          <p><kbd>Space</kbd> Play / pause<br><kbd>←</kbd> <kbd>→</kbd> Comparison ±2% / replay ±0.2 s<br><kbd>G</kbd> Scene <kbd>F</kbd> Focus paths <kbd>T</kbd> Top view<br><kbd>A</kbd>–<kbd>D</kbd> Select a docking pose</p>
+        </details>
+        <details class="outcome-guide">
+          <summary>Failure cases</summary>
+          <p><b>Case 2 · Physical validation:</b> a plan is executed but fails validation. No independently confirmed example is present in this batch.</p>
+          <p><b>Case 3 · No feasible action:</b> none of the tested candidates yields a feasible action at the dock. C and D illustrate this case.</p>
+          <p><b>B · Candidate-level failures:</b> 12 lift-planning failures and one prescreen rejection; 16 candidates succeeded. These do not make B a case 3 dock.</p>
+          <p class="validation-rule">Success requires a 0.5 s hold after lifting, including at least 0.2 s of contact and ≥3 cm clearance at the end.</p>
+        </details>
       </aside>
+
+      <section id="viewer" class="viewer" aria-label="3D scene">
+        <div id="canvas-host" class="canvas-host"></div>
+
+
+        <div id="scene-labels" class="scene-labels" aria-label="Docking poses"><svg id="label-leaders" class="label-leaders" aria-hidden="true"></svg></div>
+        <div id="reach-labels" class="reach-labels" aria-label="Distance evidence" hidden></div>
+        <div id="c-failure-callout" class="c-failure-callout" role="note" hidden>
+          <strong>Case 3 · C: pre-grasp IK failed</strong>
+          <p>All 29 candidates failed pre-grasp IK; no grasp was executed.</p>
+          <p>Conservative reach bound: remaining gap ≈  <b id="c-failure-gap">1.10 m</b> .</p>
+        </div>
+        <div id="d-failure-callout" class="c-failure-callout" role="note" hidden>
+          <strong>Case 3 · D: full-pose IK failed</strong>
+          <p>The shown position solution differs from the required orientation by  <b id="d-orientation-gap">176.6°</b>. </p>
+          <p>All 29 candidates failed pre-grasp IK. The static witness below compares orientations.</p>
+        </div>
+        <div id="loading-panel" class="loading-panel" role="status" aria-live="polite">
+          <span id="loading-spinner" class="loading-spinner" aria-hidden="true"></span>
+          <strong id="loading-title">Loading experiment</strong>
+          <p id="loading-detail">Loading data and 3D assets.</p>
+          <button id="retry-button" type="button" hidden>Retry</button>
+        </div>
+        <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
+        <div id="comparison-context" class="comparison-context">
+          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; robot and bottle are static references. Select Replay for motion.</span>
+        </div>
+        <div class="scene-footer">
+          <div class="scene-caption"><div id="scene-name" class="scene-name">Experiment scene</div><span id="cutaway-state" class="cutaway-state" role="status">Loading room shell</span></div>
+          <div class="world-key" aria-label="Z up; units: meters"><span class="axis-dot axis-z"></span>Z up<span class="key-separator"></span>meters</div>
+        </div>
+        <div id="path-key" class="path-key" hidden><span></span>Colored lines: attempts<span class="current-path-key"></span>: Selected attempt</div>
+        <section id="diversity-lens" class="diversity-lens" aria-label="Path comparison">
+          <div class="lens-heading"><h2>Path comparison</h2></div>
+          <div id="lens-body">
+
+            <div id="lens-chart" class="lens-chart"></div>
+            <p id="lens-caption" class="lens-caption">Measured from recorded paths without rescaling.</p>
+          </div>
+          <div id="comparison-legend" class="comparison-legend" aria-label="Selected path legend"></div>
+        </section>
+        <section id="physics-lens" class="diagnostic-lens physics-lens" aria-label="Recorded execution metrics" hidden>
+          <div class="lens-heading"><h2 id="physics-heading">Execution metrics</h2><span id="physics-result" class="evidence-result"></span><button id="physics-toggle" type="button" aria-expanded="true">Hide metrics</button></div>
+          <div class="physics-readings">
+            <div><span>Hand–object contact</span><strong id="physics-contact">—</strong></div>
+            <div><span>Table clearance · ≥30 mm</span><strong id="physics-gap">—</strong></div>
+            <div><span>Conservative bottom clearance · ≥30 mm</span><strong id="physics-min-z">—</strong></div>
+            <div><span>Valid hold · ≥0.2 s</span><strong id="physics-hold">—</strong></div>
+          </div>
+          <div class="physics-chart-heading"><span><i class="physics-gap-key"></i>Table clearance <i class="physics-z-key"></i>Bottom clearance <i class="physics-threshold-key"></i>3 cm threshold</span></div>
+          <div id="physics-chart" class="physics-chart"></div>
+          <div class="physics-actions"><button id="physics-paired" type="button">Compare same grasp</button></div>
+          <p id="physics-explanation" class="physics-explanation"></p>
+          <p class="measurement-note">Metrics use recorded frames. A negative conservative height alone does not prove table penetration.</p>
+        </section>
+        <section id="reachability-lens" class="diagnostic-lens reachability-lens" aria-label="C: conservative distance bound" hidden>
+          <div class="lens-heading"><h2>C: pre-grasp IK failed</h2><span class="evidence-result">Static distance bound; no execution</span></div>
+          <div class="reach-proof-flow"><span>Pre-grasp IK prescreen <b>29 candidates failed</b></span><i>→</i><span>Valid candidates <b>0</b></span><i>→</i><span>Grasp execution <b>Not executed</b></span></div>
+          <svg id="c-distance-ruler" class="c-distance-ruler" viewBox="0 0 620 88" role="img" aria-label="Distance bounds shown to scale">
+            <title>Arm bound: 0.84 m; bottle bound: 0.17 m; center distance: 2.11 m; remaining gap: about 1.10 m.</title>
+            <line id="c-ruler-arm" y1="38" y2="38" class="ruler-arm"/>
+            <line id="c-ruler-gap" y1="38" y2="38" class="ruler-gap"/>
+            <line id="c-ruler-object" y1="38" y2="38" class="ruler-object"/>
+            <circle cx="30" cy="38" r="4" class="ruler-anchor"/><circle cx="590" cy="38" r="4" class="ruler-bottle"/>
+            <text x="30" y="17">Arm bound</text><text id="reach-arm-radius" x="30" y="62">—</text>
+            <text x="590" y="17" text-anchor="end">Bottle bound</text><text id="reach-object-radius" x="590" y="62" text-anchor="end">—</text>
+            <text id="c-ruler-gap-title" y="17" text-anchor="middle" class="ruler-gap-copy">Gap remains</text><text id="reach-gap" y="66" text-anchor="middle" class="ruler-gap-copy">—</text>
+          </svg>
+          <p id="reach-equation" class="reach-equation"></p>
+          <p class="reach-explanation">All 29 templates failed pre-grasp IK over 12 allowed orientations. The red gap is independent geometric evidence of distance-based unreachability.</p>
+          <p class="measurement-note">The bounding spheres provide a conservative geometric bound, not an IK result or trajectory.</p>
+        </section>
+        <section id="d-pose-lens" class="diagnostic-lens d-pose-lens" aria-label="D: full-pose IK failure" hidden>
+          <div class="lens-heading"><h2>D: position reached, orientation constrained</h2><span class="evidence-result">Static comparison, not executed</span></div>
+          <div class="d-pose-facts"><span>Pre-grasp position <b>Collision-free position solution</b></span><span>Required full pose <b>IK failed</b></span><span>Grasp execution <b>Not executed</b></span></div>
+          <div id="d-orientation-chart" class="d-orientation-chart"></div>
+          <p class="d-pose-explanation">A position-only IK solution and the requested pre-grasp orientation share a center but differ in orientation.</p>
+          <p class="measurement-note">The 176.6° difference is for this candidate’s static witness only. The reason for IK failure is not further resolved.</p>
+        </section>
+        <div id="ik-axis-key" class="ik-axis-key" hidden>
+          <strong>Static IK, not executed</strong>
+          <span class="ik-key-item"><i class="ik-solid-key"></i><span id="ik-witness-axis-label">Position IK</span></span>
+          <span class="ik-key-item"><i class="ik-dashed-key"></i><span id="ik-requested-axis-label">Required pose</span></span>
+          <span>X red / Y green / Z blue</span>
+          <span id="ik-angle-label" class="ik-angle-label"></span>
+        </div>
+      </section>
+
+
     </main>
 
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261110-compact"></script>
+  <script type="module" src="./app.js?v=20261110-one-sidebar"></script>
   <script nomodule>document.getElementById('loading-title').textContent=' browser  not  supported  ES ';document.getElementById('loading-detail').textContent=' Chrome, Edge, Firefox  or  Safari. ';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

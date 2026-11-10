@@ -271,3 +271,19 @@
 .metric-details{margin-top:7px;color:var(--muted);font-size:10px;line-height:1.55}
 .metric-details summary,.c-prescreen-explanation>details>summary{cursor:pointer;color:#3d5e71}
 .metric-details p{margin-top:5px}
+
+/* All pose details and controls share one sidebar. */
+.points-panel .inspector{display:block;grid-area:auto;flex:0 0 auto;width:100%;min-height:0;overflow:visible;border:0;background:transparent}
+.points-panel .point-overview,.points-panel .is-comparing .point-overview{display:block;padding:14px 2px}
+.points-panel .advanced-controls{padding:13px 2px}
+.points-panel .c-prescreen-explanation,.points-panel .failure-cases,.points-panel .comparison-panel{padding:14px 2px}
+.points-panel .help-details,.points-panel .outcome-guide{flex:0 0 auto}
+.points-panel .help-details{margin-top:12px}
+.points-panel .success-stat>strong{display:none}
+@media(min-width:701px){
+  .app{height:100dvh;min-height:650px;max-height:1600px}
+  .workspace{display:grid;grid-template-columns:240px minmax(0,1fr);grid-template-areas:"side scene";min-height:0}
+  .points-panel{grid-area:side;overflow:auto;border-right:1px solid var(--line);padding:16px 14px}
+  .viewer,.has-diagnostic-analysis .viewer{grid-area:scene;height:auto;min-height:0;max-height:none;border:0}
+}
+@media(max-width:700px){.points-panel .inspector{order:initial}.points-panel .point-overview{display:block}}
