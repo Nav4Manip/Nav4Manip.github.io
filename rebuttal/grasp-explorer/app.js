@@ -10,6 +10,7 @@ import { computeReachabilityProof, createReachabilityVisual } from './reachabili
 const $ = (id) => document.getElementById(id);
 const rootURL = new URL('./', window.location.href);
 const compressedSceneURL = 'https://raw.githubusercontent.com/Nav4Manip/Nav4Manip.github.io/ca59b8b524b89a63cd11e3fec4fb08a88bd84c5e/rebuttal/grasp-explorer/assets/scene-optimized.glb';
+const compressedRobotURL = 'https://raw.githubusercontent.com/Nav4Manip/Nav4Manip.github.io/7ee75d515054362a34f44203f598a0c69b2d3a9f/rebuttal/grasp-explorer/assets/robot-optimized.glb';
 const statusLabels = { success: 'Success', planning_rejected: 'Planning rejected', physics_failed: 'Execution did not pass' };
 const outcomeLabels = { success: 'Success', ik_failed: 'IK-FAIL', prescreen_ik_failed: 'IK-FAIL (Prescreen)', lift_plan_failed: 'Lift planning failed', reach_rejected: 'Prescreen', prescreen_rejected: 'Prescreen rejected', physical_validation_failed: 'Physical validation failed' };
 const statusAliases = { rejected: 'planning_rejected', planning_reject: 'planning_rejected', physical_failure: 'physics_failed', failed: 'physics_failed' };
@@ -314,7 +315,7 @@ function initializeGraphics() {
 
   const manager = new THREE.LoadingManager();
   manager.setURLModifier((url) => {
-    if (url === compressedSceneURL || url.startsWith('blob:') || url.startsWith('data:')) return url;
+    if (url === compressedSceneURL || url === compressedRobotURL || url.startsWith('blob:') || url.startsWith('data:')) return url;
     return resourceURL(url);
   });
   loader = new GLTFLoader(manager);
@@ -354,7 +355,7 @@ async function loadModel(path, originalScene = false) {
     let modelURL = resourceURL(path);
     let temporaryURL;
     if (path === 'assets/robot.glb') {
-      modelURL = resourceURL(`${path}?v=20261110-fastrobot`);
+      modelURL = compressedRobotURL;
     } else if (path === 'assets/scene.glb' && !originalScene) {
       // Geometry-compressed scene; trajectory and experiment data are unchanged.
       modelURL = compressedSceneURL;
