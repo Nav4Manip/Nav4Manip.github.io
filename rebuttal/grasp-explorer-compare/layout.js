@@ -1,0 +1,30 @@
+(() => {
+  const app = document.querySelector('.app');
+  const workspace = document.querySelector('.workspace');
+  const modebar = document.createElement('div');
+  modebar.className = 'explorer-modebar';
+  const modes = document.querySelector('.mode-switch');
+  modes.prepend(document.getElementById('mode-single'));
+  document.getElementById('mode-single').textContent = 'Replay';
+  document.getElementById('mode-comparison').textContent = 'Compare paths';
+  modebar.append(modes);
+  const choice = document.createElement('label');
+  choice.id = 'replay-choice-label'; choice.className = 'replay-choice';
+  choice.append('Replay ');
+  const select = document.createElement('select');
+  select.id = 'replay-choice'; select.setAttribute('aria-label', 'Select replay'); select.disabled = true;
+  choice.append(select); modebar.append(choice); app.insertBefore(modebar, workspace);
+  for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
+  const loop = document.createElement('label'); loop.className = 'loop-option';
+  loop.innerHTML = '<input id="replay-loop" type="checkbox" checked> Loop';
+  document.getElementById('single-transport').append(loop);
+  const sidebar = document.querySelector('.points-panel');
+  const inspector = document.querySelector('.inspector');
+  sidebar.insertBefore(inspector, sidebar.querySelector('.point-note'));
+  const detailsSection = document.getElementById('c-prescreen-explanation');
+  const details = document.createElement('details'), summary = document.createElement('summary');
+  summary.textContent = 'Prescreen details';
+  while (detailsSection.firstChild) details.append(detailsSection.firstChild);
+  details.prepend(summary); detailsSection.append(details);
+
+})();
