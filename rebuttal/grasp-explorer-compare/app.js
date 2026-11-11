@@ -1,3 +1,4 @@
+import { applyProceduralSurfaces } from './procedural-surfaces.js';
 import * as THREE from '../grasp-explorer-v2/vendor/three.module.js';
 import { OrbitControls } from '../grasp-explorer-v2/vendor/OrbitControls.js';
 import { GLTFLoader } from '../grasp-explorer-v2/vendor/GLTFLoader.js';
@@ -12,7 +13,7 @@ import { createEvaluationSession, compareEndpointRates, rateStatistics, formatRa
 const $ = (id) => document.getElementById(id);
 const rootURL = new URL('./', window.location.href);
 const assetBase = new URL('./', import.meta.url).href;
-const sharedRobot = new URL('../grasp-explorer-v2/assets/robot-20261110.glb.gz', assetBase).href;
+const sharedRobot = new URL('assets/robot-20261111-light.glb.gz', assetBase).href;
 const statusLabels = { unknown: 'Unknown', success: 'Success', planning_rejected: 'Planning rejected', physics_failed: 'Unsuccessful' };
 const outcomeLabels = { success: "Success", ik_failed: 'IK-FAIL', prescreen_ik_failed: "IK-FAIL (pre-screening)", lift_ik_failed: "Lift-pose IK failed", lift_plan_failed: "Lift planning failed", reach_rejected: "Pre-Screen Reject", prescreen_rejected: "Prescreen rejected", physical_validation_failed: "Physical validation failed" };
 const statusAliases = { rejected: 'planning_rejected', planning_reject: 'planning_rejected', physical_failure: 'physics_failed', failed: 'physics_failed' };
@@ -71,9 +72,9 @@ function node(tag, className, text) {
 function resourceURL(path) {
   if (typeof path !== 'string' || !path.trim()) throw new Error("The data is missing a local file path.");
   if (path === 'assets/robot.glb' || path === sharedRobot) return sharedRobot;
-  if (path === 'assets/scene.glb') return assetBase + 'assets/scene-20261111-fast.glb.gz';
+  if (path === 'assets/scene.glb') return assetBase + 'assets/scene-20261111-light.glb.gz';
   if (path === 'assets/object.glb') return assetBase + 'assets/object-20261111.glb.gz';
-  if (['scene-20261111-fast.glb.gz', 'object-20261111.glb.gz'].some(name => path === assetBase + 'assets/' + name)) return path;
+  if (['scene-20261111-light.glb.gz', 'object-20261111.glb.gz'].some(name => path === assetBase + 'assets/' + name)) return path;
   const url = new URL(path, rootURL);
   if (url.origin !== rootURL.origin || !url.pathname.startsWith(rootURL.pathname)) {
     throw new Error(`Resources must be located in the local delivery directory:${path}`);
@@ -1336,6 +1337,7 @@ function setViewMode(mode) {
   setPlaying(false);
   state.comparison.playing = false;
   state.viewMode = mode;
+  if (mode === 'comparison') ensurePointTrajectories();
   if (trialToRestore) selectTrial(trialToRestore);
   updateModeUI();
   if (comparisonActive()) {
@@ -1463,6 +1465,7 @@ async function selectPoint(point) {
   state.time = 0;
   state.duration = 0;
   state.comparison.playing = false;
+  state.comparison.fetchPromise = null;
   state.comparison.candidates = [];
   state.comparison.entries = [];
   state.comparison.selectedIds = [];
@@ -1517,9 +1520,24 @@ async function selectPoint(point) {
   await initialPlayback;
   await new Promise(resolve => requestAnimationFrame(resolve));
   if (token !== state.pointToken) return;
+  if (state.reachabilityMode) requestAnimationFrame(focusReachability);
+  if (!isWam() && point.diagnostics?.positionIK) { enterPositionIK(); focusTarget(); }
+  refreshPaths();
+  if (comparisonActive() || $('show-paths').checked) ensurePointTrajectories();
+}
+
+function ensurePointTrajectories() {
+  if (!state.point) return Promise.resolve();
+  if (!state.comparison.fetchPromise) state.comparison.fetchPromise = loadPointTrajectories(state.point, state.pointToken).catch(error => notice(errorMessage(error)));
+  return state.comparison.fetchPromise;
+}
+
+async function loadPointTrajectories(point, token) {
   const recorded = point.trials.filter((trial) => trial.file);
   const results = await Promise.allSettled(recorded.map((trial) => getTrajectory(point, trial)));
   if (token !== state.pointToken) return;
+  disposePaths();
+  state.comparison.candidates = [];
   let failures = 0;
   results.forEach((result, index) => {
     const trial = recorded[index];
@@ -1718,6 +1736,8 @@ async function selectTrial(trial) {
     const trajectory = await getTrajectory(point, trial);
     if (token !== state.trialToken || state.point !== point) return;
     state.trajectory = trajectory;
+    if (!state.paths.some(path => path.trial.id === trial.id)) buildPath(point, trial, trajectory);
+    refreshPaths();
     state.physics = isWam() && hasIncompleteGapMeasurements(trajectory) ? null : analyzePhysics(trajectory);
     state.duration = trajectory.duration;
     const playable = Boolean(trajectory.joints && state.bindings.length);
@@ -2211,6 +2231,7 @@ function bindUI() {
 
 async function start() {
   bindUI();
+  $('show-paths').addEventListener('change', () => { if ($('show-paths').checked) ensurePointTrajectories(); });
   if (window.location.protocol === 'file:') {
     setLoading("Please open via local service", "Run python3 serve.py in the delivery directory and visit http://127.0.0.1: 8000/.", true);
     $('dataset-summary').textContent = "Waiting for local HTTP service";
@@ -2257,6 +2278,7 @@ async function start() {
       const prefetched = await initialReplay;
       if (prefetched.raw) state.cache.set(trialKey(manifest.points[0], initialTrial), Promise.resolve(validateTrajectory(prefetched.raw, initialTrial.file)));
     }
+    applyProceduralSurfaces(sceneAsset);
     scene.add(sceneAsset);
     configureCutaway();
     robotRoot.add(robot);
@@ -2282,6 +2304,7 @@ async function start() {
     await selectPoint(manifest.points[0]);
     if (requestedMethod !== evaluationView().model) await switchEvaluation(requestedMethod);
     if (embedded) parent.postMessage({type: 'grasp-ready'}, location.origin);
+
   } catch (error) {
     setPlaying(false);
     setLoading("Experiment data could not be loaded", `${errorMessage(error)}Please check the data and assets files in the delivery directory before reloading.`, true);

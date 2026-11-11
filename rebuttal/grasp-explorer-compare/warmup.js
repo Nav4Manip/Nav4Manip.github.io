@@ -11,8 +11,8 @@
 
   const base = new URL('./', document.currentScript.src).href;
   const urls = [
-    `${base}assets/scene-20261111-fast.glb.gz`,
-    new URL('../grasp-explorer-v2/assets/robot-20261110.glb.gz', base).href,
+    `${base}assets/scene-20261111-light.glb.gz`,
+    `${base}assets/robot-20261111-light.glb.gz`,
     `${base}assets/object-20261111.glb.gz`,
   ];
   const pending = new Map();
