@@ -2006,7 +2006,7 @@ function animate(now) {
     if (state.time >= state.duration) { if ($('replay-loop').checked) applyTime(0); else setPlaying(false); }
   }
   if (comparisonActive() && state.comparison.playing) {
-    const progress = Math.min(1, state.comparison.progress + elapsed / 8);
+    const progress = Math.min(1, state.comparison.progress + elapsed * state.speed / 8);
     if (progress >= 1) state.comparison.playing = false;
     applyComparisonProgress(progress);
   }
@@ -2202,7 +2202,18 @@ function bindUI() {
   });
   $('replay-button').addEventListener('click', () => { applyTime(0); setPlaying(true); });
   $('timeline').addEventListener('input', (event) => { setPlaying(false); applyTime(Number(event.target.value)); });
-  $('playback-speed').addEventListener('change', (event) => { state.speed = Number(event.target.value); });
+  const playbackRates = [0.25, 0.5, 1, 2, 4];
+  const speedButtons = document.querySelectorAll('[data-playback-speed]');
+  for (const button of speedButtons) {
+    button.addEventListener('click', () => {
+      const next = (playbackRates.indexOf(state.speed) + 1) % playbackRates.length;
+      state.speed = playbackRates[next];
+      for (const control of speedButtons) {
+        control.textContent = `${state.speed}×`;
+        control.setAttribute('aria-label', `Playback speed: ${state.speed}×`);
+      }
+    });
+  }
   document.addEventListener('keydown', (event) => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.target.matches('input,textarea,select,[contenteditable=true]')) return;
     const key = event.key.toLowerCase();

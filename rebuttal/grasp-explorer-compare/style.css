@@ -364,3 +364,12 @@
 }
 
 .model-toolbar[hidden]{display:none}
+
+/* Reserve enough room for the longest speed label without shifting the timeline. */
+.transport-buttons .playback-speed {
+  flex: 0 0 52px;
+  min-height: 34px;
+  padding: 6px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}

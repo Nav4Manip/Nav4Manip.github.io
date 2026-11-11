@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261111-light">
+  <link rel="stylesheet" href="./style.css?v=20261111-speed">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -105,7 +105,7 @@
                 <span class="advanced-label">Path comparison</span><div class="lens-tabs" role="group" aria-label="Path comparison"><button id="lens-profile" type="button" aria-pressed="true">Separation / orientation</button><button id="lens-projection" type="button" aria-pressed="false">Top / side projections</button></div><button id="lens-toggle" type="button" aria-expanded="true" aria-controls="lens-body">Collapse</button>
               </div>
               <div id="playback-tools" class="advanced-group">
-                <label>Scope<select id="physics-window"><option value="contact" selected>Near contact</option><option value="full">Full record</option></select></label><div class="physics-actions"><button id="physics-first-contact" type="button">First contact</button><button id="physics-peak" type="button">Max. clearance</button><button id="physics-end" type="button">End of record</button></div><div class="speed-control"><label for="playback-speed">Speed</label><select id="playback-speed" aria-label="Replay speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div><button id="replay-button" class="icon-button" type="button" disabled title="Replay" aria-label="Replay"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6.5a6 6 0 1 1-1 6M5 2.5v4.5H.5"/></svg></button>
+                <label>Scope<select id="physics-window"><option value="contact" selected>Near contact</option><option value="full">Full record</option></select></label><div class="physics-actions"><button id="physics-first-contact" type="button">First contact</button><button id="physics-peak" type="button">Max. clearance</button><button id="physics-end" type="button">End of record</button></div><button id="replay-button" class="icon-button" type="button" disabled title="Replay" aria-label="Replay"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6.5a6 6 0 1 1-1 6M5 2.5v4.5H.5"/></svg></button>
               </div>
               <div id="comparison-reset-tools" class="advanced-group"><button id="comparison-reset" type="button" disabled>Reset progress</button></div>
               <div id="ik-diagnostic" class="ik-diagnostic" hidden>
@@ -276,7 +276,10 @@
 
     <footer id="reachability-transport" class="static-transport" aria-label="Static Diagnostic Evidence" hidden><strong id="static-title">Static Diagnostic Evidence</strong><span id="static-copy">Diagnostic diagrams are shown based on the corresponding real evidence.</span></footer>
     <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls" hidden>
-      <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
+      <div class="transport-buttons">
+        <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
+        <button class="playback-speed" type="button" data-playback-speed title="Click to change playback speed" aria-label="Playback speed: 1×">1×</button>
+      </div>
       <div class="comparison-timeline-block">
         <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
         <input id="comparison-progress" class="timeline" type="range" min="0" max="1" step="0.001" value="0.55" disabled aria-label="Normalized path progress" aria-valuetext="55%; not synchronized time">
@@ -287,7 +290,7 @@
     <footer id="single-transport" class="transport" aria-label="Replay controls">
       <div class="transport-buttons">
         <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button>
-
+        <button class="playback-speed" type="button" data-playback-speed title="Click to change playback speed" aria-label="Playback speed: 1×">1×</button>
       </div>
       <div class="timeline-block">
         <div class="timeline-top"><span id="current-stage">Waiting for trajectory</span><span class="time-readout"><output id="current-time">0.00</output><span> / </span><output id="duration">0.00</output><span> s</span></span></div>
@@ -300,7 +303,7 @@
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
   <script src="./layout.js?v=20261111-light"></script>
-  <script type="module" src="./app.js?v=20261111-light"></script>
+  <script type="module" src="./app.js?v=20261111-speed"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>
