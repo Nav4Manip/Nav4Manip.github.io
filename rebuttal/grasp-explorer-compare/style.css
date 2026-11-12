@@ -386,3 +386,48 @@
 
 /* Keep recording metadata out of the main presentation. */
 .frame-indicator, .scene-caption { display: none; }
+
+/* Presentation: show controls and results, without auxiliary fine print. */
+#dataset-description, .dataset-meta, #point-count, #trial-count,
+#trajectory-state, .statistic-note, .help-details, .scene-footer, .path-key,
+.comparison-scope, .comparison-metric-note, .comparison-progress-note,
+.lens-caption, .measurement-note, .comparison-source-note,
+#trajectory-note, #physics-explanation, .point-overview > .panel-heading,
+.point-overview .success-stat, .comparison-context > span:last-child {
+  display: none !important;
+}
+.app-header { flex-basis: 52px; min-height: 52px; padding: 10px 18px; }
+.point-overview:has(.point-description[hidden]) { display: none !important; }
+.points-panel .point-overview { padding: 8px 2px; }
+.point-overview .point-description { margin: 0; font-size: 14px; }
+.point-label, .point-result, .point-percent, .point-letter,
+.mode-switch button, .replay-choice, .replay-choice select,
+.loop-option, .playback-speed, .viewer-more > summary,
+#physics-toggle, #reach-toggle, #pose-toggle, .lens-heading h2,
+.static-transport, .timeline-top, .comparison-timeline-block .timeline-top {
+  font-size: 14px;
+}
+.comparison-status:empty, .trial-reason:empty, .trajectory-note:empty { display: none; }
+
+.rate-comparison { font-size: 13px; margin: 0 0 14px; }
+.rate-comparison h2 { font-size: 15px; }
+.oracle-overlay-note { font-size: 14px; color: #315970; }
+@media (min-width: 701px) {
+  .workspace { grid-template-columns: 280px minmax(0, 1fr); }
+}
+
+/* Necessary information uses the same readable size as the controls. */
+.app button, .app select, .app summary,
+.point-fraction, .time-readout, .evidence-result,
+.trial-status, .trial-label, .comparison-count,
+.comparison-metrics span, .physics-readings span,
+.legend-entry, .comparison-record, .advanced-label,
+.comparison-context, .view-options, .skeleton-option {
+  font-size: 14px;
+}
+.lens-chart text { font-size: 13px; }
+.model-toolbar > strong { display: none; }
+
+.point-result { flex-direction: column; align-items: flex-end; gap: 2px; }
+.comparison-status, .comparison-explanation, .randomness-note,
+.path-details, .metric-list, .trial-reason { font-size: 14px; }

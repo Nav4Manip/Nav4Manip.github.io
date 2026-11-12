@@ -5,8 +5,8 @@
   const buttons = [...document.querySelectorAll('[data-explorer-method]')];
   const external = document.querySelector('.explorer-heading a');
   const urls = {
-    dexonomy: './rebuttal/grasp-explorer-v2/?v=20261112-cleanui&embed=1',
-    wam: './rebuttal/grasp-explorer-compare/?v=20261112-cleanui&embed=1&method=wam',
+    dexonomy: './rebuttal/grasp-explorer-v2/?v=20261112-readable&embed=1',
+    wam: './rebuttal/grasp-explorer-compare/?v=20261112-readable&embed=1&method=wam',
   };
   const frames = new Map([['dexonomy', initial]]);
   let selected = 'dexonomy';

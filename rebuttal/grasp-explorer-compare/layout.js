@@ -23,7 +23,7 @@
   oracleChoice.innerHTML = 'Oracle <select id="oracle-choice" aria-label="Oracle overlay replay"></select>';
   const overlayNote = document.createElement('p');
   overlayNote.id = 'oracle-overlay-note'; overlayNote.className = 'oracle-overlay-note'; overlayNote.hidden = true;
-  overlayNote.textContent = 'Motion comparison · translucent Oracle, solid WAM · progress-aligned';
+  overlayNote.textContent = 'Ghost: Oracle · Solid: WAM · Progress-aligned';
   modebar.append(overlay, oracleChoice, overlayNote); app.insertBefore(modebar, workspace);
   for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
   const loop = document.createElement('label'); loop.className = 'loop-option';
