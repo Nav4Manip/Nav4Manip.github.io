@@ -365,3 +365,5 @@
 #d-failure-callout strong, #d-failure-callout p,
 #d-pose-explanation, .d-pose-facts span, .d-pose-facts b { font-size: 14px; line-height: 1.45; }
 #d-failure-summary { display: block; }
+
+#d-failure-summary:empty, #d-pose-explanation:empty { display: none; }

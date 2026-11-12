@@ -456,3 +456,5 @@
 }
 .oracle-overlay-note strong { font-size: 17px; font-weight: 700; }
 .oracle-overlay-note[hidden] { display: none; }
+
+#d-failure-summary:empty, #d-pose-explanation:empty { display: none; }

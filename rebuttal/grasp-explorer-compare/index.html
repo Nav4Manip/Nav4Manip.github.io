@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261112-type">
+  <link rel="stylesheet" href="./style.css?v=20261112-brief">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -109,7 +109,7 @@
         </div>
         <div id="d-failure-callout" class="c-failure-callout" role="note" hidden>
           <strong id="d-failure-heading">Static position IK versus required posture</strong>
-          <p>Shown orientation mismatch: <b id="d-orientation-gap">—</b>.</p>
+          <p hidden>Shown orientation mismatch: <b id="d-orientation-gap">—</b>.</p>
           <p id="d-failure-summary"></p>
         </div>
         <div id="loading-panel" class="loading-panel" role="status" aria-live="polite">
@@ -280,8 +280,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261112-type"></script>
-  <script type="module" src="./app.js?v=20261112-type"></script>
+  <script src="./layout.js?v=20261112-brief"></script>
+  <script type="module" src="./app.js?v=20261112-brief"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

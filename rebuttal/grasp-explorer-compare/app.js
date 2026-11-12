@@ -872,11 +872,11 @@ function renderDPoseComparison(witness) {
   svg.append(physicsSVG('text', { x: 300, y: 50, 'text-anchor': 'middle', class: 'pose-angle-label' }, "Shown orientation mismatch"));
   svg.append(physicsSVG('text', { x: 300, y: 82, 'text-anchor': 'middle', class: 'pose-angle-value' }, `${witness.orientationErrorDeg.toFixed(1)}°`));
   host.append(svg);
-  $('d-pose-heading').textContent = `${state.point.id} · Case 3 · Orientation constraint`;
-  $('d-pose-explanation').textContent = 'Position reachable; no full-pose IK solution found for the required orientation. Static illustration.';
-  $('d-failure-heading').textContent = `${state.point.id} · Case 3: orientation-constrained IK failed`;
+  $('d-pose-heading').textContent = `${state.point.id} · Case 3 · Full-pose IK`;
+  $('d-pose-explanation').textContent = '';
+  $('d-failure-heading').textContent = `${state.point.id} · Case 3: no feasible full-pose IK`;
   const rejected = state.point.trials.filter((trial) => outcomeCode(trial) === 'ik_failed' || outcomeCode(trial) === 'prescreen_ik_failed').length;
-  $('d-failure-summary').textContent = 'Position reachable; required orientation not satisfied.';
+  $('d-failure-summary').textContent = '';
 }
 
 function pairedTrial(point = state.point, trial = state.trial) {
@@ -1386,7 +1386,7 @@ function updateModeUI() {
   $('comparison-transport').hidden = !active;
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
-  $('static-title').textContent = reach ? `${state.point.id} · Case 3: out of reach` : `${state.point?.id || ''} · Case 3: orientation constraint`;
+  $('static-title').textContent = reach ? `${state.point.id} · Case 3: out of reach` : `${state.point?.id || ''} · Case 3: no feasible full-pose IK`;
   $('static-copy').textContent = reach ? "Static evidence · no execution" : "Static witness · no execution";
   $('comparison-context').hidden = !active;
   $('comparison-legend').hidden = !active;
@@ -1709,7 +1709,7 @@ function enterPositionIK() {
   $('diagnostics-heading').textContent = 'Case 3 · IK illustration';
   $('trajectory-state').textContent = "Static IK";
   $('trial-title').textContent = copy.title;
-  $('trial-reason').textContent = 'Case 3: position reachable, but full-pose IK did not satisfy the required orientation.';
+  $('trial-reason').textContent = 'Case 3: no feasible full-pose IK solution found.';
   $('trial-metrics').replaceChildren();
   addMetric("Record Type", "Static IK, non-execution records");
   addMetric(`${copy.position}error`, formatPositionError(witness.positionErrorM));
