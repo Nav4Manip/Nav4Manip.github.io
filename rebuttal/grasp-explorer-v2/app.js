@@ -1,3 +1,4 @@
+import { applyProceduralSurfaces } from '../grasp-explorer-compare/procedural-surfaces.js';
 import * as THREE from './vendor/three.module.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
@@ -32,6 +33,23 @@ const state = {
   homePosition: new THREE.Vector3(4, -5, 3), homeTarget: new THREE.Vector3(0, 0, 0.8),
 };
 
+let hostActive = true, resumeReplay = false, resumeComparison = false;
+window.addEventListener('message', event => {
+  if (parent === window || event.origin !== location.origin || event.source !== parent || event.data?.type !== 'grasp-active') return;
+  const active = event.data.active === true;
+  if (active === hostActive) return;
+  hostActive = active;
+  if (!active) {
+    resumeReplay = state.playing || !state.ready;
+    resumeComparison = state.comparison.playing;
+    setPlaying(false); state.comparison.playing = false;
+  } else {
+    if (resumeReplay) setPlaying(true);
+    state.comparison.playing = resumeComparison && comparisonActive();
+    invalidate();
+  }
+});
+
 let scene, camera, renderer, controls, loader, robotRoot, objectRoot, sceneAsset;
 let markerGroup, pathGroup, eeAxes, witnessAxes, requestedAxes, animationId, lastFrameTime = 0;
 let comparisonGroup;
@@ -56,8 +74,8 @@ function node(tag, className, text) {
 
 function resourceURL(path) {
   if (typeof path !== 'string' || !path.trim()) throw new Error("The data is missing a local file path.");
-  if (/^assets\/(scene|robot|object)\.glb$/.test(path)) return assetBase + path.replace('.glb', '-20261110.glb.gz');
-  if (['scene-20261110.glb.gz','robot-20261110.glb.gz','object-20261110.glb.gz'].some(name => path === assetBase + 'assets/' + name)) return path;
+  if (/^assets\/(scene|robot|object)\.glb$/.test(path)) return assetBase + path.replace('.glb', path.includes('object') ? '-20261110.glb.gz' : '-20261112-light.glb.gz');
+  if (['scene-20261112-light.glb.gz','robot-20261112-light.glb.gz','object-20261110.glb.gz'].some(name => path === assetBase + 'assets/' + name)) return path;
   const url = new URL(path, rootURL);
   if (url.origin !== rootURL.origin || !url.pathname.startsWith(rootURL.pathname)) {
     throw new Error(`Resources must be located in the local delivery directory:${path}`);
@@ -376,7 +394,7 @@ function initializeGraphics() {
 async function loadModel(path) {
   try {
     const url = resourceURL(path);
-    const warmed = window.__graspAssetWarmup?.get(url);
+    const warmed = window.__graspV2Warmup?.get(url);
     const bytes = warmed ? await warmed : await fetch(url).then(response => {
       if (!response.ok) throw new Error(`Model download: HTTP ${response.status}`);
       return response.arrayBuffer();
@@ -1311,6 +1329,7 @@ function setViewMode(mode) {
   setPlaying(false);
   state.comparison.playing = false;
   state.viewMode = mode;
+  if (mode === 'comparison') ensurePointTrajectories();
   if (trialToRestore) selectTrial(trialToRestore);
   updateModeUI();
   if (comparisonActive()) {
@@ -1364,6 +1383,7 @@ async function selectPoint(point) {
   state.time = 0;
   state.duration = 0;
   state.comparison.playing = false;
+  state.comparison.fetchPromise = null;
   state.comparison.candidates = [];
   state.comparison.entries = [];
   state.comparison.selectedIds = [];
@@ -1385,7 +1405,7 @@ async function selectPoint(point) {
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
   $('success-fraction').textContent = `${result.successes} / ${result.attempts} attempts`;
-  $('statistic-note').textContent = 'Successes / all attempts; failures count as 0.';
+  $('statistic-note').textContent = '';
   $('data-warning').hidden = !result.mismatch;
   $('data-warning').textContent = `Claim stats are inconsistent with the attempt list. Currently pressing${result.attempts}attempted to record recalculation, success${result.successes}times.`;
   const failuresByCode = new Map();
@@ -1417,9 +1437,24 @@ async function selectPoint(point) {
   await initialPlayback;
   await new Promise(resolve => requestAnimationFrame(resolve));
   if (token !== state.pointToken) return;
+  if (state.reachabilityMode) requestAnimationFrame(focusReachability);
+  if (point.diagnostics?.positionIK) { enterPositionIK(); focusTarget(); }
+  refreshPaths();
+  if (comparisonActive() || $('show-paths').checked) ensurePointTrajectories();
+}
+
+function ensurePointTrajectories() {
+  if (!state.point) return Promise.resolve();
+  if (!state.comparison.fetchPromise) state.comparison.fetchPromise = loadPointTrajectories(state.point, state.pointToken).catch(error => notice(errorMessage(error)));
+  return state.comparison.fetchPromise;
+}
+
+async function loadPointTrajectories(point, token) {
   const recorded = point.trials.filter((trial) => trial.file);
   const results = await Promise.allSettled(recorded.map((trial) => getTrajectory(point, trial)));
   if (token !== state.pointToken) return;
+  disposePaths();
+  state.comparison.candidates = [];
   let failures = 0;
   results.forEach((result, index) => {
     const trial = recorded[index];
@@ -1618,6 +1653,8 @@ async function selectTrial(trial) {
     const trajectory = await getTrajectory(point, trial);
     if (token !== state.trialToken || state.point !== point) return;
     state.trajectory = trajectory;
+    if (!state.paths.some(path => path.trial.id === trial.id)) buildPath(point, trial, trajectory);
+    refreshPaths();
     state.physics = analyzePhysics(trajectory);
     state.duration = trajectory.duration;
     const playable = Boolean(trajectory.joints && state.bindings.length);
@@ -1677,7 +1714,8 @@ function setPlaybackAvailability(available) {
 }
 
 function setPlaying(playing) {
-  state.playing = Boolean(playing && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
+  if (playing && !hostActive) resumeReplay = true;
+  state.playing = Boolean(playing && hostActive && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
   $('play-label').textContent = state.playing ? "Pause" : "Play";
   $('play-button').setAttribute('aria-label', state.playing ? "Pause" : "Play");
   $('play-icon').replaceChildren();
@@ -1898,7 +1936,7 @@ function animate(now) {
     if (state.time >= state.duration) { if ($('replay-loop').checked) applyTime(0); else setPlaying(false); }
   }
   if (comparisonActive() && state.comparison.playing) {
-    const progress = Math.min(1, state.comparison.progress + elapsed / 8);
+    const progress = Math.min(1, state.comparison.progress + elapsed * state.speed / 8);
     if (progress >= 1) state.comparison.playing = false;
     applyComparisonProgress(progress);
   }
@@ -2093,7 +2131,20 @@ function bindUI() {
   });
   $('replay-button').addEventListener('click', () => { applyTime(0); setPlaying(true); });
   $('timeline').addEventListener('input', (event) => { setPlaying(false); applyTime(Number(event.target.value)); });
-  $('playback-speed').addEventListener('change', (event) => { state.speed = Number(event.target.value); });
+  $('playback-speed').addEventListener('change', (event) => { state.speed = Number(event.target.value); document.querySelectorAll('[data-playback-speed]').forEach(button => { button.textContent = `${state.speed}×`; button.setAttribute('aria-label', `Playback speed: ${state.speed}×`); }); });
+  const playbackRates = [0.25, 0.5, 1, 2, 4];
+  const speedButtons = document.querySelectorAll('[data-playback-speed]');
+  for (const button of speedButtons) {
+    button.addEventListener('click', () => {
+      const next = (playbackRates.indexOf(state.speed) + 1) % playbackRates.length;
+      state.speed = playbackRates[next];
+      $('playback-speed').value = String(state.speed);
+      for (const control of speedButtons) {
+        control.textContent = `${state.speed}×`;
+        control.setAttribute('aria-label', `Playback speed: ${state.speed}×`);
+      }
+    });
+  }
   document.addEventListener('keydown', (event) => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.target.matches('input,textarea,select,[contenteditable=true]')) return;
     const key = event.key.toLowerCase();
@@ -2122,6 +2173,7 @@ function bindUI() {
 
 async function start() {
   bindUI();
+  $('show-paths').addEventListener('change', () => { if ($('show-paths').checked) ensurePointTrajectories(); });
   if (window.location.protocol === 'file:') {
     setLoading("Please open via local service", "Run python3 serve.py in the delivery directory and visit http://127.0.0.1: 8000/.", true);
     $('dataset-summary').textContent = "Waiting for local HTTP service";
@@ -2139,12 +2191,12 @@ async function start() {
     const manifest = state.manifest;
     $('app-title').textContent = manifest.title || "Grasp Explorer";
     document.title = manifest.title || "Grasp Explorer";
-    $('dataset-description').textContent = '4 docking poses · recorded trajectories';
+    $('dataset-description').textContent = 'Oracle Manip Policy · cleaner scene';
     $('scene-name').textContent = manifest.scene.name || "Recorded scene";
     $('point-count').textContent = `${manifest.points.length}`;
     const total = manifest.points.reduce((sum, point) => sum + point.trials.length, 0);
     const replays = manifest.points.reduce((sum, point) => sum + point.trials.filter((trial) => trial.file).length, 0);
-    $('dataset-summary').textContent = `${manifest.points.length} poses / ${total} attempts / ${replays} replays`;
+    $('dataset-summary').textContent = `12 attempts / pose · ${replays} replays`;
     setLoading('Loading scene and robot', 'Preparing the complete scene…');
     const initialTrial = preferredTrial(manifest.points[0]);
     const initialReplay = initialTrial?.file
@@ -2166,6 +2218,7 @@ async function start() {
       const prefetched = await initialReplay;
       if (prefetched.raw) state.cache.set(trialKey(manifest.points[0], initialTrial), Promise.resolve(validateTrajectory(prefetched.raw, initialTrial.file)));
     }
+    applyProceduralSurfaces(sceneAsset);
     scene.add(sceneAsset);
     configureCutaway();
     robotRoot.add(robot);
@@ -2188,6 +2241,7 @@ async function start() {
     state.ready = true;
     $('loading-panel').hidden = true;
     await selectPoint(manifest.points[0]);
+    if (parent !== window) parent.postMessage({type: 'grasp-ready'}, location.origin);
   } catch (error) {
     setPlaying(false);
     setLoading("Experiment data could not be loaded", `${errorMessage(error)}Please check the data and assets files in the delivery directory before reloading.`, true);

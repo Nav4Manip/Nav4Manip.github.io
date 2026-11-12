@@ -301,3 +301,12 @@
 #c-failure-summary,#d-failure-summary{display:none}
 .c-failure-callout{width:auto;min-width:190px;max-width:min(300px,calc(100% - 150px));padding:8px 10px}
 .c-failure-callout p{margin-top:2px;line-height:1.45}
+
+/* Reserve enough room for the longest speed label without shifting the timeline. */
+.transport-buttons .playback-speed {
+  flex: 0 0 52px;
+  min-height: 34px;
+  padding: 6px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}

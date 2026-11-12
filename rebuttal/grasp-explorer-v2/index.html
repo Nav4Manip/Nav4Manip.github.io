@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="./warmup.js?v=20261110-stream"></script>
+  <script src="./warmup.js?v=20261112-v2"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261110-stream">
+  <link rel="stylesheet" href="./style.css?v=20261112-v2">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
   <div class="app">
     <header class="app-header">
       <div class="identity">
-        <span class="wordmark" aria-label="3D">3D</span>
+
         <div class="header-copy">
           <h1 id="app-title">Grasp Explorer</h1>
           <p id="dataset-description">4 docking poses</p>
         </div>
       </div>
       <div class="dataset-meta">
-        <span class="local-indicator"><span></span>RECORDED ROLLOUTS</span>
+
         <p id="dataset-summary">Loading experiment data</p>
       </div>
     </header>
@@ -260,7 +260,7 @@
 
     <footer id="reachability-transport" class="static-transport" aria-label="Static Diagnostic Evidence" hidden><strong id="static-title">Static Diagnostic Evidence</strong><span id="static-copy">Diagnostic diagrams are shown based on the corresponding real evidence.</span></footer>
     <footer id="comparison-transport" class="comparison-transport" aria-label="Comparison controls" hidden>
-      <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button>
+      <button id="comparison-play" class="primary-button" type="button" disabled aria-label="Play comparison">Play progress</button><button class="playback-speed" type="button" data-playback-speed title="Click to change playback speed" aria-label="Playback speed: 1×">1×</button>
       <div class="comparison-timeline-block">
         <div class="timeline-top"><label for="comparison-progress">Arc-length progress, not synchronized time</label><output id="comparison-progress-label" for="comparison-progress">55%</output></div>
         <input id="comparison-progress" class="timeline" type="range" min="0" max="1" step="0.001" value="0.55" disabled aria-label="Normalized path progress" aria-valuetext="55%; not synchronized time">
@@ -270,7 +270,7 @@
     </footer>
     <footer id="single-transport" class="transport" aria-label="Replay controls">
       <div class="transport-buttons">
-        <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button>
+        <button id="play-button" class="primary-button" type="button" disabled aria-label="Play" title="Play / pause (Space)"><svg id="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z"/></svg><span id="play-label">Play</span></button><button class="playback-speed" type="button" data-playback-speed title="Click to change playback speed" aria-label="Playback speed: 1×">1×</button>
 
       </div>
       <div class="timeline-block">
@@ -283,8 +283,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261110-stream"></script>
-  <script type="module" src="./app.js?v=20261110-stream"></script>
+  <script src="./layout.js?v=20261112-v2"></script>
+  <script type="module" src="./app.js?v=20261112-v2"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

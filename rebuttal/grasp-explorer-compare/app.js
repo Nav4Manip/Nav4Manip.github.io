@@ -37,6 +37,23 @@ const state = {
   homePosition: new THREE.Vector3(4, -5, 3), homeTarget: new THREE.Vector3(0, 0, 0.8),
 };
 
+let hostActive = true, resumeReplay = false, resumeComparison = false;
+window.addEventListener('message', event => {
+  if (parent === window || event.origin !== location.origin || event.source !== parent || event.data?.type !== 'grasp-active') return;
+  const active = event.data.active === true;
+  if (active === hostActive) return;
+  hostActive = active;
+  if (!active) {
+    resumeReplay = state.playing || !state.ready;
+    resumeComparison = state.comparison.playing;
+    setPlaying(false); state.comparison.playing = false;
+  } else {
+    if (resumeReplay) setPlaying(true);
+    state.comparison.playing = resumeComparison && comparisonActive();
+    invalidate();
+  }
+});
+
 let scene, camera, renderer, controls, loader, robotRoot, objectRoot, sceneAsset;
 let markerGroup, pathGroup, eeAxes, witnessAxes, requestedAxes, animationId, lastFrameTime = 0;
 let comparisonGroup, oracleGhost;
@@ -52,7 +69,7 @@ const tmpVector = new THREE.Vector3();
 const tmpProjection = new THREE.Vector3();
 const identityPose = [0, 0, 0, 0, 0, 0, 1];
 
-let requestedMethod = 'dexonomy';
+let requestedMethod = new URLSearchParams(location.search).get('method') === 'wam' ? 'wam' : 'dexonomy';
 const embedded = new URLSearchParams(location.search).get('embed') === '1' && parent !== window;
 if (embedded) document.querySelector('.model-toolbar').hidden = true;
 window.addEventListener('message', event => {
@@ -1896,7 +1913,8 @@ function setPlaybackAvailability(available) {
 }
 
 function setPlaying(playing) {
-  state.playing = Boolean(playing && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
+  if (playing && !hostActive) resumeReplay = true;
+  state.playing = Boolean(playing && hostActive && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
   $('play-label').textContent = state.playing ? "Pause" : "Play";
   $('play-button').setAttribute('aria-label', state.playing ? "Pause" : "Play");
   $('play-icon').replaceChildren();
@@ -2375,6 +2393,7 @@ async function start() {
   try {
     const baseManifest = validateManifest(await readJSON('data/manifest.json'));
     const evaluation = createEvaluationSession(baseManifest, await readJSON('data/wam.json'), { scope: 'equal20', setId: 'aligned_a_v1' });
+    evaluation.select(requestedMethod);
     state.evaluation = evaluation;
     state.manifest = evaluation.view().manifest;
     const manifest = state.manifest;
@@ -2407,6 +2426,7 @@ async function start() {
     state.comparisonModel = createComparisonModel(results[3].value);
     if (initialReplay) {
       const prefetched = await initialReplay;
+      if (prefetched.raw && requestedMethod === 'wam') validateWamTrajectory(prefetched.raw, evaluation.view().payload.model.checkpoint.sha256);
       if (prefetched.raw) state.cache.set(trialKey(manifest.points[0], initialTrial), Promise.resolve(validateTrajectory(prefetched.raw, initialTrial.file)));
     }
     applyProceduralSurfaces(sceneAsset);

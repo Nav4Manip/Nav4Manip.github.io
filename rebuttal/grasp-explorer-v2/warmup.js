@@ -1,6 +1,6 @@
 // Shared by the landing page and its same-origin viewer: one request per model.
 (() => {
-  const key = '__graspAssetWarmup';
+  const key = '__graspV2Warmup';
   if (window[key]) return;
   try {
     if (window.parent !== window && window.parent.location.origin === window.location.origin && window.parent[key]) {
@@ -10,7 +10,7 @@
   } catch { /* A standalone or externally embedded viewer owns its downloads. */ }
 
   const base = new URL('./', document.currentScript.src).href;
-  const urls = ['scene', 'robot', 'object'].map(name => `${base}assets/${name}-20261110.glb.gz`);
+  const urls = [`${base}assets/scene-20261112-light.glb.gz`, `${base}assets/robot-20261112-light.glb.gz`, `${base}assets/object-20261110.glb.gz`];
   const pending = new Map();
   const cache = typeof caches !== 'undefined'
     ? caches.open('grasp-models-v1').catch(() => null)
