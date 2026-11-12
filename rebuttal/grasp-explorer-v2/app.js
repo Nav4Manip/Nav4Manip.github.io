@@ -5,7 +5,7 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { MeshoptDecoder } from './vendor/meshopt_decoder.module.js';
 import { createComparisonModel, sampleComparisonPath, comparisonMetrics, selectDiverseEntries, analyzeComparisonPaths } from './comparison.js';
 import { renderDiversityLens, updateDiversityProgress, setDiversityView } from './diversity.js';
-import { analyzePhysics, physicsFrameAt, selectFailureCases } from './physics.js';
+import { analyzePhysics, physicsFrameAt } from './physics.js';
 import { computeReachabilityProof, createReachabilityVisual, readPrescreenMetadata, referenceReachabilityAnchor } from './reachability.js';
 
 const $ = (id) => document.getElementById(id);
@@ -27,7 +27,7 @@ const state = {
   diagnosticMode: false, previousAxesChecked: null,
   experiment: null, prescreen: null, physics: null, physicsPlot: null,
   reachabilityMode: false, reachabilityProof: null, reachabilityVisual: null, reachLabels: [], reachabilityPointId: null,
-  reachabilityAudit: null, failureCases: [],
+  reachabilityAudit: null,
   viewMode: 'single', comparisonModel: null,
   comparison: { source: 'planned', progress: 0.55, playing: false, candidates: [], entries: [], selectedIds: [], visuals: [], colors: new Map(), loading: false, analysis: null, allAnalysis: null },
   homePosition: new THREE.Vector3(4, -5, 3), homeTarget: new THREE.Vector3(0, 0, 0.8),
@@ -133,12 +133,14 @@ function failureCase(trial) {
   return null;
 }
 function outcomeLabel(trial) {
-  const label = outcomeLabels[outcomeCode(trial)] || statusLabels[trial.status];
+  if (trial.status === 'success') return 'Success';
+  if (trial.status === 'unknown') return 'Unknown';
   const category = failureCase(trial);
-  return category === 2 ? 'Case 2 · Physical validation failed' : category ? `Case ${category} · ${label}` : label;
+  return category === 2 ? 'Case 2 · Physical validation failed'
+    : category === 3 ? 'Case 3 · No feasible plan' : 'Failed';
 }
 function displayReason(trial) {
-  return failureCase(trial) === 2 ? 'Grasp did not pass physical validation.' : trial.reason || outcomeLabel(trial);
+  return trial.status === 'success' ? '' : outcomeLabel(trial);
 }
 function formatNumber(value, digits = 2) {
   return Number.isFinite(value) ? value.toLocaleString('zh-CN', { maximumFractionDigits: digits }) : '—';
@@ -158,9 +160,9 @@ function statistics(point) {
   return { successes, attempts, mismatch };
 }
 function preferredTrial(point) {
-  return point.trials.find((trial) => trial.id === point.defaultTrialId)
+  return point.trials.find((trial) => trial.id === point.defaultTrialId && trial.status === 'success' && trial.file)
     || point.trials.find((trial) => trial.status === 'success' && trial.file)
-    || point.trials.find((trial) => trial.file) || point.trials[0];
+    || point.trials[0];
 }
 function formatPositionError(value) {
   return `${value > 0 && value < 0.0001 ? value.toExponential(2) : formatNumber(value, 5)} m`;
@@ -566,7 +568,7 @@ function renderPointList() {
 function renderReplayChoices(point) {
   const select = $('replay-choice');
   select.replaceChildren();
-  for (const trial of point.trials.filter(t => t.file)) {
+  for (const trial of point.trials.filter(t => t.status === 'success' && t.file)) {
     const option = document.createElement('option');
     option.value = trial.id;
     option.textContent = `${trial.label || trial.id} · ${outcomeLabel(trial)}`;
@@ -602,6 +604,7 @@ function renderTrialList() {
     choice.append(checkbox);
     const button = node('button', 'trial-button');
     button.type = 'button';
+    button.disabled = trial.status !== 'success' || !trial.file;
     button.dataset.trialId = trial.id;
     button.setAttribute('aria-pressed', 'false');
     button.setAttribute('aria-label', `${trial.label || trial.id}，${outcomeLabel(trial)}。${displayReason(trial)}`);
@@ -610,12 +613,11 @@ function renderTrialList() {
     color.dataset.trialColor = trial.id;
     color.style.background = trialColor(state.point, trial);
     const group = node('span', 'trial-label-group');
-    const recordingLabel = trial.file ? "Playback Sample" : trial.replayAvailability === 'summary_only' ? "Numeric value only" : "Not executed";
-    group.append(node('span', 'trial-label', trial.label || trial.grasp || trial.id), node('span', 'trial-id', `Seeds${trial.seed ?? "not recorded"} · ${trial.sourceRawId || trial.id} · ${recordingLabel}`));
+    group.append(node('span', 'trial-label', trial.label || trial.id));
     row.append(color, group, node('span', `trial-status ${outcomeCode(trial)}`, outcomeLabel(trial)));
     button.append(row);
     button.addEventListener('click', () => {
-      if (trial.file) openPhysicalCase(state.point, trial);
+      if (trial.status === 'success' && trial.file) openPhysicalCase(state.point, trial);
       else {
         if (trial.replayAvailability === 'summary_only') setViewMode('single');
         selectTrial(trial);
@@ -760,11 +762,12 @@ function renderDPoseComparison(witness) {
 function pairedTrial(point = state.point, trial = state.trial) {
   const other = state.manifest?.points.find((candidate) => candidate.id === (point?.id === 'B' ? 'A' : 'B'));
   if (!['A', 'B'].includes(point?.id) || !trial || trial.grasp === undefined || trial.seed === undefined) return null;
-  const paired = other?.trials.find((candidate) => candidate.file && candidate.grasp === trial.grasp && candidate.seed === trial.seed);
+  const paired = other?.trials.find((candidate) => candidate.status === 'success' && candidate.file && candidate.grasp === trial.grasp && candidate.seed === trial.seed);
   return paired ? { point: other, trial: paired } : null;
 }
 
 async function openPhysicalCase(point, trial) {
+  if (trial.status !== 'success' || !trial.file) return;
   const pointLoad = state.point !== point ? selectPoint(point) : null;
   // selectPoint synchronously installs its initial trial before waiting for IO.
   const pointToken = state.pointToken, expectedTrialToken = state.trialToken;
@@ -781,24 +784,6 @@ async function openPhysicalCase(point, trial) {
   if (window.matchMedia('(max-width:950px)').matches) $('viewer').scrollIntoView({ block: 'start', behavior: 'instant' });
 }
 
-function renderFailureCases(trajectories = new Map()) {
-  const container = $('failure-case-list'); container.replaceChildren();
-  const measured = (state.point?.trials || []).filter((trial) => analyzePhysics(trajectories.get(trial.id)));
-  state.failureCases = selectFailureCases(measured, state.point?.failureCaseIds);
-  $('failure-cases').hidden = !state.failureCases.length;
-  container.disabled = !state.failureCases.length;
-  if (!state.failureCases.length) return;
-  $('failure-cases-heading').textContent = `${state.point.id} · Failed attempts`;
-  $('failure-case-intro').textContent = `${state.failureCases.length} recorded failures.`;
-  $('failure-case-footnote').hidden = !state.failureCases.some((trial) => pairedTrial(state.point, trial));
-  const placeholder = node('option', '', "Select a failure"); placeholder.value = ''; container.append(placeholder);
-  for (const trial of state.failureCases) {
-    const id = trial.sourceRawId || trial.id;
-    const option = node('option', '', `${id} · ${outcomeLabel(trial)}`); option.value = id;
-    container.append(option);
-  }
-  if (state.failureCases.includes(state.trial)) container.value = state.trial.sourceRawId || state.trial.id;
-}
 
 function renderPhysicsPanel() {
   state.physicsPlot = null;
@@ -807,16 +792,7 @@ function renderPhysicsPanel() {
   if (!analysis || !state.trial) return;
   $('physics-heading').textContent = `${state.trial.sourceRawId || state.trial.label} · Execution metrics`;
   $('physics-result').textContent = outcomeLabel(state.trial);
-  const code = outcomeCode(state.trial), evidenceCode = state.trial.outcome?.evidenceCode;
-  const failureCopy = failureCase(state.trial) === 2
-    ? 'Case 2: physical validation failed.'
-    : code === 'lift_ik_failed'
-    ? "The lift posture IK did not find a qualified solution and did not enter the successful lift path."
-    : code === 'lift_plan_failed'
-    ? "Successful lift plans were not generated; no further breakdown of internal planning reasons was documented."
-    : "It was determined that the original observation time was used, and the A/B position was fixed against the candidate and the test seed.";
-  const contactCopy = analysis.firstContactIndex === null ? "No hand contact recorded" : "Contact recorded";
-  $('physics-explanation').textContent = `${contactCopy}. Maximum table clearance: ${formatNumber(analysis.maxGapM * 1000, 3)} mm; final valid hold: ${formatNumber(analysis.terminalHoldS, 3)} s. ${evidenceCode ? `Recorded code: ${evidenceCode}. ` : ''}${failureCopy}`;
+  $('physics-explanation').textContent = '';
   $('physics-first-contact').disabled = analysis.firstContactIndex === null;
   const paired = pairedTrial();
   $('physics-paired').hidden = !paired;
@@ -1192,14 +1168,14 @@ function renderComparisonSummary() {
     $('comparison-orientation').textContent = '—';
   }
   $('comparison-metric-note').textContent = selected.length >= 2
-    ? `${selected.length} selected paths; separation is aligned by arc length, orientation is measured at the endpoint.`
+    ? `${selected.length} paths · arc-length aligned`
     : "Select at least two paths to compute separation and orientation difference.";
   let status;
   if (comparison.loading) status = "Loading successful trajectories…";
   else if (!state.point?.trials.some((trial) => trial.status === 'success')) status = "No successful trajectories at this pose. Rejections and diagnostics are retained.";
   else if (!comparison.entries.length) status = planned ? "No lift plans available. Switch to recorded execution." : "No successful execution trajectories at this pose.";
   else if (!selected.length) status = "Select successful attempts below, or choose six diverse paths.";
-  else status = `${selected.length} of ${comparison.entries.length} successful paths selected. Resampling uses recorded paths only.`;
+  else status = `${selected.length} of ${comparison.entries.length} successful paths selected. `;
   $('comparison-status').textContent = status;
   $('comparison-auto').disabled = comparison.loading || !comparison.entries.length;
   $('comparison-random').disabled = comparison.loading || !comparison.entries.length;
@@ -1406,8 +1382,8 @@ async function selectPoint(point) {
   notice();
   const result = statistics(point);
   $('selected-point-heading').textContent = `${point.id} · ${pointLabel(point)}`;
-  $('point-kind').textContent = kindLabels[point.kind] || point.kind || "Experimental stops";
-  $('point-description').textContent = point.id === 'A' ? '' : point.id === 'B' ? 'Case 2: physical validation failed.' : point.description || '';
+  $('point-kind').hidden = true;
+  $('point-description').textContent = point.id === 'B' ? 'Case 2: physical validation failed.' : point.id === 'C' ? 'Case 3: out of reach.' : point.id === 'D' ? 'Case 3: pose constraints.' : '';
   $('point-description').hidden = !$('point-description').textContent;
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
@@ -1415,12 +1391,9 @@ async function selectPoint(point) {
   $('statistic-note').textContent = '';
   $('data-warning').hidden = !result.mismatch;
   $('data-warning').textContent = `Claim stats are inconsistent with the attempt list. Currently pressing${result.attempts}attempted to record recalculation, success${result.successes}times.`;
-  const failuresByCode = new Map();
-  for (const trial of point.trials) if (trial.status !== 'success') failuresByCode.set(outcomeLabel(trial), (failuresByCode.get(outcomeLabel(trial)) || 0) + 1);
-  $('failure-summary').textContent = [...failuresByCode].map(([label, count]) => `${label}: ${count}`).join('；');
-  $('failure-summary').hidden = !failuresByCode.size;
+  $('failure-summary').textContent = '';
+  $('failure-summary').hidden = true;
   renderPositionIKButton();
-  renderFailureCases();
   renderTrialList();
   renderReplayChoices(point);
   renderComparisonSummary();
@@ -1457,7 +1430,7 @@ function ensurePointTrajectories() {
 }
 
 async function loadPointTrajectories(point, token) {
-  const recorded = point.trials.filter((trial) => trial.file);
+  const recorded = point.trials.filter((trial) => trial.status === 'success' && trial.file);
   const results = await Promise.allSettled(recorded.map((trial) => getTrajectory(point, trial)));
   if (token !== state.pointToken) return;
   disposePaths();
@@ -1477,7 +1450,6 @@ async function loadPointTrajectories(point, token) {
     }
   });
   state.comparison.loading = false;
-  renderFailureCases(new Map(results.flatMap((result, index) => result.status === 'fulfilled' ? [[recorded[index].id, result.value]] : [])));
   refreshComparisonData();
   if (comparisonActive() && state.comparison.entries.length) focusComparison();
   if (state.reachabilityMode) requestAnimationFrame(focusReachability);
@@ -1586,40 +1558,8 @@ function leavePositionIK() {
 
 function renderMetrics(trial, trajectory = null) {
   $('trial-metrics').replaceChildren();
-  addMetric("Result", outcomeLabel(trial));
-  if (trial.outcome?.evidenceCode) addMetric("Recorded evidence code", trial.outcome.evidenceCode);
-  if (trial.seed !== undefined) addMetric("Trial seed (not an independent planner seed)", trial.seed);
-  if (trial.grasp) addMetric("Grasp", typeof trial.grasp === 'string' ? trial.grasp : JSON.stringify(trial.grasp));
-  if (trajectory) {
-    addMetric("Playback duration", `${formatNumber(trajectory.duration, 3)} s`);
-    addMetric("Recorded samples", `${trajectory.frameCount}Frame${trajectory.dimensions ? ` / ${trajectory.dimensions}Dimension Joints` : ''}`);
-    if (trajectory.ee) {
-      let length = 0;
-      for (let i = 1; i < trajectory.ee.length; i++) {
-        length += Math.hypot(...trajectory.ee[i].slice(0, 3).map((v, j) => v - trajectory.ee[i - 1][j]));
-      }
-      addMetric("End-effector path length", `${formatNumber(length, 3)} m`);
-    }
-  } else if (trial.replaySummary) {
-    const summary = trial.replaySummary;
-    addMetric("Original Recording Duration", `${formatNumber(summary.durationS, 3)} s`);
-    addMetric("Original Record Sampling", `${summary.frameCount}Frame/${summary.dimensions}Dimension Joints`);
-    addMetric("End-effector path length", `${formatNumber(summary.actualPathLengthM, 3)} m`);
-    if (summary.plannedPathLengthM !== null) addMetric("Native Lift Path Length", `${formatNumber(summary.plannedPathLengthM, 3)} m`);
-    if (summary.physics) {
-      const physics = summary.physics;
-      addMetric("First contact", physics.firstContactTimeS === null ? "No contacts recorded" : `${formatNumber(physics.firstContactTimeS, 3)} s`);
-      addMetric("Maximum table clearance", `${formatNumber(physics.maxGapM * 1000, 3)} mm`);
-      addMetric("Maximum qualifying hold", `${formatNumber(physics.longestHoldS, 3)} s`);
-      addMetric("Qualified hold at the end", `${formatNumber(physics.terminalHoldS, 3)} s`);
-    }
-  }
-  const names = { liftHeight: "Lifting height", lift_height: "Lifting height", maxLift: "Max Lift", max_lift: "Max Lift", finalLift: "Final Lift", final_lift: "Final Lift", planningTime: "Time-consuming to plan", planning_time: "Time-consuming to plan", minDistance: "Closest distance", min_distance: "Closest distance", positionError: "Position error", position_error: "Position error", rotationError: "Attitude error", rotation_error: "Attitude error", final_height: "Final height", collision: "collision", reason: "Determination description" };
-  for (const [key, value] of Object.entries(trial.metrics || {}).slice(0, 10)) {
-    const formatted = typeof value === 'number' ? formatNumber(value, 4)
-      : typeof value === 'boolean' ? (value ? " is " : "No") : typeof value === 'object' ? JSON.stringify(value) : String(value);
-    addMetric(names[key] || key, formatted);
-  }
+  addMetric('Result', outcomeLabel(trial));
+  if (trajectory) addMetric('Duration', `${formatNumber(trajectory.duration, 1)} s`);
 }
 
 async function selectTrial(trial) {
@@ -1637,20 +1577,14 @@ async function selectTrial(trial) {
   updateSelectionButtons();
   $('trial-title').textContent = trial.label || trial.id;
   $('trial-reason').textContent = displayReason(trial);
-  $('failure-case-list').value = state.failureCases.includes(trial) ? trial.sourceRawId || trial.id : '';
   renderMetrics(trial);
   setPlaybackAvailability(false);
   updateTimeline();
   updateProvenance();
   updateModeUI();
-  if (!trial.file) {
-    const summaryOnly = trial.replayAvailability === 'summary_only';
-    $('trajectory-state').textContent = summaryOnly ? "Numeric value only" : "No replay";
-    $('trajectory-note').textContent = summaryOnly
-      ? "This time it has actually been implemented.The Lite version retains the original results, feeds, and numerical summaries without a full playback; an attempted playback marked \"Playback Sample\" is optional."
-      : trial.status === 'planning_rejected'
-      ? "This time it was rejected in the planning stage and no physical trajectory was performed.The scene shows the docking position and the initial state of the object."
-      : "The attempt did not provide a joint and object status file and could not be replayed.";
+  if (trial.status !== 'success' || !trial.file) {
+    $('trajectory-state').textContent = 'No replay';
+    $('trajectory-note').textContent = '';
     $('current-stage').textContent = outcomeLabel(trial);
     return;
   }
@@ -1666,15 +1600,7 @@ async function selectTrial(trial) {
     state.duration = trajectory.duration;
     const playable = Boolean(trajectory.joints && state.bindings.length);
     $('trajectory-state').textContent = playable ? "Replay loaded" : "Path only";
-    const notes = [];
-    if (failureCase(trial) === 2) notes.push('Grasp did not pass physical validation.');
-    else if (outcomeCode(trial) === 'lift_ik_failed') notes.push("Only the pre-grab, close, and contact segments that have been performed are played back; the lift posture IK did not find a qualified solution and did not enter the successful lift path.");
-    else if (outcomeCode(trial) === 'lift_plan_failed') notes.push("Replay contains approach, closure, and contact only; lift planning failed.");
-    if (!trajectory.joints) notes.push("No joint states; robot replay unavailable.");
-    if (!trajectory.object) notes.push("No object states; bottle remains at its initial pose.");
-    if (!trajectory.ee) notes.push("No end-effector data; paths and axes are unavailable.");
-    if (!notes.length) notes.push("Robot, end-effector, and bottle use recorded states.");
-    $('trajectory-note').textContent = notes.join('');
+    $('trajectory-note').textContent = '';
     renderMetrics(trial, trajectory);
     renderPhysicsPanel();
     updateModeUI();
@@ -1723,7 +1649,7 @@ function setPlaybackAvailability(available) {
 
 function setPlaying(playing) {
   if (playing && !hostActive) resumeReplay = true;
-  state.playing = Boolean(playing && hostActive && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
+  state.playing = Boolean(playing && hostActive && state.trial?.status === 'success' && !state.diagnosticMode && !state.reachabilityMode && !comparisonActive() && state.trajectory?.joints && state.duration > 0);
   $('play-label').textContent = state.playing ? "Pause" : "Play";
   $('play-button').setAttribute('aria-label', state.playing ? "Pause" : "Play");
   $('play-icon').replaceChildren();
@@ -1988,11 +1914,6 @@ function focusTop() {
 
 function bindUI() {
   $('back-to-comparison').addEventListener('click', () => setViewMode('comparison'));
-  $('failure-case-list').addEventListener('change', (event) => {
-    const point = state.point;
-    const trial = state.failureCases.find((item) => (item.sourceRawId || item.id) === event.target.value);
-    if (trial) openPhysicalCase(point, trial);
-  });
   document.addEventListener('pointerdown', (event) => {
     if (!$('viewer-options').contains(event.target)) $('viewer-options').open = false;
   });
@@ -2203,7 +2124,7 @@ async function start() {
     $('scene-name').textContent = manifest.scene.name || "Recorded scene";
     $('point-count').textContent = `${manifest.points.length}`;
     const total = manifest.points.reduce((sum, point) => sum + point.trials.length, 0);
-    const replays = manifest.points.reduce((sum, point) => sum + point.trials.filter((trial) => trial.file).length, 0);
+    const replays = manifest.points.reduce((sum, point) => sum + point.trials.filter((trial) => trial.status === 'success' && trial.file).length, 0);
     $('dataset-summary').textContent = `12 attempts / pose · ${replays} replays`;
     setLoading('Loading scene and robot', 'Preparing the complete scene…');
     const initialTrial = preferredTrial(manifest.points[0]);

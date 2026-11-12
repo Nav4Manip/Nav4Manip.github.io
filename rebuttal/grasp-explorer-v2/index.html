@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="./warmup.js?v=20261112-cases"></script>
+  <script src="./warmup.js?v=20261112-cleanui"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261112-cases">
+  <link rel="stylesheet" href="./style.css?v=20261112-cleanui">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -36,22 +36,11 @@
         <div id="point-list" class="point-list" aria-label="Pose" tabindex="-1">
           <p class="empty-copy">Loading poses.</p>
         </div>
-        <div class="point-note">
-          <span class="small-caption">Metric</span>
-          <p id="statistics-definition">Successes / 12 candidates, including prescreen rejects.</p>
-        </div>
+        <div class="point-note" hidden><p id="statistics-definition"></p></div>
         <details class="help-details">
           <summary>Controls</summary>
           <p>Drag to orbit, scroll to zoom, right-drag to pan.</p>
           <p><kbd>Space</kbd>Play/Pause<br><kbd>←</kbd> <kbd>→</kbd>Contrast progress ± 2%/playback ± 0.2 seconds<br><kbd>G</kbd>Scenario<kbd>F</kbd>Focus Path<kbd>T</kbd>Overlook<br><kbd>A</kbd>–<kbd>D</kbd>Select a pose</p>
-        </details>
-        <details class="outcome-guide">
-          <summary>Failure codes</summary>
-          <p><b>IK-FAIL:</b> No valid pre-grasp IK solution was found.</p>
-          <p><b>Prescreen IK-FAIL:</b> The candidate was rejected before execution.</p>
-          <p><b>Lift-stage codes:</b> Pipeline diagnostics; execution outcome determines the case.</p>
-          <p><b>Physical validation:</b> Contact, clearance or hold time did not meet the success criteria.</p>
-          <p class="validation-rule">Success requires a 0.5 s hold after lifting, including at least 0.2 s of contact and ≥3 cm clearance at the end.</p>
         </details>
       </aside>
 
@@ -120,7 +109,7 @@
         </div>
         <div id="viewer-notice" class="viewer-notice" role="status" aria-live="polite" hidden></div>
         <div id="comparison-context" class="comparison-context" hidden>
-          <span id="comparison-source-caption">cuRobo lift plan</span><span>Paths show the right palm center; bottle remains at its initial pose.</span>
+          <span id="comparison-source-caption">cuRobo lift plan</span><span>Palm paths · object fixed.</span>
         </div>
         <div class="scene-footer">
           <div class="scene-caption"><div id="scene-name" class="scene-name">Experiment scene</div><span id="cutaway-state" class="cutaway-state" role="status">Loading room shell</span></div>
@@ -211,16 +200,10 @@
           </details>
         </section>
 
-        <section id="failure-cases" class="failure-cases" aria-labelledby="failure-cases-heading" hidden>
-          <div class="panel-heading"><h2 id="failure-cases-heading">Failure Cases</h2><span class="subtle">Recorded replay</span></div>
-          <p id="failure-case-intro" class="case-intro">Recorded failed attempts.</p>
-          <label class="sr-only" for="failure-case-list">Select a failure</label><select id="failure-case-list" class="source-select" disabled><option value="">Select a failure</option></select>
-          <p id="failure-case-footnote" class="case-footnote">Compare the same grasp and seed at the other pose.</p>
-        </section>
 
         <section id="comparison-panel" class="comparison-panel" aria-labelledby="comparison-heading" hidden>
           <div class="panel-heading"><h2 id="comparison-heading">Trajectory comparison</h2><span id="comparison-count" class="subtle">0 / 6 paths</span></div>
-          <p class="comparison-scope">Compare recorded paths; up to six may be selected.</p>
+          <p class="comparison-scope">Select up to 6 paths.</p>
           <details class="comparison-explanation"><summary>Interpretation</summary><p class="randomness-note">Grasp and seed vary together; this shows plan diversity, not planner randomness in isolation.</p></details>
 
 
@@ -283,8 +266,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261112-cases"></script>
-  <script type="module" src="./app.js?v=20261112-cases"></script>
+  <script src="./layout.js?v=20261112-cleanui"></script>
+  <script type="module" src="./app.js?v=20261112-cleanui"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

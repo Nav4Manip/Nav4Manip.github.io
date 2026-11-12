@@ -30,6 +30,7 @@
   loop.innerHTML = '<input id="replay-loop" type="checkbox" checked> Loop';
   document.getElementById('single-transport').append(loop);
   const sidebar = document.querySelector('.points-panel');
+  sidebar.prepend(document.getElementById('rate-comparison'));
   const inspector = document.querySelector('.inspector');
   sidebar.insertBefore(inspector, sidebar.querySelector('.point-note'));
   const detailsSection = document.getElementById('c-prescreen-explanation');

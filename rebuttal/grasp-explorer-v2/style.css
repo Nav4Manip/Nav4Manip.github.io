@@ -310,3 +310,6 @@
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
+
+/* Keep recording metadata out of the main presentation. */
+.frame-indicator, .scene-caption { display: none; }
