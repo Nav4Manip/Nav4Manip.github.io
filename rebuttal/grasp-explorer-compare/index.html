@@ -9,15 +9,15 @@
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261111-speed">
+  <link rel="stylesheet" href="./style.css?v=20261112-oracle">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
   <div class="app">
-    <div class="model-toolbar" role="group" aria-label="Compare Dex and WAM">
+    <div class="model-toolbar" role="group" aria-label="Compare Oracle Manip Policy and WAM">
       <strong>Compare methods</strong>
       <div class="model-switch">
-        <button type="button" data-method="dexonomy" aria-pressed="true" disabled>Dex</button>
+        <button type="button" data-method="dexonomy" aria-pressed="true" disabled>Oracle Manip Policy</button>
         <button type="button" data-method="wam" aria-pressed="false" disabled>WAM</button>
       </div>
     </div>
@@ -46,9 +46,9 @@
           <summary>Compare success rates</summary>
           <div class="evaluation-settings">
             <label>Poses <select id="evaluation-set"></select></label>
-            <label>Records <select id="evaluation-scope"><option value="full">All</option><option value="equal20">20 per pose</option></select></label>
+            <label>Records <select id="evaluation-scope"><option value="full">All</option><option value="equal20">20-record subset</option></select></label>
           </div>
-          <table><thead><tr><th scope="col">Pose</th><th scope="col">Dex</th><th scope="col">WAM</th></tr></thead><tbody id="evaluation-rate-rows"></tbody></table>
+          <table><thead><tr><th scope="col">Pose</th><th scope="col">Oracle</th><th scope="col">WAM</th></tr></thead><tbody id="evaluation-rate-rows"></tbody></table>
           <p id="evaluation-metrics" class="subtle"></p>
           <p class="subtle">Same poses, separate trials.</p>
         </details>
@@ -302,8 +302,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261111-light"></script>
-  <script type="module" src="./app.js?v=20261111-speed"></script>
+  <script src="./layout.js?v=20261112-oracle"></script>
+  <script type="module" src="./app.js?v=20261112-oracle"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>

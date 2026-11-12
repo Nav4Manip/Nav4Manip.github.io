@@ -13,7 +13,12 @@
   choice.append('Replay ');
   const select = document.createElement('select');
   select.id = 'replay-choice'; select.setAttribute('aria-label', 'Select replay'); select.disabled = true;
-  choice.append(select); modebar.append(choice); app.insertBefore(modebar, workspace);
+  choice.append(select); modebar.append(choice);
+  const overlay = document.createElement('label');
+  overlay.id = 'oracle-overlay-label'; overlay.className = 'loop-option'; overlay.hidden = true;
+  overlay.innerHTML = '<input id="oracle-overlay" type="checkbox" checked> Oracle paths';
+  overlay.title = 'Faint recorded Oracle paths at the same docking pose; separate trials.';
+  modebar.append(overlay); app.insertBefore(modebar, workspace);
   for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
   const loop = document.createElement('label'); loop.className = 'loop-option';
   loop.innerHTML = '<input id="replay-loop" type="checkbox" checked> Loop';

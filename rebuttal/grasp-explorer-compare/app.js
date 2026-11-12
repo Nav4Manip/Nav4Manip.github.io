@@ -8,7 +8,7 @@ import { renderDiversityLens, updateDiversityProgress, setDiversityView } from '
 import { analyzePhysics, physicsFrameAt, selectFailureCases } from './physics.js';
 import { computeReachabilityProof, createReachabilityVisual, readPrescreenMetadata, referenceReachabilityAnchor } from './reachability.js';
 
-import { createEvaluationSession, compareEndpointRates, rateStatistics, formatRate, validateWamTrajectory, hasIncompleteGapMeasurements } from './wam-evaluation.js';
+import { createEvaluationSession, compareEndpointRates, rateStatistics, formatRate, validateWamTrajectory, hasIncompleteGapMeasurements } from './wam-evaluation.js?v=20261112-oracle';
 
 const $ = (id) => document.getElementById(id);
 const rootURL = new URL('./', window.location.href);
@@ -39,7 +39,8 @@ const state = {
 
 let scene, camera, renderer, controls, loader, robotRoot, objectRoot, sceneAsset;
 let markerGroup, pathGroup, eeAxes, witnessAxes, requestedAxes, animationId, lastFrameTime = 0;
-let comparisonGroup;
+let comparisonGroup, oracleOverlayGroup;
+const oracleOverlayCache = new Map();
 let needsRender = true;
 const pointer = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
@@ -645,6 +646,45 @@ function updateSelectionButtons() {
     button.setAttribute('aria-pressed', String(!state.diagnosticMode && button.dataset.trialId === state.trial?.id));
   }
   refreshPaths();
+}
+
+function clearOracleOverlay() {
+  if (!oracleOverlayGroup) return;
+  oracleOverlayGroup.traverse(object => { object.geometry?.dispose(); object.material?.dispose(); });
+  oracleOverlayGroup.clear();
+}
+
+async function loadOracleOverlay(point, token) {
+  const view = evaluationView();
+  if (!view?.isWam) return;
+  const baseline = view.baselinePoints.find(item => item.id === point.id);
+  const trials = baseline?.trials.filter(trial => trial.file) || [];
+  if (!trials.length) return;
+  const results = await Promise.allSettled(trials.map(trial => {
+    if (!oracleOverlayCache.has(trial.file)) {
+      const pending = readJSON(trial.file).then(raw => validateTrajectory(raw, trial.file));
+      oracleOverlayCache.set(trial.file, pending);
+      pending.catch(() => oracleOverlayCache.delete(trial.file));
+    }
+    return oracleOverlayCache.get(trial.file);
+  }));
+  if (token !== state.pointToken || !isWam()) return;
+  clearOracleOverlay();
+  oracleOverlayGroup ??= new THREE.Group();
+  scene.add(oracleOverlayGroup);
+  for (const result of results) {
+    if (result.status !== 'fulfilled') continue;
+    const poses = result.value.ee;
+    if (!poses || poses.length < 2) continue;
+    const points = poses.filter((_, i) => i % Math.max(1, Math.ceil(poses.length / 600)) === 0 || i === poses.length - 1)
+      .map(pose => new THREE.Vector3(...pose.slice(0, 3)));
+    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),
+      new THREE.LineBasicMaterial({ color: '#648ca6', transparent: true, opacity: 0.32, depthWrite: false }));
+    oracleOverlayGroup.add(line);
+  }
+  oracleOverlayGroup.visible = $('oracle-overlay').checked;
+  if (results.some(result => result.status === 'rejected')) notice('Some Oracle paths could not load.');
+  invalidate();
 }
 
 function disposePaths() {
@@ -1384,8 +1424,13 @@ function renderEvaluation() {
   const points = view.manifest.points;
   const attempts = points.reduce((total, point) => total + point.trials.length, 0);
   const replays = points.reduce((total, point) => total + point.trials.filter(trial => trial.file).length, 0);
-  $('dataset-description').textContent = `${points.length} docking poses`;
-  $('dataset-summary').textContent = `${attempts} attempts · ${replays} replays`;
+  $('dataset-description').textContent = `${view.isWam ? 'WAM' : 'Oracle Manip Policy'} · ${points.length} poses`;
+  $('oracle-overlay-label').hidden = !view.isWam;
+  $('dataset-summary').textContent = view.scope === 'equal20'
+    ? `20 records / pose (subset) · ${replays} replays`
+    : `${attempts} attempts · ${replays} replays`;
+  $('dataset-summary').title = view.scope === 'equal20'
+    ? 'Evenly sampled in source order, without filtering outcomes. All records are available under Compare success rates.' : '';
   $('statistics-definition').textContent = view.scope === 'full' ? 'Successes / attempts.' : 'Successes / 20-record subset.';
   $('planned-source-option').disabled = $('planned-source-option').hidden = view.isWam;
   const comparison = compareEndpointRates(view.baselinePoints, view.wamPoints);
@@ -1452,8 +1497,11 @@ async function selectPoint(point) {
   leavePositionIK();
   const token = ++state.pointToken;
   state.trialToken++;
+  clearOracleOverlay();
   setPlaying(false);
   state.point = point;
+  $('oracle-overlay-label').hidden = !isWam() || !evaluationView().baselinePoints
+    .find(item => item.id === point.id)?.trials.some(trial => trial.file);
   state.viewMode = 'single';
   $('viewer-options').open = false;
   $('all-trials').open = false;
@@ -1520,6 +1568,7 @@ async function selectPoint(point) {
   await initialPlayback;
   await new Promise(resolve => requestAnimationFrame(resolve));
   if (token !== state.pointToken) return;
+  if (isWam()) loadOracleOverlay(point, token).catch(error => notice(errorMessage(error)));
   if (state.reachabilityMode) requestAnimationFrame(focusReachability);
   if (!isWam() && point.diagnostics?.positionIK) { enterPositionIK(); focusTarget(); }
   refreshPaths();
@@ -1556,6 +1605,7 @@ async function loadPointTrajectories(point, token) {
   renderFailureCases(new Map(results.flatMap((result, index) => result.status === 'fulfilled' ? [[recorded[index].id, result.value]] : [])));
   refreshComparisonData();
   if (comparisonActive() && state.comparison.entries.length) focusComparison();
+  if (isWam()) loadOracleOverlay(point, token).catch(error => notice(errorMessage(error)));
   if (state.reachabilityMode) requestAnimationFrame(focusReachability);
   if (!isWam() && point.diagnostics?.positionIK) { enterPositionIK(); focusTarget(); }
   refreshPaths();
@@ -2242,6 +2292,10 @@ function bindUI() {
 
 async function start() {
   bindUI();
+  $('oracle-overlay').addEventListener('change', () => {
+    if (oracleOverlayGroup) oracleOverlayGroup.visible = $('oracle-overlay').checked;
+    invalidate();
+  });
   $('show-paths').addEventListener('change', () => { if ($('show-paths').checked) ensurePointTrajectories(); });
   if (window.location.protocol === 'file:') {
     setLoading("Please open via local service", "Run python3 serve.py in the delivery directory and visit http://127.0.0.1: 8000/.", true);
@@ -2256,7 +2310,10 @@ async function start() {
     return;
   }
   try {
-    state.manifest = validateManifest(await readJSON('data/manifest.json'));
+    const baseManifest = validateManifest(await readJSON('data/manifest.json'));
+    const evaluation = createEvaluationSession(baseManifest, await readJSON('data/wam.json'), { scope: 'equal20', setId: 'aligned_a_v1' });
+    state.evaluation = evaluation;
+    state.manifest = evaluation.view().manifest;
     const manifest = state.manifest;
     $('app-title').textContent = manifest.title || "Grasp Explorer";
     document.title = manifest.title || "Grasp Explorer";
@@ -2274,7 +2331,7 @@ async function start() {
     const results = await Promise.allSettled([
       loadModel(manifest.scene.file), loadModel(manifest.robot.file), loadModel(manifest.object.file), readJSON(manifest.robot.kinematics),
       readJSON('data/experiment.json').catch(() => null), readJSON('data/prescreen.json').catch(() => null),
-      readJSON('data/wam.json').then(raw => createEvaluationSession(manifest, raw, { scope: 'full' })),
+      Promise.resolve(evaluation),
     ]);
     const failure = results.find((result) => result.status === 'rejected');
     if (failure) throw failure.reason;

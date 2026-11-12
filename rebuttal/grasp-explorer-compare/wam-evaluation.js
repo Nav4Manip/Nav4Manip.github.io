@@ -193,7 +193,7 @@ export function hasIncompleteGapMeasurements(trajectory) {
 
 export function createEvaluationSession(baseManifest, rawPayload, options = {}) {
   const payload = validateEvaluationPayload(rawPayload, baseManifest);
-  let model = 'dexonomy', setId = payload.sets.find((set) => set.role === 'original').id, scope = options.scope ?? 'equal20', revision = 0;
+  let model = 'dexonomy', setId = options.setId ?? payload.sets.find((set) => set.role === 'original').id, scope = options.scope ?? 'equal20', revision = 0;
   const validScope = (value) => requireValue(['equal20', 'full'].includes(value), 'Unknown record scope.');
   validScope(scope);
   const namespace = () => `${payload.model.id}/${setId}/${model}/${scope}`;
@@ -213,9 +213,9 @@ export function createEvaluationSession(baseManifest, rawPayload, options = {}) 
     const points = scope === 'full' ? fullPoints : fullPoints.map((point, i) => {
       const selection = metadata[i], trials = selection.indices.map((index) => point.trials[index]);
       return { ...point, trials, selection,
-        description: ` invalid ：${trials.length} / ${selection.sourceCount}  invalid ${selection.complete ? '' : '； invalid  20  invalid ， invalid '}。 invalid ， invalid ； invalid 。`,
-        statistics: { ...rateStatistics(trials), metric: ' invalid  /  invalid （ invalid ）',
-          note: ' invalid ； invalid 。' },
+        description: `${trials.length} of ${selection.sourceCount} records; evenly spaced in source order.`,
+        statistics: { ...rateStatistics(trials), metric: 'Successes / selected attempts',
+          note: 'Display subset; all records remain available.' },
       };
     });
     return cached[scope] = { points, metadata };
@@ -228,12 +228,12 @@ export function createEvaluationSession(baseManifest, rawPayload, options = {}) 
     const isWam = model === 'wam', isOriginalDexonomy = !isWam && set.role === 'original' && scope === 'full';
     const manifest = isOriginalDexonomy ? baseManifest : { ...baseManifest,
       title: isWam ? `${baseManifest.title} · WAM` : baseManifest.title,
-      description: `${set.label} · ${isWam ? payload.model.label : 'Dexonomy'} · ${scope === 'equal20' ? ' invalid  20  invalid （ invalid ）' : ' invalid '}`,
+      description: `${set.label} · ${isWam ? payload.model.label : 'Dexonomy'} · ${scope === 'equal20' ? '20-record display subset' : 'All records'}`,
       points: isWam ? wamPoints : baselinePoints,
       provenance: { source: payload.provenance, model: isWam ? payload.model : 'Dexonomy', protocol: isWam ? payload.protocol : 'pick_lift_hold_v1', frozen: set.frozen },
     };
     const selection = { scope, target: scope === 'equal20' ? 20 : null,
-      rule: scope === 'full' ? ' invalid ： invalid ' : 'floor(i*(n-1)/19), i=0..19； invalid ；n<20  invalid ',
+      rule: scope === 'full' ? 'All source records' : 'floor(i*(n-1)/19), i=0..19; source order only; retain all if n<20',
       dexonomy: baseline.metadata, wam: wam.metadata, complete: [...baseline.metadata, ...wam.metadata].every((point) => point.complete) };
     return { model, setId, scope, set, manifest, baselinePoints, wamPoints, fullBaselinePoints, fullWamPoints: set.points,
       fullPoints: isWam ? set.points : fullBaselinePoints, selection, isWam, isOriginalDexonomy,
