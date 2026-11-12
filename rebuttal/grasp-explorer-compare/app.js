@@ -39,7 +39,8 @@ const state = {
 
 let scene, camera, renderer, controls, loader, robotRoot, objectRoot, sceneAsset;
 let markerGroup, pathGroup, eeAxes, witnessAxes, requestedAxes, animationId, lastFrameTime = 0;
-let comparisonGroup, oracleOverlayGroup;
+let comparisonGroup, oracleGhost;
+let oracleBindings = [], oracleTrajectory = null, oraclePoint = null, oracleLoadToken = 0;
 const oracleOverlayCache = new Map();
 let needsRender = true;
 const pointer = new THREE.Vector2();
@@ -491,8 +492,8 @@ function pointBasePose(point) {
   return [...point.position, 0, 0, Math.sin(yaw / 2), Math.cos(yaw / 2)];
 }
 
-function applyJoints(a, b = a, alpha = 0) {
-  for (const binding of state.bindings) {
+function applyJoints(a, b = a, alpha = 0, bindings = state.bindings) {
+  for (const binding of bindings) {
     const first = a?.[binding.index] ?? 0;
     const second = b?.[binding.index] ?? first;
     const value = first + (second - first) * alpha;
@@ -649,42 +650,99 @@ function updateSelectionButtons() {
 }
 
 function clearOracleOverlay() {
-  if (!oracleOverlayGroup) return;
-  oracleOverlayGroup.traverse(object => { object.geometry?.dispose(); object.material?.dispose(); });
-  oracleOverlayGroup.clear();
+  oracleLoadToken++;
+  oracleTrajectory = null;
+  oraclePoint = null;
+  if (oracleGhost) oracleGhost.visible = false;
+  $('oracle-overlay-note').hidden = true;
+}
+
+function prepareOracleChoices(point) {
+  const baseline = evaluationView()?.baselinePoints.find(item => item.id === point.id);
+  const trials = isWam() ? baseline?.trials.filter(trial => trial.file) || [] : [];
+  const choice = $('oracle-choice');
+  choice.replaceChildren();
+  for (const trial of trials) {
+    const option = node('option', '', `${trial.label || trial.id} · ${statusLabels[trial.status]}`);
+    option.value = trial.id;
+    choice.append(option);
+  }
+  const initial = trials.find(trial => trial.status === 'success') || trials[0];
+  if (initial) choice.value = initial.id;
+  choice.disabled = !trials.length;
+  $('oracle-overlay-label').hidden = !trials.length;
+  $('oracle-choice-label').hidden = trials.length < 2;
+}
+
+function ensureOracleGhost() {
+  if (oracleGhost) return;
+  // Rigid joint hierarchy: share existing geometry, but never WAM materials or joint state.
+  oracleGhost = robotRoot.clone(true);
+  oracleGhost.name = 'Oracle motion overlay';
+  const material = new THREE.MeshBasicMaterial({
+    color: '#88bce2', transparent: true, opacity: 0.28, depthWrite: false,
+  });
+  oracleGhost.traverse(object => {
+    if (!object.isMesh) return;
+    object.material = Array.isArray(object.material) ? object.material.map(() => material) : material;
+    object.castShadow = false;
+    object.receiveShadow = false;
+    object.renderOrder = 2;
+  });
+  oracleBindings = state.bindings.map(binding => {
+    const object = oracleGhost.getObjectByName(binding.object.name);
+    if (!object) throw new Error('Oracle overlay joint unavailable.');
+    return { ...binding, object };
+  });
+  oracleGhost.visible = false;
+  scene.add(oracleGhost);
+}
+
+function updateOracleOverlay() {
+  const available = isWam() && state.viewMode === 'single' && $('oracle-choice').options.length > 0;
+  $('oracle-overlay-label').hidden = !available;
+  $('oracle-choice-label').hidden = !available || $('oracle-choice').options.length < 2;
+  const visible = Boolean(isWam() && $('oracle-overlay').checked && oracleTrajectory
+    && state.trajectory?.joints && state.duration > 0 && state.viewMode === 'single'
+    && !state.diagnosticMode && !state.reachabilityMode);
+  if (oracleGhost) oracleGhost.visible = visible;
+  $('oracle-overlay-note').hidden = !visible;
+  if (!visible) { invalidate(); return; }
+  // Align progress, not physical time: both recorded actions finish in the same playback cycle.
+  const progress = THREE.MathUtils.clamp(state.time / state.duration, 0, 1);
+  const [first, second, alpha] = findFrame(oracleTrajectory, oracleTrajectory.start + progress * oracleTrajectory.duration);
+  applyJoints(oracleTrajectory.joints[first], oracleTrajectory.joints[second], alpha, oracleBindings);
+  if (oracleTrajectory.base) applyPoseSample(oracleGhost, oracleTrajectory.base, first, second, alpha);
+  else setPose(oracleGhost, oracleTrajectory.basePose || pointBasePose(oraclePoint));
+  invalidate();
 }
 
 async function loadOracleOverlay(point, token) {
   const view = evaluationView();
   if (!view?.isWam) return;
   const baseline = view.baselinePoints.find(item => item.id === point.id);
-  const trials = baseline?.trials.filter(trial => trial.file) || [];
-  if (!trials.length) return;
-  const results = await Promise.allSettled(trials.map(trial => {
+  const trial = baseline?.trials.find(trial => trial.id === $('oracle-choice').value && trial.file);
+  clearOracleOverlay();
+  if (!trial || !$('oracle-overlay').checked) return;
+  const loadToken = oracleLoadToken;
+  try {
     if (!oracleOverlayCache.has(trial.file)) {
-      const pending = readJSON(trial.file).then(raw => validateTrajectory(raw, trial.file));
+      // A previously viewed Oracle replay can be reused without another download.
+      const key = `${view.payload.model.id}/${view.setId}/dexonomy/${view.scope}/${point.id}/${trial.id}`;
+      const pending = state.cache.get(key) || readJSON(trial.file).then(raw => validateTrajectory(raw, trial.file));
       oracleOverlayCache.set(trial.file, pending);
       pending.catch(() => oracleOverlayCache.delete(trial.file));
     }
-    return oracleOverlayCache.get(trial.file);
-  }));
-  if (token !== state.pointToken || !isWam()) return;
-  clearOracleOverlay();
-  oracleOverlayGroup ??= new THREE.Group();
-  scene.add(oracleOverlayGroup);
-  for (const result of results) {
-    if (result.status !== 'fulfilled') continue;
-    const poses = result.value.ee;
-    if (!poses || poses.length < 2) continue;
-    const points = poses.filter((_, i) => i % Math.max(1, Math.ceil(poses.length / 600)) === 0 || i === poses.length - 1)
-      .map(pose => new THREE.Vector3(...pose.slice(0, 3)));
-    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),
-      new THREE.LineBasicMaterial({ color: '#648ca6', transparent: true, opacity: 0.32, depthWrite: false }));
-    oracleOverlayGroup.add(line);
+    const trajectory = await oracleOverlayCache.get(trial.file);
+    if (token !== state.pointToken || loadToken !== oracleLoadToken || !isWam()) return;
+    if (!trajectory.joints) throw new Error('Oracle joint replay unavailable.');
+    ensureOracleGhost();
+    oraclePoint = baseline;
+    oracleTrajectory = trajectory;
+    updateOracleOverlay();
+  } catch (error) {
+    if (token === state.pointToken && loadToken === oracleLoadToken) notice(`Oracle overlay: ${errorMessage(error)}`);
   }
-  oracleOverlayGroup.visible = $('oracle-overlay').checked;
-  if (results.some(result => result.status === 'rejected')) notice('Some Oracle paths could not load.');
-  invalidate();
 }
 
 function disposePaths() {
@@ -1366,6 +1424,7 @@ function updateModeUI() {
   }
   updateComparisonSelectionUI();
   updateAnalysisLayout();
+  updateOracleOverlay();
   invalidate();
 }
 
@@ -1500,8 +1559,7 @@ async function selectPoint(point) {
   clearOracleOverlay();
   setPlaying(false);
   state.point = point;
-  $('oracle-overlay-label').hidden = !isWam() || !evaluationView().baselinePoints
-    .find(item => item.id === point.id)?.trials.some(trial => trial.file);
+  prepareOracleChoices(point);
   state.viewMode = 'single';
   $('viewer-options').open = false;
   $('all-trials').open = false;
@@ -1553,7 +1611,11 @@ async function selectPoint(point) {
   updateSelectionButtons();
   const initial = preferredTrial(point);
   let initialPlayback = Promise.resolve();
-  if (initial) initialPlayback = selectTrial(initial).then(() => { if (state.point === point && state.trial === initial && state.viewMode === 'single') setPlaying(true); });
+  if (initial) initialPlayback = selectTrial(initial).then(async () => {
+    if (token !== state.pointToken) return;
+    if (isWam()) await loadOracleOverlay(point, token);
+    if (state.point === point && state.trial === initial && state.viewMode === 'single') setPlaying(true);
+  });
   else {
     $('trial-title').textContent = "No attempts";
     $('trial-reason').textContent = "No attempts for this pose.";
@@ -1568,7 +1630,6 @@ async function selectPoint(point) {
   await initialPlayback;
   await new Promise(resolve => requestAnimationFrame(resolve));
   if (token !== state.pointToken) return;
-  if (isWam()) loadOracleOverlay(point, token).catch(error => notice(errorMessage(error)));
   if (state.reachabilityMode) requestAnimationFrame(focusReachability);
   if (!isWam() && point.diagnostics?.positionIK) { enterPositionIK(); focusTarget(); }
   refreshPaths();
@@ -1900,6 +1961,7 @@ function applyTime(time) {
   }
   updateTimeline();
   updatePhysicsReadings();
+  updateOracleOverlay();
   invalidate();
 }
 
@@ -2293,9 +2355,10 @@ function bindUI() {
 async function start() {
   bindUI();
   $('oracle-overlay').addEventListener('change', () => {
-    if (oracleOverlayGroup) oracleOverlayGroup.visible = $('oracle-overlay').checked;
-    invalidate();
+    if ($('oracle-overlay').checked && !oracleTrajectory) loadOracleOverlay(state.point, state.pointToken);
+    else updateOracleOverlay();
   });
+  $('oracle-choice').addEventListener('change', () => loadOracleOverlay(state.point, state.pointToken));
   $('show-paths').addEventListener('change', () => { if ($('show-paths').checked) ensurePointTrajectories(); });
   if (window.location.protocol === 'file:') {
     setLoading("Please open via local service", "Run python3 serve.py in the delivery directory and visit http://127.0.0.1: 8000/.", true);

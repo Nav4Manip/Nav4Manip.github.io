@@ -373,3 +373,13 @@
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
+
+.explorer-modebar { flex-wrap: wrap; row-gap: 6px; }
+.oracle-overlay-note {
+  flex-basis: 100%;
+  margin: 0;
+  color: #526f83;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.oracle-overlay-note[hidden], #oracle-choice-label[hidden] { display: none; }

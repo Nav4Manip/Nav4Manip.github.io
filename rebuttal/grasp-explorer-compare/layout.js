@@ -16,9 +16,15 @@
   choice.append(select); modebar.append(choice);
   const overlay = document.createElement('label');
   overlay.id = 'oracle-overlay-label'; overlay.className = 'loop-option'; overlay.hidden = true;
-  overlay.innerHTML = '<input id="oracle-overlay" type="checkbox" checked> Oracle paths';
-  overlay.title = 'Faint recorded Oracle paths at the same docking pose; separate trials.';
-  modebar.append(overlay); app.insertBefore(modebar, workspace);
+  overlay.innerHTML = '<input id="oracle-overlay" type="checkbox" checked> Oracle overlay';
+  overlay.title = 'Translucent Oracle and solid WAM: recorded motions aligned by playback progress.';
+  const oracleChoice = document.createElement('label');
+  oracleChoice.id = 'oracle-choice-label'; oracleChoice.className = 'replay-choice'; oracleChoice.hidden = true;
+  oracleChoice.innerHTML = 'Oracle <select id="oracle-choice" aria-label="Oracle overlay replay"></select>';
+  const overlayNote = document.createElement('p');
+  overlayNote.id = 'oracle-overlay-note'; overlayNote.className = 'oracle-overlay-note'; overlayNote.hidden = true;
+  overlayNote.textContent = 'Motion comparison · translucent Oracle, solid WAM · progress-aligned';
+  modebar.append(overlay, oracleChoice, overlayNote); app.insertBefore(modebar, workspace);
   for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
   const loop = document.createElement('label'); loop.className = 'loop-option';
   loop.innerHTML = '<input id="replay-loop" type="checkbox" checked> Loop';
