@@ -744,7 +744,7 @@ function buildPath(point, trial, trajectory) {
 function comparisonActive() { return state.viewMode === 'comparison' && !state.diagnosticMode && !state.reachabilityMode; }
 function physicsActive() { return state.viewMode === 'single' && !state.diagnosticMode && !state.reachabilityMode && Boolean(state.physics); }
 function dPoseActive() { return state.diagnosticMode && Boolean(state.point?.diagnostics?.positionIK); }
-function isReachabilityPoint(point = state.point) { return originalDex() && Boolean(state.reachabilityVisual) && point?.id === state.reachabilityPointId; }
+function isReachabilityPoint(point = state.point) { return !isWam() && Boolean(state.reachabilityVisual) && point?.id === state.reachabilityPointId; }
 
 function updateAnalysisLayout() {
   const panel = state.reachabilityMode ? $('reachability-lens') : dPoseActive() ? $('d-pose-lens') : physicsActive() ? $('physics-lens') : comparisonActive() ? $('diversity-lens') : null;

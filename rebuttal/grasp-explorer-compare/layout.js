@@ -28,7 +28,7 @@
   sidebar.insertBefore(inspector, sidebar.querySelector('.point-note'));
   const detailsSection = document.getElementById('c-prescreen-explanation');
   const details = document.createElement('details'), summary = document.createElement('summary');
-  summary.textContent = 'Prescreen details';
+  summary.textContent = 'Full evaluation details';
   while (detailsSection.firstChild) details.append(detailsSection.firstChild);
   details.prepend(summary); detailsSection.append(details);
 
