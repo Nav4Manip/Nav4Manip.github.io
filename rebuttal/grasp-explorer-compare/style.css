@@ -441,6 +441,7 @@
 .trial-button:disabled { opacity: .8; }
 :root { --success: #3979aa; }
 #d-failure-callout { max-width: min(410px, calc(100% - 150px)); }
+#c-failure-callout strong, #c-failure-callout p,
 #d-failure-callout strong, #d-failure-callout p,
 #d-pose-explanation, .d-pose-facts span, .d-pose-facts b { font-size: 14px; line-height: 1.45; }
 #d-failure-summary { display: block; }
