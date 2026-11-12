@@ -126,14 +126,19 @@ function canonicalStatus(status) { return statusAliases[status] || status; }
 function outcomeCode(trial) { return trial.outcome?.code || trial.status; }
 function failureCase(trial) {
   const code = outcomeCode(trial);
-  if (code === 'physical_validation_failed') return 2;
+  if (trial.status === 'success') return null;
+  // Classify the recorded execution outcome before considering a pipeline error code.
+  if (trial.status === 'physics_failed' || code === 'physical_validation_failed') return 2;
   if (['ik_failed', 'prescreen_ik_failed', 'lift_ik_failed', 'lift_plan_failed', 'reach_rejected', 'prescreen_rejected'].includes(code) || trial.status === 'planning_rejected') return 3;
   return null;
 }
 function outcomeLabel(trial) {
   const label = outcomeLabels[outcomeCode(trial)] || statusLabels[trial.status];
   const category = failureCase(trial);
-  return category ? `Case ${category} · ${label}` : label;
+  return category === 2 ? 'Case 2 · Physical validation failed' : category ? `Case ${category} · ${label}` : label;
+}
+function displayReason(trial) {
+  return failureCase(trial) === 2 ? 'Grasp did not pass physical validation.' : trial.reason || outcomeLabel(trial);
 }
 function formatNumber(value, digits = 2) {
   return Number.isFinite(value) ? value.toLocaleString('zh-CN', { maximumFractionDigits: digits }) : '—';
@@ -599,7 +604,7 @@ function renderTrialList() {
     button.type = 'button';
     button.dataset.trialId = trial.id;
     button.setAttribute('aria-pressed', 'false');
-    button.setAttribute('aria-label', `${trial.label || trial.id}，${outcomeLabel(trial)}。${trial.reason || ''}`);
+    button.setAttribute('aria-label', `${trial.label || trial.id}，${outcomeLabel(trial)}。${displayReason(trial)}`);
     const row = node('span', 'trial-row');
     const color = node('span', 'trial-color');
     color.dataset.trialColor = trial.id;
@@ -803,7 +808,9 @@ function renderPhysicsPanel() {
   $('physics-heading').textContent = `${state.trial.sourceRawId || state.trial.label} · Execution metrics`;
   $('physics-result').textContent = outcomeLabel(state.trial);
   const code = outcomeCode(state.trial), evidenceCode = state.trial.outcome?.evidenceCode;
-  const failureCopy = code === 'lift_ik_failed'
+  const failureCopy = failureCase(state.trial) === 2
+    ? 'Case 2: physical validation failed.'
+    : code === 'lift_ik_failed'
     ? "The lift posture IK did not find a qualified solution and did not enter the successful lift path."
     : code === 'lift_plan_failed'
     ? "Successful lift plans were not generated; no further breakdown of internal planning reasons was documented."
@@ -1400,7 +1407,7 @@ async function selectPoint(point) {
   const result = statistics(point);
   $('selected-point-heading').textContent = `${point.id} · ${pointLabel(point)}`;
   $('point-kind').textContent = kindLabels[point.kind] || point.kind || "Experimental stops";
-  $('point-description').textContent = point.id === 'A' ? '' : point.id === 'B' ? 'Case 3: lift planning failed.' : point.description || '';
+  $('point-description').textContent = point.id === 'A' ? '' : point.id === 'B' ? 'Case 2: physical validation failed.' : point.description || '';
   $('point-description').hidden = !$('point-description').textContent;
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
@@ -1629,7 +1636,7 @@ async function selectTrial(trial) {
   resetPose();
   updateSelectionButtons();
   $('trial-title').textContent = trial.label || trial.id;
-  $('trial-reason').textContent = trial.reason || `Experimental Recorded Results:${outcomeLabel(trial)}。`;
+  $('trial-reason').textContent = displayReason(trial);
   $('failure-case-list').value = state.failureCases.includes(trial) ? trial.sourceRawId || trial.id : '';
   renderMetrics(trial);
   setPlaybackAvailability(false);
@@ -1660,7 +1667,8 @@ async function selectTrial(trial) {
     const playable = Boolean(trajectory.joints && state.bindings.length);
     $('trajectory-state').textContent = playable ? "Replay loaded" : "Path only";
     const notes = [];
-    if (outcomeCode(trial) === 'lift_ik_failed') notes.push("Only the pre-grab, close, and contact segments that have been performed are played back; the lift posture IK did not find a qualified solution and did not enter the successful lift path.");
+    if (failureCase(trial) === 2) notes.push('Grasp did not pass physical validation.');
+    else if (outcomeCode(trial) === 'lift_ik_failed') notes.push("Only the pre-grab, close, and contact segments that have been performed are played back; the lift posture IK did not find a qualified solution and did not enter the successful lift path.");
     else if (outcomeCode(trial) === 'lift_plan_failed') notes.push("Replay contains approach, closure, and contact only; lift planning failed.");
     if (!trajectory.joints) notes.push("No joint states; robot replay unavailable.");
     if (!trajectory.object) notes.push("No object states; bottle remains at its initial pose.");
