@@ -748,15 +748,14 @@ function renderDPoseComparison(witness) {
     }
     svg.append(physicsSVG('circle', { cx: center, cy: 77, r: 3.2, fill: '#315970' }));
   }
-  svg.append(physicsSVG('text', { x: 300, y: 50, 'text-anchor': 'middle', class: 'pose-angle-label' }, "Three-dimensional rotation difference"));
+  svg.append(physicsSVG('text', { x: 300, y: 50, 'text-anchor': 'middle', class: 'pose-angle-label' }, "Shown orientation mismatch"));
   svg.append(physicsSVG('text', { x: 300, y: 82, 'text-anchor': 'middle', class: 'pose-angle-value' }, `${witness.orientationErrorDeg.toFixed(1)}°`));
-  svg.append(physicsSVG('text', { x: 300, y: 109, 'text-anchor': 'middle', class: 'pose-angle-label' }, `Position error${formatPositionError(witness.positionErrorM)}`));
   host.append(svg);
-  $('d-pose-heading').textContent = `${state.point.id} · Position vs. required orientation`;
-  $('d-pose-explanation').textContent = `Left: position solution. Right: required pre-grasp pose. Position error ${formatPositionError(witness.positionErrorM)}; orientation difference ${formatNumber(witness.orientationErrorDeg, 1)}°. The witness was not executed.`;
-  $('d-failure-heading').textContent = `${state.point.id} · Case 3: pose constraints`;
+  $('d-pose-heading').textContent = `${state.point.id} · Case 3 · Orientation constraint`;
+  $('d-pose-explanation').textContent = 'Position reachable; no full-pose IK solution found for the required orientation. Static illustration.';
+  $('d-failure-heading').textContent = `${state.point.id} · Case 3: orientation-constrained IK failed`;
   const rejected = state.point.trials.filter((trial) => outcomeCode(trial) === 'ik_failed' || outcomeCode(trial) === 'prescreen_ik_failed').length;
-  $('d-failure-summary').textContent = `${rejected} of ${state.point.trials.length} pre-grasp IK attempts failed. This static witness is not an executed attempt.`;
+  $('d-failure-summary').textContent = 'Position reachable; required orientation not satisfied.';
 }
 
 function pairedTrial(point = state.point, trial = state.trial) {
@@ -790,7 +789,7 @@ function renderPhysicsPanel() {
   const host = $('physics-chart'); host.replaceChildren();
   const analysis = state.physics;
   if (!analysis || !state.trial) return;
-  $('physics-heading').textContent = `${state.trial.sourceRawId || state.trial.label} · Execution metrics`;
+  $('physics-heading').textContent = `${state.trial.label} · Success`;
   $('physics-result').textContent = outcomeLabel(state.trial);
   $('physics-explanation').textContent = '';
   $('physics-first-contact').disabled = analysis.firstContactIndex === null;
@@ -1265,7 +1264,7 @@ function updateModeUI() {
   $('comparison-transport').hidden = !active;
   $('single-transport').hidden = active || isStatic;
   $('reachability-transport').hidden = !isStatic;
-  $('static-title').textContent = reach ? `${state.point.id} · Distance bound` : `${state.point?.id || ''} · Static IK witness`;
+  $('static-title').textContent = reach ? `${state.point.id} · Case 3: out of reach` : `${state.point?.id || ''} · Case 3: orientation constraint`;
   $('static-copy').textContent = reach ? "Static evidence · no execution" : "Static witness · no execution";
   $('comparison-context').hidden = !active;
   $('comparison-legend').hidden = !active;
@@ -1383,7 +1382,7 @@ async function selectPoint(point) {
   const result = statistics(point);
   $('selected-point-heading').textContent = `${point.id} · ${pointLabel(point)}`;
   $('point-kind').hidden = true;
-  $('point-description').textContent = point.id === 'B' ? 'Case 2: physical validation failed.' : point.id === 'C' ? 'Case 3: out of reach.' : point.id === 'D' ? 'Case 3: pose constraints.' : '';
+  $('point-description').textContent = point.id === 'B' ? 'Case 2: physical validation failed.' : point.id === 'C' ? 'Case 3: out of reach.' : point.id === 'D' ? 'Case 3: orientation constraint.' : '';
   $('point-description').hidden = !$('point-description').textContent;
   $('success-rate').textContent = percentage(result.successes, result.attempts);
   $('success-rate').style.color = result.successes ? 'var(--teal)' : 'var(--failure)';
@@ -1517,10 +1516,10 @@ function enterPositionIK() {
   $('ik-witness-axis-label').textContent = copy.actual;
   $('ik-requested-axis-label').textContent = copy.requested;
   $('ik-angle-label').textContent = `${copy.rotation} ${formatNumber(witness.orientationErrorDeg, 2)}°`;
-  $('diagnostics-heading').textContent = copy.heading;
+  $('diagnostics-heading').textContent = 'Case 3 · IK illustration';
   $('trajectory-state').textContent = "Static IK";
   $('trial-title').textContent = copy.title;
-  $('trial-reason').textContent = `End Reachable${copy.pregrasp ? "Pre-Grab Position Requested" : "Requested location"}, but with${copy.requested}Direction difference${formatNumber(witness.orientationErrorDeg, 2)}°. Solid spool display${copy.actual}Direction, dotted axis shows${copy.requested}Direction.${witness.note ? ` ${witness.note}` : ''}`;
+  $('trial-reason').textContent = 'Case 3: position reachable, but full-pose IK did not satisfy the required orientation.';
   $('trial-metrics').replaceChildren();
   addMetric("Record Type", "Static IK, non-execution records");
   addMetric(`${copy.position}error`, formatPositionError(witness.positionErrorM));

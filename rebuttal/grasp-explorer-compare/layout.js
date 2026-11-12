@@ -23,9 +23,11 @@
   oracleChoice.innerHTML = 'Oracle <select id="oracle-choice" aria-label="Oracle overlay replay"></select>';
   const overlayNote = document.createElement('p');
   overlayNote.id = 'oracle-overlay-note'; overlayNote.className = 'oracle-overlay-note'; overlayNote.hidden = true;
-  overlayNote.textContent = 'Motion comparison: translucent Oracle vs. solid WAM · progress-aligned';
-  modebar.append(overlay, oracleChoice, overlayNote); app.insertBefore(modebar, workspace);
+  overlayNote.setAttribute('role', 'note');
+  overlayNote.innerHTML = '<strong>Success · Intentional overlay for motion comparison</strong><span>Solid: WAM · Translucent: Oracle · Progress-aligned</span>';
+  modebar.append(overlay, oracleChoice); app.insertBefore(modebar, workspace);
   for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
+  app.insertBefore(overlayNote, workspace);
   const loop = document.createElement('label'); loop.className = 'loop-option';
   loop.innerHTML = '<input id="replay-loop" type="checkbox" checked> Loop';
   document.getElementById('single-transport').append(loop);

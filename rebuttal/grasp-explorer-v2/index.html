@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="./warmup.js?v=20261112-readable"></script>
+  <script src="./warmup.js?v=20261112-categories"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf2f6">
   <title>Grasp Explorer</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2318384d'/%3E%3Cpath d='M23 10a10 10 0 1 0 0 12v-7h-8v4h4v1a6 6 0 1 1 1-8' fill='%239bd1d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=20261112-readable">
+  <link rel="stylesheet" href="./style.css?v=20261112-categories">
 </head>
 <body>
   <a class="skip-link" href="#point-list">Skip to docking poses</a>
@@ -98,7 +98,7 @@
         </div>
         <div id="d-failure-callout" class="c-failure-callout" role="note" hidden>
           <strong id="d-failure-heading">Static position IK versus required posture</strong>
-          <p>Orientation difference: <b id="d-orientation-gap">—</b>. This witness was not executed.</p>
+          <p>Shown orientation mismatch: <b id="d-orientation-gap">—</b>.</p>
           <p id="d-failure-summary"></p>
         </div>
         <div id="loading-panel" class="loading-panel" role="status" aria-live="polite">
@@ -117,7 +117,7 @@
         </div>
         <div id="path-key" class="path-key" hidden><span></span>Colored lines: attempts<span class="current-path-key"></span>Bold: selected attempt</div>
         <section id="diversity-lens" class="diversity-lens" aria-label="Path comparison" hidden>
-          <div class="lens-heading"><h2>Path comparison</h2></div>
+          <div class="lens-heading"><h2>Success · Path diversity</h2></div>
           <div id="lens-body">
 
             <div id="lens-chart" class="lens-chart"></div>
@@ -158,7 +158,7 @@
         </section>
         <section id="d-pose-lens" class="diagnostic-lens d-pose-lens is-collapsed" aria-label="Static position solution versus required posture orientation" hidden>
           <div class="lens-heading"><h2 id="d-pose-heading">Position vs. orientation</h2><span class="evidence-result">Not executed</span><button id="pose-toggle" type="button" aria-expanded="false">Show comparison</button></div>
-          <div class="d-pose-facts"><span>Palm position<b>Collision-free position solution</b></span><span>Full pose<b>See recorded attempts</b></span><span>Witness<b>Not executed</b></span></div>
+          <div class="d-pose-facts"><span>Palm position<b>Collision-free position solution</b></span><span>Full pose<b>No feasible IK found</b></span><span>Witness<b>Not executed</b></span></div>
           <div id="d-orientation-chart" class="d-orientation-chart"></div>
           <p id="d-pose-explanation" class="d-pose-explanation"></p>
           <p class="measurement-note">Both views share the same camera. The angle applies only to this witness and is not a global minimum; finite IK failures do not prove mathematical infeasibility.</p>
@@ -202,7 +202,7 @@
 
 
         <section id="comparison-panel" class="comparison-panel" aria-labelledby="comparison-heading" hidden>
-          <div class="panel-heading"><h2 id="comparison-heading">Trajectory comparison</h2><span id="comparison-count" class="subtle">0 / 6 paths</span></div>
+          <div class="panel-heading"><h2 id="comparison-heading">Success · Path diversity</h2><span id="comparison-count" class="subtle">0 / 6 paths</span></div>
           <p class="comparison-scope">Select up to 6 paths.</p>
           <details class="comparison-explanation"><summary>Interpretation</summary><p class="randomness-note">Grasp and seed vary together; this shows plan diversity, not planner randomness in isolation.</p></details>
 
@@ -266,8 +266,8 @@
     </footer>
   </div>
   <div id="announcer" class="sr-only" aria-live="polite"></div>
-  <script src="./layout.js?v=20261112-readable"></script>
-  <script type="module" src="./app.js?v=20261112-readable"></script>
+  <script src="./layout.js?v=20261112-categories"></script>
+  <script type="module" src="./app.js?v=20261112-categories"></script>
   <script nomodule>document.getElementById('loading-title').textContent='A modern browser is required';document.getElementById('loading-spinner').hidden=true;</script>
 </body>
 </html>
