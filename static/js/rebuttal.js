@@ -1,9 +1,9 @@
 (() => {
   const tabs = [...document.querySelectorAll('.review-tabs [role="tab"]')];
   const clips = {
-    'snack-bag': { fixed: ['failure', 'success'], navigation: ['success', 'failure'] },
+    'snack-bag': { fixed: ['success', 'failure'], navigation: ['success', 'failure'] },
     'snack-can': { fixed: ['failure'], navigation: ['success', 'failure'] },
-    yogurt: { fixed: ['failure', 'success'], navigation: ['success', 'failure'] },
+    yogurt: { fixed: ['success', 'failure'], navigation: ['success', 'failure'] },
   };
   document.querySelectorAll('[data-coevolution]').forEach(section => {
     const task = section.querySelector('[data-coevolution-task]');
@@ -22,6 +22,9 @@
       if (section.getClientRects().length) video.poster = video.dataset.poster;
     }
     function selectTask() {
+      // Start with the same outcome on both sides, using only available recordings.
+      const defaultOutcome = ['success', 'failure'].find(value =>
+        cards.every(card => clips[task.value][card.dataset.coevolutionModel].includes(value)));
       cards.forEach(card => {
         const outcome = card.querySelector('[data-outcome]');
         outcome.replaceChildren(...clips[task.value][card.dataset.coevolutionModel].map(value => {
@@ -30,6 +33,7 @@
           option.textContent = value === 'success' ? 'Success' : 'Failure';
           return option;
         }));
+        outcome.value = defaultOutcome;
         outcome.disabled = outcome.options.length === 1;
         loadClip(card);
       });
