@@ -1,63 +1,47 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <script src="./rebuttal/grasp-explorer-v2/warmup.js?v=20261112-brief"></script>
-  
-  <meta name="description" content="Dexterous mobile manipulation with bidirectionally coupled co-evolution, the Nav-N-Manip benchmark, and Nav4Manip-Pairs.">
-  
-  <meta name="keywords" content="dexterous mobile manipulation, navigation, Nav-N-Manip, Nav4Manip-Pairs">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title> Nav4Manip: From Navigation to Dexterous Mobile Manipulation through Co-Evolution </title>
-
-  <link rel="preload" href="./static/webfonts/linux-libertine/linux-libertine-regular.woff2" as="font" type="font/woff2" crossorigin>
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  
-  <link rel="stylesheet" href="./static/css/index.css?v=navigation-compact-20261104">
-  <link rel="stylesheet" href="./static/css/demo-carousels.css">
-  <link rel="stylesheet" href="./static/css/rebuttal.css?v=20261114-recordings">
-  <script defer src="./static/js/rebuttal.js?v=20261114-recordings"></script>
-  
-  <link rel="icon" href="data:,">
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script defer src="./static/js/site-config.js?v=silent-20261104"></script>
-  <script defer src="./static/js/index.js?v=20261111-light"></script>
+<meta charset="utf-8"/>
+<script src="./rebuttal/grasp-explorer-v2/warmup.js?v=20261112-brief"></script>
+<meta content="Dexterous mobile manipulation with bidirectionally coupled co-evolution, the Nav-N-Manip benchmark, and Nav4Manip-Pairs." name="description"/>
+<meta content="dexterous mobile manipulation, navigation, Nav-N-Manip, Nav4Manip-Pairs" name="keywords"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title> Nav4Manip: From Navigation to Dexterous Mobile Manipulation through Co-Evolution </title>
+<link as="font" crossorigin="" href="./static/webfonts/linux-libertine/linux-libertine-regular.woff2" rel="preload" type="font/woff2"/>
+<link href="./static/css/bulma.min.css" rel="stylesheet"/>
+<link href="./static/css/bulma-carousel.min.css" rel="stylesheet"/>
+<link href="./static/css/bulma-slider.min.css" rel="stylesheet"/>
+<link href="./static/css/fontawesome.all.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet"/>
+<link href="./static/css/index.css?v=navigation-compact-20261104" rel="stylesheet"/>
+<link href="./static/css/demo-carousels.css" rel="stylesheet"/>
+<link href="./static/css/rebuttal.css?v=20261114-recordings" rel="stylesheet"/>
+<script defer="" src="./static/js/rebuttal.js?v=20261114-recordings"></script>
+<link href="data:," rel="icon"/>
+<script defer="" src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script defer="" src="./static/js/site-config.js?v=silent-20261104"></script>
+<script defer="" src="./static/js/index.js?v=20261111-light"></script>
 </head>
 <body>
 <section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered" style="margin-left:0; margin-right:0;">
-        <div class="column has-text-centered">
-          
-          <h1 class="title is-1 publication-title" data-paper-title> 
-            <span data-title-text><span class="publication-title-line">Nav4Manip: From Navigation to Dexterous</span> <span class="publication-title-line">Mobile Manipulation through Co-Evolution</span></span>
-          </h1>
-          <div class="is-size-5 publication-authors">
-            
-            <span class="author-block" data-authors>Anonymous Submission</span>
-            
-            
-          </div>
-            
-            
-          </div>
-        </div>
-    </div>
-  </div>
+<div class="hero-body">
+<div class="container is-max-desktop">
+<div class="columns is-centered" style="margin-left:0; margin-right:0;">
+<div class="column has-text-centered">
+<h1 class="title is-1 publication-title" data-paper-title="">
+<span data-title-text=""><span class="publication-title-line">Nav4Manip: From Navigation to Dexterous</span> <span class="publication-title-line">Mobile Manipulation through Co-Evolution</span></span>
+</h1>
+<div class="is-size-5 publication-authors">
+<span class="author-block" data-authors="">Anonymous Submission</span>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section aria-label="Reviewer responses" class="review-section" id="reviewer-responses">
 <div class="review-inner">
 <div class="review-heading"><span class="review-kicker">REBUTTAL</span></div>
@@ -67,642 +51,626 @@
 <button aria-controls="review-aqr4" aria-selected="false" id="tab-aqr4" role="tab" tabindex="-1" type="button">AQR4</button>
 </div>
 <div aria-labelledby="tab-yd4j" class="review-panel" id="review-yd4j" role="tabpanel" tabindex="0"><p>Thank you for your careful reading of Appendix D.2 and for framing the evaluation-cell filtering boundary as a clear, constructive question. We address each part of your inquiry below.</p><section class="response-item"><div class="qa-question"><strong>Q1:</strong><p>What exactly causes rejection before an affordance evaluation cell is created? ... Please distinguish invalid initializations, rejected action candidates within a task, and entire valid initializations for which the dock permits no feasible action.</p></div><details class="qa-answer"><summary><strong>A1:</strong><span class="qa-answer-preview">In our offline affordance pipeline, no valid failure cases are omitted or excluded from the denominator. The three categories are handled as follows:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> In our offline affordance pipeline, no valid failure cases are omitted or excluded from the denominator. The three categories are handled as follows:</p><ul><li><b>Case 1 (Invalid initializations):</b> When constructing the simulation scenes, we enforce physical validity constraints and collision checks on initial object placements and randomization. Configurations with physical penetration or out-of-bound placement are prevented during scene generation and never enter the evaluation pipeline.</li><li><b>Case 2 (Rejected action candidates within a task — feasible plan, failed physics verification):</b> For valid object configurations, if the planner generates a trajectory that subsequently fails physics verification (e.g., due to grasp instability), the attempt creates a record in the Affordance Evaluation Cell, is scored as 0, and is counted in the denominator of Eq. (34).</li><li><b>Case 3 (Valid initializations where the dock permits no feasible action):</b> If the object configuration is valid but the candidate dock is too far or poorly positioned for the planner to find any feasible trajectory, the attempt also creates a record in the Affordance Evaluation Cell, is scored as 0, and is fully included in the denominator of Eq. (34).</li></ul></div></details></section><section class="response-item"><div class="qa-question"><strong>Q2:</strong><p>If the last category can be excluded, how is it accounted for when comparing candidate docks? The frequency of such exclusions and their effect on the selected endpoints would help determine whether the scores remain comparable across docks.</p></div><details class="qa-answer"><summary><strong>A2:</strong><span class="qa-answer-preview">Across all candidate nodes in the training set, the distribution is:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Across all candidate nodes in the training set, the distribution is:</p><ul><li><b>Case 1 (Invalid initializations):</b> 0%</li><li><b>Case 2 (Planning succeeded, physics verification failed):</b> 19.72%</li><li><b>Case 3 (No feasible plan due to poor or distant dock pose):</b> 67.69%</li><li><b>Successful execution:</b> 12.59%</li></ul></div></details><p class="explorer-link"><a class="explorer-cta" data-explorer-jump="dexonomy" href="#grasp-explorer"><span>Oracle manipulation policy</span><span aria-hidden="true" class="explorer-cta-arrow">↓</span></a></p></section></div>
-<div aria-labelledby="tab-qjfp" class="review-panel" hidden="" id="review-qjfp" role="tabpanel" tabindex="0"><p>Thank you for your thoughtful review and for suggesting concrete experiments to further test our pipeline. We have conducted additional closed-loop, ablation, correlation, and cross-policy experiments to address each of your points below.</p><section class="response-item"><div class="qa-question"><strong>Q1:</strong><p>Questionable co-evolution claim. The manipulation WAM remains frozen after post-training, while only the navigation VLM is further fine-tuned. ... The authors should better justify the term co-evolution.</p></div><details class="qa-answer"><summary><strong>A1:</strong><span class="qa-answer-preview">To validate the closed-loop co-evolution between navigation and manipulation, we ran inference with the trained VLN policy in both simulation and real-world scenes. Using the actual stopping poses reached by the VLN policy as the initial base distribution, we re-collected manipulation training data and post-trained the WAM. We evaluated this closed-loop WAM on Nav-N-Manip in both simulation and the real world:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> To validate the closed-loop co-evolution between navigation and manipulation, we ran inference with the trained VLN policy in both simulation and real-world scenes. Using the actual stopping poses reached by the VLN policy as the initial base distribution, we re-collected manipulation training data and post-trained the WAM. We evaluated this closed-loop WAM on Nav-N-Manip in both simulation and the real world:</p><p>Post-training the WAM on rollouts from actual VLN endpoints adapts the manipulation policy to upstream navigation stopping characteristics, improving end-to-end success rates from <b>30% to 52% in simulation</b> and from <b>17% to 30% in the real world</b>. </p><div class="coevolution-results"><table><thead><tr><th scope="col">Training Setting</th><th scope="col">Sim SR@E2E (100 trials)</th><th scope="col">Real SR@E2E (30 trials)</th></tr></thead><tbody><tr><th scope="row">Original WAM</th><td>30%</td><td>17%</td></tr><tr><th scope="row">Fine-tuned WAM</th><td>52%</td><td>30%</td></tr></tbody></table></div><section class="response-media" data-recordings><div class="recording-toolbar"><strong>Real-world experiments</strong><label>View <select data-recording-mode><option value="individual">Individual trials</option><option value="overlap">Overlap</option></select></label><label>Task <select data-recording-task><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label></div><p data-recording-note>Individual trials · One recorded attempt per video. Play both starts both clips together.</p><div class="cross-wam-actions"><button type="button" data-play-group>Play both</button><button type="button" data-restart-group>Restart</button></div><div class="coevolution-grid" data-video-group data-play-label="Play both" data-pause-label="Pause both"><figure class="cross-wam-card" data-recording-model="original"><figcaption><h3>Original WAM</h3><select aria-label="Original WAM recording" data-recording-choice></select></figcaption><video controls muted playsinline preload="none" aria-label="Real-world Original WAM"></video></figure><figure class="cross-wam-card" data-recording-model="fine-tuned"><figcaption><h3>Fine-tuned WAM</h3><select aria-label="Fine-tuned WAM recording" data-recording-choice></select></figcaption><video controls muted playsinline preload="none" aria-label="Real-world Fine-tuned WAM"></video></figure></div></section></div></details></section><section class="response-item"><div class="qa-question"><strong>Q2:</strong><p>Insufficient validation of the three-stage pipeline. As shown in Table 3, RFT provides only a marginal improvement in end-to-end success rate (31.01% to 31.79%). A Co-Tuning + RLAIF baseline without RFT is needed to demonstrate the necessity of all three stages.</p></div><details class="qa-answer"><summary><strong>A2:</strong><span class="qa-answer-preview">We added the Co-Tuning (MTC) + RLAIF baseline (skipping the RFT stage) and compared it against our original settings:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We added the Co-Tuning (MTC) + RLAIF baseline (skipping the RFT stage) and compared it against our original settings:</p><p>Skipping RFT (MTC + RLAIF) yields end-to-end success rate of <b>43.02%</b>, lower than the full three-stage pipeline (<b>52.13%</b>). By filtering high-quality trajectories, RFT provides a stable behavioral prior that prevents performance degradation caused by overly large exploration spaces during direct RLAIF fine-tuning.</p></div></details><div class="coevolution-results"><table><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup><tbody><tr><td><p></p></td><td><p>SR@3</p></td><td><p>SR@1.5</p></td><td><p>SR@1.0</p></td><td><p>SR@0.6</p></td><td><p>NE</p></td><td><p>SR@Manip</p></td><td><p>SR@E2E</p></td></tr><tr><td><p>MTC</p></td><td><p>80.2</p></td><td><p>77.1</p></td><td><p>69.8</p></td><td><p>52.7</p></td><td><p>1.81</p></td><td><p>39.34</p></td><td><p>31.01</p></td></tr><tr><td><p>MTC + RLAIF</p></td><td><p>84.5</p></td><td><p>80.0</p></td><td><p>78.5</p></td><td><p>64.2</p></td><td><p>1.46</p></td><td><p>51.16</p></td><td><p>43.02</p></td></tr><tr><td><p>MTC + RFT + RLAIF</p></td><td><p>89.5</p></td><td><p>84.1</p></td><td><p>80.4</p></td><td><p>71.7</p></td><td><p>1.15</p></td><td><p>56.87</p></td><td><p>52.13</p></td></tr></tbody></table></div></section><section class="response-item"><div class="qa-question"><strong>Q3:</strong><p>Potential mismatch between offline affordance labels and WAM capabilities. ... The authors should compare both at the same candidate base poses and report the correlation between offline affordance scores and actual WAM success rates.</p></div><details class="qa-answer"><summary><strong>A3:</strong><span class="qa-answer-preview">Because the WAM is trained on expert trajectories provided by the Dexonomy-based oracle manipulation policy, their capabilities are inherently aligned. We evaluated both the Dexonomy oracle and the learned WAM across repeated trials at the same candidate navigation endpoints in simulation:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Because the WAM is trained on expert trajectories provided by the Dexonomy-based oracle manipulation policy, their capabilities are inherently aligned. We evaluated both the Dexonomy oracle and the learned WAM across repeated trials at the same candidate navigation endpoints in simulation:</p><p>The <b>Pearson correlation coefficient</b> between the offline Dexonomy affordance scores and actual WAM grasp success rates is r = 0.9987 (Spearman rank correlation ρ = 1.00), showing that the offline labels match the actual capabilities of the learned policy.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Candidate Endpoint</th><th scope="col">Oracle (Dexonomy) SR</th><th scope="col">Learned WAM SR</th></tr></thead><tbody><tr><th scope="row">A</th><td>100% (20/20)</td><td>90% (18/20)</td></tr><tr><th scope="row">B</th><td>55% (11/20)</td><td>45% (9/20)</td></tr><tr><th scope="row">C</th><td>0% (0/20)</td><td>0% (0/20)</td></tr><tr><th scope="row">D</th><td>0% (0/20)</td><td>0% (0/20)</td></tr></tbody></table></div><p class="explorer-link"><a class="explorer-cta" data-explorer-jump="wam" href="#grasp-explorer"><span>WAM</span><span aria-hidden="true" class="explorer-cta-arrow">↓</span></a></p></section><section class="response-item"><div class="qa-question"><strong>Q4:</strong><p>Limited generalization across manipulation policies. ... Cross-WAM evaluation would strengthen the generalization claims.</p></div><details class="qa-answer"><summary><strong>A4:</strong><span class="qa-answer-preview">In the same real-world shelf scene, we evaluated 3 independently trained WAMs—each targeting a different task and shelf level—directly from the stopping poses produced by our navigation policy:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> In the same real-world shelf scene, we evaluated 3 independently trained WAMs—each targeting a different task and shelf level—directly from the stopping poses produced by our navigation policy:</p><p>The stopping poses produced by our navigation policy achieve consistent grasp success across all 3 independently trained WAMs, showing that the navigation model learns generalizable manipulation-aware spatial priors.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Navigation Method</th><th scope="col">Real Task 1 SR@E2E (10 trials)</th><th scope="col">Real Task 2 SR@E2E (10 trials)</th><th scope="col">Real Task 3 SR@E2E (10 trials)</th></tr></thead><tbody><tr><th scope="row">UniNaVid</th><td>0%</td><td>0%</td><td>0%</td></tr><tr><th scope="row">Ours</th><td>30%</td><td>20%</td><td>40%</td></tr></tbody></table></div><section class="response-media"><div class="cross-wam-actions"><button data-play-group="" type="button">Play all</button><button data-restart-group="" type="button">Restart</button></div><p>Real-world · Choose an individual trial or the success overlap. Overlap superimposes multiple attempts.</p><div class="cross-wam-grid" data-pause-label="Pause all" data-play-label="Play all" data-video-group=""><figure class="cross-wam-card" data-task-recording="snack-bag"><figcaption><h3>Real-world · Real Task 1 · Snack bag</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 1 · Snack bag" controls="" data-poster="./static/rebuttal-videos/cross-wam/snack-bag.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/snack-bag.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card" data-task-recording="snack-can"><figcaption><h3>Real-world · Real Task 2 · Snack can</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 2 · Snack can" controls="" data-poster="./static/rebuttal-videos/cross-wam/snack-can.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/snack-can.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card" data-task-recording="yogurt"><figcaption><h3>Real-world · Real Task 3 · Yogurt carton</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 3 · Yogurt carton" controls="" data-poster="./static/rebuttal-videos/cross-wam/yogurt.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/yogurt.mp4" type="video/mp4"/></video></figure></div></section></section></div>
-<div aria-labelledby="tab-aqr4" class="review-panel" hidden="" id="review-aqr4" role="tabpanel" tabindex="0"><p>Thank you for your time and helpful feedback on our method, figures, and experimental details. We have revised the manuscript and conducted additional experiments to address your comments below.</p><section class="response-item"><div class="qa-question"><strong>Q1:</strong><p>1. This method highly relies on simulator.</p></div><details class="qa-answer"><summary><strong>A1:</strong><span class="qa-answer-preview">Following standard VLN training paradigms (Uni-NaVid [1], NavFoM [2], InternVLA-N1 [3]), training in simulation enables safe, large-scale exploration with strong foundational generalization. To ensure our method does not rely on a single simulator, we implemented three designs:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Following standard VLN training paradigms (Uni-NaVid [1], NavFoM [2], InternVLA-N1 [3]), training in simulation enables safe, large-scale exploration with strong foundational generalization. To ensure our method does not rely on a single simulator, we implemented three designs:</p><ol><li><b>Cross-simulator mix-training</b> across large-scale heterogeneous datasets;</li><li><b>Domain randomization</b> during trajectory rollouts (covering house layouts, lighting, and camera viewpoints);</li><li><b>Real-to-Sim modeling</b> to align geometry and physics with the real-world environment.</li></ol><p>All real-world policies were trained strictly in simulation without overfitting to the real test environment, achieving high end-to-end success rates on physical hardware.</p></div></details><section class="response-media"><div class="cross-wam-actions"><button data-play-group="" type="button">Play all</button><button data-restart-group="" type="button">Restart</button></div><div class="navigation-response-grid" data-pause-label="Pause all" data-play-label="Play all" data-video-group=""><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 1</h3></figcaption><video aria-label="Real-world deployment 1" controls="" data-poster="./static/images/realworld/1064031782.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1064031782.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 2</h3></figcaption><video aria-label="Real-world deployment 2" controls="" data-poster="./static/images/realworld/1751186873.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1751186873.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 3</h3></figcaption><video aria-label="Real-world deployment 3" controls="" data-poster="./static/images/realworld/1937928961.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1937928961.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 4</h3></figcaption><video aria-label="Real-world deployment 4" class="portrait-video" controls="" data-poster="./static/images/real-navigation/1.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/1.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 5</h3></figcaption><video aria-label="Real-world deployment 5" class="portrait-video" controls="" data-poster="./static/images/real-navigation/2.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/2.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 6</h3></figcaption><video aria-label="Real-world deployment 6" class="portrait-video" controls="" data-poster="./static/images/real-navigation/3.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/3.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 7</h3></figcaption><video aria-label="Real-world deployment 7" class="portrait-video" controls="" data-poster="./static/images/real-navigation/4.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/4.mp4" type="video/mp4"/></video></figure></div></section></section><section class="response-item"><div class="qa-question"><strong>Q2:</strong><p>Both two finetuning process rely on resetting the environment to specific state and obtain different trajectories.</p></div><details class="qa-answer"><summary><strong>A2:</strong><span class="qa-answer-preview">Neither RFT nor RLAIF uses intermediate state resets. Both stages rely purely on clean on-policy trajectories rolled out from scratch. Compared to SFT on static offline data, training and RL fine-tuning on reset-free on-policy data allow the policy to build an intrinsic understanding of the environment without state priors, addressing counterfactual inference and distribution shift more effectively.</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Neither RFT nor RLAIF uses intermediate state resets. Both stages rely purely on clean <b>on-policy trajectories</b> rolled out from scratch. Compared to SFT on static offline data, training and RL fine-tuning on reset-free on-policy data allow the policy to build an intrinsic understanding of the environment without state priors, addressing counterfactual inference and distribution shift more effectively.</p></div></details></section><section class="response-item"><div class="qa-question"><strong>Q3:</strong><p>2. The paper emphasize on bidirectional training. However, the manipulation policy is fixed after the first stage training. Only the navigation policy is improved with a frozen manipulation policy.</p></div><details class="qa-answer"><summary><strong>A3:</strong><span class="qa-answer-preview">To complete the bidirectional loop, after VLN training we ran inference with the trained VLN policy in both simulation and real-world scenes, used the resulting navigation endpoints to re-collect WAM training data, and conducted a second round of post-training on the WAM:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> To complete the bidirectional loop, after VLN training we ran inference with the trained VLN policy in both simulation and real-world scenes, used the resulting navigation endpoints to re-collect WAM training data, and conducted a second round of post-training on the WAM:</p><p>Fine-tuning the WAM on rollouts from the updated VLN endpoints increases end-to-end success rates from <b>30% to 52% in simulation</b> and from <b>17% to 30% in the real world</b>, completing the bidirectional training loop.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Training Setting</th><th scope="col">Sim SR@E2E (100 trials)</th><th scope="col">Real SR@E2E (30 trials)</th></tr></thead><tbody><tr><th scope="row">Original WAM</th><td>30%</td><td>17%</td></tr><tr><th scope="row">Fine-tuned WAM</th><td>52%</td><td>30%</td></tr></tbody></table></div><section class="response-media" data-recordings><div class="recording-toolbar"><strong>Real-world experiments</strong><label>View <select data-recording-mode><option value="individual">Individual trials</option><option value="overlap">Overlap</option></select></label><label>Task <select data-recording-task><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label></div><p data-recording-note>Individual trials · One recorded attempt per video. Play both starts both clips together.</p><div class="cross-wam-actions"><button type="button" data-play-group>Play both</button><button type="button" data-restart-group>Restart</button></div><div class="coevolution-grid" data-video-group data-play-label="Play both" data-pause-label="Pause both"><figure class="cross-wam-card" data-recording-model="original"><figcaption><h3>Original WAM</h3><select aria-label="Original WAM recording" data-recording-choice></select></figcaption><video controls muted playsinline preload="none" aria-label="Real-world Original WAM"></video></figure><figure class="cross-wam-card" data-recording-model="fine-tuned"><figcaption><h3>Fine-tuned WAM</h3><select aria-label="Fine-tuned WAM recording" data-recording-choice></select></figcaption><video controls muted playsinline preload="none" aria-label="Real-world Fine-tuned WAM"></video></figure></div></section></section><section class="response-item"><div class="qa-question"><strong>Q4:</strong><p>1. The presentation is bad. Figure 2 and figure 3 are purely AI-generated without any further polishment. Please at least make sure the letters in each word are equally spacing. The names for some modules are not consistent, such as Nav-N-Manip/NAV-N-MANIP.</p></div><details class="qa-answer"><summary><strong>A4:</strong><span class="qa-answer-preview">We have redrawn and replaced Figure 2 and Figure 3 to fix the character spacing issues, and standardized all module names and notations across the main text in the revised manuscript.</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We have redrawn and replaced Figure 2 and Figure 3 to fix the character spacing issues, and standardized all module names and notations across the main text in the revised manuscript.</p></div></details></section><section class="response-item"><div class="qa-question"><strong>Q5:</strong><p>2. The experiments section lacks of lots of details. The benchmark details, the training and evaluation setting are all very coarse.</p></div><details class="qa-answer"><summary><strong>A5:</strong><span class="qa-answer-preview">We have expanded the appendix in the revised manuscript with full experimental details:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We have expanded the appendix in the revised manuscript with full experimental details:</p><ul><li><b>Training setups:</b> Appendix B.</li><li><b>Simulation benchmark settings:</b> Appendix D.</li><li><b>Evaluation settings and protocols:</b> Appendix F and Appendix G.</li></ul></div></details></section></div>
+<div aria-labelledby="tab-qjfp" class="review-panel" hidden="" id="review-qjfp" role="tabpanel" tabindex="0"><p>Thank you for your thoughtful review and for suggesting concrete experiments to further test our pipeline. We have conducted additional closed-loop, ablation, correlation, and cross-policy experiments to address each of your points below.</p><section class="response-item"><div class="qa-question"><strong>Q1:</strong><p>Questionable co-evolution claim. The manipulation WAM remains frozen after post-training, while only the navigation VLM is further fine-tuned. ... The authors should better justify the term co-evolution.</p></div><details class="qa-answer"><summary><strong>A1:</strong><span class="qa-answer-preview">To validate the closed-loop co-evolution between navigation and manipulation, we ran inference with the trained VLN policy in both simulation and real-world scenes. Using the actual stopping poses reached by the VLN policy as the initial base distribution, we re-collected manipulation training data and post-trained the WAM. We evaluated this closed-loop WAM on Nav-N-Manip in both simulation and the real world:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> To validate the closed-loop co-evolution between navigation and manipulation, we ran inference with the trained VLN policy in both simulation and real-world scenes. Using the actual stopping poses reached by the VLN policy as the initial base distribution, we re-collected manipulation training data and post-trained the WAM. We evaluated this closed-loop WAM on Nav-N-Manip in both simulation and the real world:</p><p>Post-training the WAM on rollouts from actual VLN endpoints adapts the manipulation policy to upstream navigation stopping characteristics, improving end-to-end success rates from <b>30% to 52% in simulation</b> and from <b>17% to 30% in the real world</b>. </p><div class="coevolution-results"><table><thead><tr><th scope="col">Training Setting</th><th scope="col">Sim SR@E2E (100 trials)</th><th scope="col">Real SR@E2E (30 trials)</th></tr></thead><tbody><tr><th scope="row">Original WAM</th><td>30%</td><td>17%</td></tr><tr><th scope="row">Fine-tuned WAM</th><td>52%</td><td>30%</td></tr></tbody></table></div><section class="response-media" data-recordings=""><div class="recording-toolbar"><strong>Real-world experiments</strong><label>View <select data-recording-mode=""><option value="individual">Individual trials</option><option value="overlap">Overlap</option></select></label><label>Task <select data-recording-task=""><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label></div><p data-recording-note="">Individual trials · One recorded attempt per video. Play both starts both clips together.</p><div class="cross-wam-actions"><button data-play-group="" type="button">Play both</button><button data-restart-group="" type="button">Restart</button></div><div class="coevolution-grid" data-pause-label="Pause both" data-play-label="Play both" data-video-group=""><figure class="cross-wam-card" data-recording-model="original"><figcaption><h3>Original WAM</h3><select aria-label="Original WAM recording" data-recording-choice=""></select></figcaption><video aria-label="Real-world Original WAM" controls="" muted="" playsinline="" preload="none"></video></figure><figure class="cross-wam-card" data-recording-model="fine-tuned"><figcaption><h3>Fine-tuned WAM</h3><select aria-label="Fine-tuned WAM recording" data-recording-choice=""></select></figcaption><video aria-label="Real-world Fine-tuned WAM" controls="" muted="" playsinline="" preload="none"></video></figure></div></section></div></details></section><section class="response-item"><div class="qa-question"><strong>Q2:</strong><p>Insufficient validation of the three-stage pipeline. As shown in Table 3, RFT provides only a marginal improvement in end-to-end success rate (31.01% to 31.79%). A Co-Tuning + RLAIF baseline without RFT is needed to demonstrate the necessity of all three stages.</p></div><details class="qa-answer"><summary><strong>A2:</strong><span class="qa-answer-preview">We added the Co-Tuning (MTC) + RLAIF baseline (skipping the RFT stage) and compared it against our original settings:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We added the Co-Tuning (MTC) + RLAIF baseline (skipping the RFT stage) and compared it against our original settings:</p><p>Skipping RFT (MTC + RLAIF) yields end-to-end success rate of <b>43.02%</b>, lower than the full three-stage pipeline (<b>52.13%</b>). By filtering high-quality trajectories, RFT provides a stable behavioral prior that prevents performance degradation caused by overly large exploration spaces during direct RLAIF fine-tuning.</p></div></details><div class="coevolution-results"><table><colgroup><col/><col/><col/><col/><col/><col/><col/><col/></colgroup><tbody><tr><td><p></p></td><td><p>SR@3</p></td><td><p>SR@1.5</p></td><td><p>SR@1.0</p></td><td><p>SR@0.6</p></td><td><p>NE</p></td><td><p>SR@Manip</p></td><td><p>SR@E2E</p></td></tr><tr><td><p>MTC</p></td><td><p>80.2</p></td><td><p>77.1</p></td><td><p>69.8</p></td><td><p>52.7</p></td><td><p>1.81</p></td><td><p>39.34</p></td><td><p>31.01</p></td></tr><tr><td><p>MTC + RLAIF</p></td><td><p>84.5</p></td><td><p>80.0</p></td><td><p>78.5</p></td><td><p>64.2</p></td><td><p>1.46</p></td><td><p>51.16</p></td><td><p>43.02</p></td></tr><tr><td><p>MTC + RFT + RLAIF</p></td><td><p>89.5</p></td><td><p>84.1</p></td><td><p>80.4</p></td><td><p>71.7</p></td><td><p>1.15</p></td><td><p>56.87</p></td><td><p>52.13</p></td></tr></tbody></table></div></section><section class="response-item"><div class="qa-question"><strong>Q3:</strong><p>Potential mismatch between offline affordance labels and WAM capabilities. ... The authors should compare both at the same candidate base poses and report the correlation between offline affordance scores and actual WAM success rates.</p></div><details class="qa-answer"><summary><strong>A3:</strong><span class="qa-answer-preview">Because the WAM is trained on expert trajectories provided by the Dexonomy-based oracle manipulation policy, their capabilities are inherently aligned. We evaluated both the Dexonomy oracle and the learned WAM across repeated trials at the same candidate navigation endpoints in simulation:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Because the WAM is trained on expert trajectories provided by the Dexonomy-based oracle manipulation policy, their capabilities are inherently aligned. We evaluated both the Dexonomy oracle and the learned WAM across repeated trials at the same candidate navigation endpoints in simulation:</p><p>The <b>Pearson correlation coefficient</b> between the offline Dexonomy affordance scores and actual WAM grasp success rates is r = 0.9987 (Spearman rank correlation ρ = 1.00), showing that the offline labels match the actual capabilities of the learned policy.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Candidate Endpoint</th><th scope="col">Oracle (Dexonomy) SR</th><th scope="col">Learned WAM SR</th></tr></thead><tbody><tr><th scope="row">A</th><td>100% (20/20)</td><td>90% (18/20)</td></tr><tr><th scope="row">B</th><td>55% (11/20)</td><td>45% (9/20)</td></tr><tr><th scope="row">C</th><td>0% (0/20)</td><td>0% (0/20)</td></tr><tr><th scope="row">D</th><td>0% (0/20)</td><td>0% (0/20)</td></tr></tbody></table></div><p class="explorer-link"><a class="explorer-cta" data-explorer-jump="wam" href="#grasp-explorer"><span>WAM</span><span aria-hidden="true" class="explorer-cta-arrow">↓</span></a></p></section><section class="response-item"><div class="qa-question"><strong>Q4:</strong><p>Limited generalization across manipulation policies. ... Cross-WAM evaluation would strengthen the generalization claims.</p></div><details class="qa-answer"><summary><strong>A4:</strong><span class="qa-answer-preview">In the same real-world shelf scene, we evaluated 3 independently trained WAMs—each targeting a different task and shelf level—directly from the stopping poses produced by our navigation policy:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> In the same real-world shelf scene, we evaluated 3 independently trained WAMs—each targeting a different task and shelf level—directly from the stopping poses produced by our navigation policy:</p><p>The stopping poses produced by our navigation policy achieve consistent grasp success across all 3 independently trained WAMs, showing that the navigation model learns generalizable manipulation-aware spatial priors.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Navigation Method</th><th scope="col">Real Task 1 SR@E2E (10 trials)</th><th scope="col">Real Task 2 SR@E2E (10 trials)</th><th scope="col">Real Task 3 SR@E2E (10 trials)</th></tr></thead><tbody><tr><th scope="row">UniNaVid</th><td>0%</td><td>0%</td><td>0%</td></tr><tr><th scope="row">Ours</th><td>30%</td><td>20%</td><td>40%</td></tr></tbody></table></div><section class="response-media"><div class="cross-wam-actions"><button data-play-group="" type="button">Play all</button><button data-restart-group="" type="button">Restart</button></div><p>Real-world · Choose an individual trial or the success overlap. Overlap superimposes multiple attempts.</p><div class="cross-wam-grid" data-pause-label="Pause all" data-play-label="Play all" data-video-group=""><figure class="cross-wam-card" data-task-recording="snack-bag"><figcaption><h3>Real-world · Real Task 1 · Snack bag</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 1 · Snack bag" controls="" data-poster="./static/rebuttal-videos/cross-wam/snack-bag.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/snack-bag.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card" data-task-recording="snack-can"><figcaption><h3>Real-world · Real Task 2 · Snack can</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 2 · Snack can" controls="" data-poster="./static/rebuttal-videos/cross-wam/snack-can.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/snack-can.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card" data-task-recording="yogurt"><figcaption><h3>Real-world · Real Task 3 · Yogurt carton</h3><select aria-label="Individual trial or overlap" data-task-clip=""></select></figcaption><video aria-label="Real-world · Real Task 3 · Yogurt carton" controls="" data-poster="./static/rebuttal-videos/cross-wam/yogurt.jpg" muted="" playsinline="" preload="none"><source src="./static/rebuttal-videos/cross-wam/yogurt.mp4" type="video/mp4"/></video></figure></div></section></section></div>
+<div aria-labelledby="tab-aqr4" class="review-panel" hidden="" id="review-aqr4" role="tabpanel" tabindex="0"><p>Thank you for your time and helpful feedback on our method, figures, and experimental details. We have revised the manuscript and conducted additional experiments to address your comments below.</p><section class="response-item"><div class="qa-question"><strong>Q1:</strong><p>1. This method highly relies on simulator.</p></div><details class="qa-answer"><summary><strong>A1:</strong><span class="qa-answer-preview">Following standard VLN training paradigms (Uni-NaVid [1], NavFoM [2], InternVLA-N1 [3]), training in simulation enables safe, large-scale exploration with strong foundational generalization. To ensure our method does not rely on a single simulator, we implemented three designs:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> Following standard VLN training paradigms (Uni-NaVid [1], NavFoM [2], InternVLA-N1 [3]), training in simulation enables safe, large-scale exploration with strong foundational generalization. To ensure our method does not rely on a single simulator, we implemented three designs:</p><ol><li><b>Cross-simulator mix-training</b> across large-scale heterogeneous datasets;</li><li><b>Domain randomization</b> during trajectory rollouts (covering house layouts, lighting, and camera viewpoints);</li><li><b>Real-to-Sim modeling</b> to align geometry and physics with the real-world environment.</li></ol><p>All real-world policies were trained strictly in simulation without overfitting to the real test environment, achieving high end-to-end success rates on physical hardware.</p></div></details><section class="response-media"><div class="cross-wam-actions"><button data-play-group="" type="button">Play all</button><button data-restart-group="" type="button">Restart</button></div><div class="navigation-response-grid" data-pause-label="Pause all" data-play-label="Play all" data-video-group=""><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 1</h3></figcaption><video aria-label="Real-world deployment 1" controls="" data-poster="./static/images/realworld/1064031782.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1064031782.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 2</h3></figcaption><video aria-label="Real-world deployment 2" controls="" data-poster="./static/images/realworld/1751186873.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1751186873.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 3</h3></figcaption><video aria-label="Real-world deployment 3" controls="" data-poster="./static/images/realworld/1937928961.jpg" muted="" playsinline="" preload="none"><source src="./static/video/realworld/1937928961.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 4</h3></figcaption><video aria-label="Real-world deployment 4" class="portrait-video" controls="" data-poster="./static/images/real-navigation/1.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/1.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 5</h3></figcaption><video aria-label="Real-world deployment 5" class="portrait-video" controls="" data-poster="./static/images/real-navigation/2.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/2.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 6</h3></figcaption><video aria-label="Real-world deployment 6" class="portrait-video" controls="" data-poster="./static/images/real-navigation/3.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/3.mp4" type="video/mp4"/></video></figure><figure class="cross-wam-card"><figcaption><h3>Real-world deployment 7</h3></figcaption><video aria-label="Real-world deployment 7" class="portrait-video" controls="" data-poster="./static/images/real-navigation/4.jpg" muted="" playsinline="" preload="none"><source src="./static/video/real-navigation/4.mp4" type="video/mp4"/></video></figure></div></section></section><section class="response-item"><div class="qa-question"><strong>Q2:</strong><p>Both two finetuning process rely on resetting the environment to specific state and obtain different trajectories.</p></div><details class="qa-answer"><summary><strong>A2:</strong><span class="qa-answer-preview">We apologize for the inaccurate phrasing in our original manuscript (specifically "We then reset the simulator to the same task initialization..." in Section 3.5, as well as the descriptions in Section 3.4 and Algorithm 1), which caused this confusion. In our actual implementation, neither RFT nor RLAIF requires resetting the environment to specific states to obtain different trajectories. Both stages rely purely on clean on-policy trajectories without state resets. Compared to SFT on static offline data, training and RL fine-tuning on reset-free on-policy data allow the policy to build an intrinsic understanding of the environment without state priors, addressing counterfactual inference and distribution shift more effectively. We have corrected these descriptions in Sections 3.4, 3.5, and Algorithm 1 of the revised manuscript.</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p>We apologize for the inaccurate phrasing in our original manuscript (specifically <em>"We then reset the simulator to the same task initialization..."</em> in Section 3.5, as well as the descriptions in Section 3.4 and Algorithm 1), which caused this confusion. In our actual implementation, <b>neither RFT nor RLAIF requires resetting</b> the environment to specific states to obtain different trajectories. Both stages rely purely on clean on-policy trajectories without state resets. Compared to SFT on static offline data, training and RL fine-tuning on reset-free on-policy data allow the policy to build an intrinsic understanding of the environment without state priors, addressing counterfactual inference and distribution shift more effectively. We have corrected these descriptions in Sections 3.4, 3.5, and Algorithm 1 of the revised manuscript.</p></div></details></section><section class="response-item"><div class="qa-question"><strong>Q3:</strong><p>2. The paper emphasize on bidirectional training. However, the manipulation policy is fixed after the first stage training. Only the navigation policy is improved with a frozen manipulation policy.</p></div><details class="qa-answer"><summary><strong>A3:</strong><span class="qa-answer-preview">To complete the bidirectional loop, after VLN training we ran inference with the trained VLN policy in both simulation and real-world scenes, used the resulting navigation endpoints to re-collect WAM training data, and conducted a second round of post-training on the WAM:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> To complete the bidirectional loop, after VLN training we ran inference with the trained VLN policy in both simulation and real-world scenes, used the resulting navigation endpoints to re-collect WAM training data, and conducted a second round of post-training on the WAM:</p><p>Fine-tuning the WAM on rollouts from the updated VLN endpoints increases end-to-end success rates from <b>30% to 52% in simulation</b> and from <b>17% to 30% in the real world</b>, completing the bidirectional training loop.</p></div></details><div class="coevolution-results"><table><thead><tr><th scope="col">Training Setting</th><th scope="col">Sim SR@E2E (100 trials)</th><th scope="col">Real SR@E2E (30 trials)</th></tr></thead><tbody><tr><th scope="row">Original WAM</th><td>30%</td><td>17%</td></tr><tr><th scope="row">Fine-tuned WAM</th><td>52%</td><td>30%</td></tr></tbody></table></div><section class="response-media" data-recordings=""><div class="recording-toolbar"><strong>Real-world experiments</strong><label>View <select data-recording-mode=""><option value="individual">Individual trials</option><option value="overlap">Overlap</option></select></label><label>Task <select data-recording-task=""><option value="snack-bag">Snack bag</option><option value="snack-can">Snack can</option><option value="yogurt">Yogurt carton</option></select></label></div><p data-recording-note="">Individual trials · One recorded attempt per video. Play both starts both clips together.</p><div class="cross-wam-actions"><button data-play-group="" type="button">Play both</button><button data-restart-group="" type="button">Restart</button></div><div class="coevolution-grid" data-pause-label="Pause both" data-play-label="Play both" data-video-group=""><figure class="cross-wam-card" data-recording-model="original"><figcaption><h3>Original WAM</h3><select aria-label="Original WAM recording" data-recording-choice=""></select></figcaption><video aria-label="Real-world Original WAM" controls="" muted="" playsinline="" preload="none"></video></figure><figure class="cross-wam-card" data-recording-model="fine-tuned"><figcaption><h3>Fine-tuned WAM</h3><select aria-label="Fine-tuned WAM recording" data-recording-choice=""></select></figcaption><video aria-label="Real-world Fine-tuned WAM" controls="" muted="" playsinline="" preload="none"></video></figure></div></section></section><section class="response-item"><div class="qa-question"><strong>Q4:</strong><p>1. The presentation is bad. Figure 2 and figure 3 are purely AI-generated without any further polishment. Please at least make sure the letters in each word are equally spacing. The names for some modules are not consistent, such as Nav-N-Manip/NAV-N-MANIP.</p></div><details class="qa-answer"><summary><strong>A4:</strong><span class="qa-answer-preview">We have redrawn and replaced Figure 2 and Figure 3 to fix the character spacing issues, and standardized all module names and notations across the main text in the revised manuscript.</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We have redrawn and replaced Figure 2 and Figure 3 to fix the character spacing issues, and standardized all module names and notations across the main text in the revised manuscript.</p></div></details></section><section class="response-item"><div class="qa-question"><strong>Q5:</strong><p>2. The experiments section lacks of lots of details. The benchmark details, the training and evaluation setting are all very coarse.</p></div><details class="qa-answer"><summary><strong>A5:</strong><span class="qa-answer-preview">We have added explicit pointers in Section 4.1 and the Reproducibility Statement, and expanded the appendix with full experimental details:</span><span class="qa-toggle"><span class="qa-show-more">Show more</span><span class="qa-show-less">Show less</span></span></summary><div class="qa-answer-body"><p> We have added explicit pointers in Section 4.1 and the Reproducibility Statement, and expanded the appendix with full experimental details:</p><ul><li><b>Training setups and hyperparameters:</b> Appendices B.1–B.4 (Table 5) for Nav4Manip-N and Appendix G.3 for Nav4Manip-M.</li><li><b>Simulation benchmark settings and scene splits:</b> Appendices D.1–D.6.</li><li><b>Evaluation settings and deployment protocols:</b> Appendices C.1–C.3, Appendices F.1–F.2, and Appendices G.1, G.2, and G.4.</li></ul></div></details></section></div>
 <section aria-label="References" class="response-references"><p><b>References</b> </p><p>[1] Zhang et al., "Uni-NaVid: A Video-based Vision-Language-Action Model for Unifying Embodied Navigation Tasks," <em>RSS</em>, 2025.</p><p>[2] Zhang et al., "Embodied Navigation Foundation Model," <em>ICLR</em>, 2026.</p><p>[3] InternVLA-N1 Team, "InternVLA-N1: An Open Dual-System Navigation Foundation Model with Learned Latent Plans," <em>arXiv:2509.10838 / arXiv:2512.08186</em>, 2025.</p></section></div>
 </section>
-
-<section class="explorer-section" id="grasp-explorer" aria-labelledby="explorer-title">
-  <div class="review-inner">
-    <div class="explorer-heading"><h2 id="explorer-title">Grasp Explorer · Simulation</h2><a href="./rebuttal/grasp-explorer-v2/?v=20261112-brief" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
-    <div class="explorer-methods" role="group" aria-label="Grasp method"><button type="button" data-explorer-method="dexonomy" aria-pressed="true">Oracle Manip Policy</button><button type="button" data-explorer-method="wam" aria-pressed="false">WAM</button></div>
-    <div class="explorer-shell" id="explorer-shell"><iframe title="Oracle Manip Policy · cleaner scene" src="./rebuttal/grasp-explorer-v2/?v=20261112-brief&amp;embed=1" loading="eager" allow="fullscreen"></iframe></div>
-    <script src="./static/js/explorer-switch.js?v=20261114-links"></script>
-  </div>
+<section aria-labelledby="explorer-title" class="explorer-section" id="grasp-explorer">
+<div class="review-inner">
+<div class="explorer-heading"><h2 id="explorer-title">Grasp Explorer · Simulation</h2><a href="./rebuttal/grasp-explorer-v2/?v=20261112-brief" rel="noopener" target="_blank">Open in a new tab ↗</a></div>
+<div aria-label="Grasp method" class="explorer-methods" role="group"><button aria-pressed="true" data-explorer-method="dexonomy" type="button">Oracle Manip Policy</button><button aria-pressed="false" data-explorer-method="wam" type="button">WAM</button></div>
+<div class="explorer-shell" id="explorer-shell"><iframe allow="fullscreen" loading="eager" src="./rebuttal/grasp-explorer-v2/?v=20261112-brief&amp;embed=1" title="Oracle Manip Policy · cleaner scene"></iframe></div>
+<script src="./static/js/explorer-switch.js?v=20261114-links"></script>
+</div>
 </section>
-
 <section class="hero teaser" id="overview">
-  <div class="container is-max-desktop"><div class="hero-body">
-    <div class="overview-player media-frame">
-      <video muted id="overview-video" controls playsinline preload="none" data-poster="./static/images/overview/467601245.jpg" width="854" height="480" aria-label="Nav4Manip overview">
-        <source src="./static/video/overview/467601245.mp4?v=silent-20261104" type="video/mp4">
-      </video>
-    </div>
-    <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">A bidirectionally coupled co-evolution system for long-horizon dexterous mobile manipulation.</h2>
-  </div></div>
+<div class="container is-max-desktop"><div class="hero-body">
+<div class="overview-player media-frame">
+<video aria-label="Nav4Manip overview" controls="" data-poster="./static/images/overview/467601245.jpg" height="480" id="overview-video" muted="" playsinline="" preload="none" width="854">
+<source src="./static/video/overview/467601245.mp4?v=silent-20261104" type="video/mp4"/>
+</video>
+</div>
+<h2 class="subtitle has-text-centered" style="margin-top: 1rem;">A bidirectionally coupled co-evolution system for long-horizon dexterous mobile manipulation.</h2>
+</div></div>
 </section>
-
 <section class="hero is-light is-small">
-  <div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-    <br><h2 class="title is-3">Abstract</h2>
-    <div class="content has-text-justified"><p>Dexterous mobile manipulation is essential for robots to perform useful tasks in complex, unstructured environments. However, existing systems face two challenges. First, navigation remains too coarse for downstream manipulation, which often requires a precise base position and approach orientation rather than merely reaching a meter-scale goal region. Second, navigation and manipulation are commonly trained in isolation, lacking a feedback loop that enables the two capabilities to co-evolve. These limitations prevent current systems from reliably executing long-horizon dexterous mobile-manipulation tasks in real-world environments. To address them, we introduce <span data-method-name>Nav4Manip</span>, a bidirectionally coupled co-evolution system for long-horizon dexterous mobile manipulation. It comprises two complementary architectures: <span data-navigation-name>Nav4Manip-N</span> learns long-horizon navigation and refines its policy through manipulation feedback, while Nav4Manip-M trains a world-action model (WAM) for downstream dexterous manipulation. We train <span data-navigation-name>Nav4Manip-N</span> in three stages: multi-task co-tuning learns navigation behavior and manipulation-aware affordance prediction; rejection sampling fine-tuning (RFT) rejects low-quality policy-generated paths and fine-tunes the model on retained trajectories; and reinforcement learning from AI feedback (RLAIF) uses counterfactual preferences to further improve navigation decisions. To support this framework, we establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and affordance supervision. Extensive experiments on public vision-language navigation (VLN) benchmarks and Nav-N-Manip demonstrate state-of-the-art performance, while real-world evaluations show that <span data-method-name>Nav4Manip</span> completes diverse dexterous mobile-manipulation tasks.</p><br></div>
-  </div></div></div>
+<div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">Abstract</h2>
+<div class="content has-text-justified"><p>Dexterous mobile manipulation is essential for robots to perform useful tasks in complex, unstructured environments. However, existing systems face two challenges. First, navigation remains too coarse for downstream manipulation, which often requires a precise base position and approach orientation rather than merely reaching a meter-scale goal region. Second, navigation and manipulation are commonly trained in isolation, lacking a feedback loop that enables the two capabilities to co-evolve. These limitations prevent current systems from reliably executing long-horizon dexterous mobile-manipulation tasks in real-world environments. To address them, we introduce <span data-method-name="">Nav4Manip</span>, a bidirectionally coupled co-evolution system for long-horizon dexterous mobile manipulation. It comprises two complementary architectures: <span data-navigation-name="">Nav4Manip-N</span> learns long-horizon navigation and refines its policy through manipulation feedback, while Nav4Manip-M trains a world-action model (WAM) for downstream dexterous manipulation. We train <span data-navigation-name="">Nav4Manip-N</span> in three stages: multi-task co-tuning learns navigation behavior and manipulation-aware affordance prediction; rejection sampling fine-tuning (RFT) rejects low-quality policy-generated paths and fine-tunes the model on retained trajectories; and reinforcement learning from AI feedback (RLAIF) uses counterfactual preferences to further improve navigation decisions. To support this framework, we establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and affordance supervision. Extensive experiments on public vision-language navigation (VLN) benchmarks and Nav-N-Manip demonstrate state-of-the-art performance, while real-world evaluations show that <span data-method-name="">Nav4Manip</span> completes diverse dexterous mobile-manipulation tasks.</p><br/></div>
+</div></div></div>
 </section>
-
 <section class="hero teaser paper-figure-section" id="method">
-  <div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
-    <br><h2 class="title is-3">Method</h2>
-    <a class="paper-figure-link" href="./static/images/figures/nav4manip-method-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav4Manip method diagram at full size">
-      <img loading="lazy" decoding="async" class="paper-figure" src="./static/images/figures/nav4manip-method-20261104.png" alt="Nav4Manip architecture with navigation, affordance estimation, manipulation, and selective RLAIF feedback">
-    </a>
-    <div class="content has-text-justified"><p>Our framework trains its navigation model in three stages: <b>multi-task co-tuning</b> learns navigation behavior and manipulation-aware affordance prediction; <b>rejection sampling fine-tuning (RFT)</b> rejects low-quality policy-generated paths and fine-tunes the model on retained manipulation-successful trajectories; and <b>reinforcement learning from AI feedback (RLAIF)</b> uses execution-grounded counterfactual preferences to further improve navigation decisions.</p></div><br>
-  </div></div></div>
+<div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
+<br/><h2 class="title is-3">Method</h2>
+<a aria-label="Open the Nav4Manip method diagram at full size" class="paper-figure-link" href="./static/images/figures/nav4manip-method-20261104.png" rel="noopener" target="_blank">
+<img alt="Nav4Manip architecture with navigation, affordance estimation, manipulation, and selective RLAIF feedback" class="paper-figure" decoding="async" loading="lazy" src="./static/images/figures/nav4manip-method-20261104.png"/>
+</a>
+<div class="content has-text-justified"><p>Our framework trains its navigation model in three stages: <b>multi-task co-tuning</b> learns navigation behavior and manipulation-aware affordance prediction; <b>rejection sampling fine-tuning (RFT)</b> rejects low-quality policy-generated paths and fine-tunes the model on retained manipulation-successful trajectories; and <b>reinforcement learning from AI feedback (RLAIF)</b> uses execution-grounded counterfactual preferences to further improve navigation decisions.</p></div><br/>
+</div></div></div>
 </section>
-
 <section class="hero teaser paper-figure-section" id="benchmark-and-data">
-  <div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
-    <br><h2 class="title is-3">Nav-N-Manip and Nav4Manip-Pairs</h2>
-    <a class="paper-figure-link" href="./static/images/figures/nav4manip-data-20261104.png" target="_blank" rel="noopener" aria-label="Open the Nav-N-Manip and Nav4Manip-Pairs data generation diagram at full size">
-      <img loading="lazy" decoding="async" class="paper-figure" src="./static/images/figures/nav4manip-data-20261104.png" alt="Data generation pipeline from scene assets and manipulation affordances to navigation rendering, language annotation, and paired trajectory data">
-    </a>
-    <div class="content has-text-justified"><p>We establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and rollout-derived affordance supervision.</p></div><br>
-  </div></div></div>
+<div class="container is-max-desktop"><div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-full">
+<br/><h2 class="title is-3">Nav-N-Manip and Nav4Manip-Pairs</h2>
+<a aria-label="Open the Nav-N-Manip and Nav4Manip-Pairs data generation diagram at full size" class="paper-figure-link" href="./static/images/figures/nav4manip-data-20261104.png" rel="noopener" target="_blank">
+<img alt="Data generation pipeline from scene assets and manipulation affordances to navigation rendering, language annotation, and paired trajectory data" class="paper-figure" decoding="async" loading="lazy" src="./static/images/figures/nav4manip-data-20261104.png"/>
+</a>
+<div class="content has-text-justified"><p>We establish the Nav-N-Manip benchmark and construct Nav4Manip-Pairs from benchmark rollouts, providing large-scale paired navigation–manipulation trajectories and rollout-derived affordance supervision.</p></div><br/>
+</div></div></div>
 </section>
-
 <section class="section demo-section" id="real-world-evaluation">
-  <div class="container demo-container--wide">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">Real-World Evaluation</h2><p>Real-world evaluations show that <span data-method-name>Nav4Manip</span> completes diverse dexterous mobile-manipulation tasks.</p><br>
-    </div></div>
-    <div class="realworld-gallery has-text-centered">
-      <div class="realworld-example" style="--video-ratio: 1.777777778;">
-        <div class="media-frame">
-          <div class="demo-media" data-media-slot="realworld-1" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 1">
-            <img loading="lazy" decoding="async" src="./static/images/realworld/1064031782.jpg" alt="Real-world demonstration 1" width="1280" height="720">
-          </div>
-        </div>
-        <p>Real-world demonstration</p>
-      </div>
-      <div class="realworld-example" style="--video-ratio: 1.777777778;">
-        <div class="media-frame">
-          <div class="demo-media" data-media-slot="realworld-2" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 2">
-            <img loading="lazy" decoding="async" src="./static/images/realworld/1751186873.jpg" alt="Real-world demonstration 2" width="1280" height="720">
-          </div>
-        </div>
-        <p>Real-world demonstration</p>
-      </div>
-      <div class="realworld-example" style="--video-ratio: 1.777777778;">
-        <div class="media-frame">
-          <div class="demo-media" data-media-slot="realworld-3" style="--media-aspect: 1280 / 720;" aria-label="Real-world demonstration 3">
-            <img loading="lazy" decoding="async" src="./static/images/realworld/1937928961.jpg" alt="Real-world demonstration 3" width="1280" height="720">
-          </div>
-        </div>
-        <p>Real-world demonstration</p>
-      </div>
-    </div>
-  </div>
+<div class="container demo-container--wide">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">Real-World Evaluation</h2><p>Real-world evaluations show that <span data-method-name="">Nav4Manip</span> completes diverse dexterous mobile-manipulation tasks.</p><br/>
+</div></div>
+<div class="realworld-gallery has-text-centered">
+<div class="realworld-example" style="--video-ratio: 1.777777778;">
+<div class="media-frame">
+<div aria-label="Real-world demonstration 1" class="demo-media" data-media-slot="realworld-1" style="--media-aspect: 1280 / 720;">
+<img alt="Real-world demonstration 1" decoding="async" height="720" loading="lazy" src="./static/images/realworld/1064031782.jpg" width="1280"/>
+</div>
+</div>
+<p>Real-world demonstration</p>
+</div>
+<div class="realworld-example" style="--video-ratio: 1.777777778;">
+<div class="media-frame">
+<div aria-label="Real-world demonstration 2" class="demo-media" data-media-slot="realworld-2" style="--media-aspect: 1280 / 720;">
+<img alt="Real-world demonstration 2" decoding="async" height="720" loading="lazy" src="./static/images/realworld/1751186873.jpg" width="1280"/>
+</div>
+</div>
+<p>Real-world demonstration</p>
+</div>
+<div class="realworld-example" style="--video-ratio: 1.777777778;">
+<div class="media-frame">
+<div aria-label="Real-world demonstration 3" class="demo-media" data-media-slot="realworld-3" style="--media-aspect: 1280 / 720;">
+<img alt="Real-world demonstration 3" decoding="async" height="720" loading="lazy" src="./static/images/realworld/1937928961.jpg" width="1280"/>
+</div>
+</div>
+<p>Real-world demonstration</p>
+</div>
+</div>
+</div>
 </section>
-
-<section class="section demo-section" id="real-world-navigation" aria-label="Real-world navigation demonstrations">
-  <div class="container demo-container--wide">
-    <div class="real-navigation-gallery">
-      <figure class="real-navigation-example">
-        <p class="real-navigation-speed has-text-centered">4× speed</p>
-        <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/1.jpg" width="720" height="1280" aria-label="Navigation 1">
-            <source src="./static/video/real-navigation/1.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="has-text-centered">Navigation 1</figcaption>
-      </figure>
-      <figure class="real-navigation-example">
-        <p class="real-navigation-speed has-text-centered">4× speed</p>
-        <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/2.jpg" width="720" height="1280" aria-label="Navigation 2">
-            <source src="./static/video/real-navigation/2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="has-text-centered">Navigation 2</figcaption>
-      </figure>
-      <figure class="real-navigation-example">
-        <p class="real-navigation-speed has-text-centered">4× speed</p>
-        <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/3.jpg" width="720" height="1280" aria-label="Navigation 3">
-            <source src="./static/video/real-navigation/3.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="has-text-centered">Navigation 3</figcaption>
-      </figure>
-      <figure class="real-navigation-example">
-        <p class="real-navigation-speed has-text-centered">4× speed</p>
-        <div class="media-frame real-navigation-media">
-          <video controls muted playsinline preload="none" data-poster="./static/images/real-navigation/4.jpg" width="720" height="1280" aria-label="Navigation and Manipulation">
-            <source src="./static/video/real-navigation/4.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="has-text-centered">Navigation and Manipulation</figcaption>
-      </figure>
-    </div>
-  </div>
+<section aria-label="Real-world navigation demonstrations" class="section demo-section" id="real-world-navigation">
+<div class="container demo-container--wide">
+<div class="real-navigation-gallery">
+<figure class="real-navigation-example">
+<p class="real-navigation-speed has-text-centered">4× speed</p>
+<div class="media-frame real-navigation-media">
+<video aria-label="Navigation 1" controls="" data-poster="./static/images/real-navigation/1.jpg" height="1280" muted="" playsinline="" preload="none" width="720">
+<source src="./static/video/real-navigation/1.mp4" type="video/mp4"/>
+</video>
+</div>
+<figcaption class="has-text-centered">Navigation 1</figcaption>
+</figure>
+<figure class="real-navigation-example">
+<p class="real-navigation-speed has-text-centered">4× speed</p>
+<div class="media-frame real-navigation-media">
+<video aria-label="Navigation 2" controls="" data-poster="./static/images/real-navigation/2.jpg" height="1280" muted="" playsinline="" preload="none" width="720">
+<source src="./static/video/real-navigation/2.mp4" type="video/mp4"/>
+</video>
+</div>
+<figcaption class="has-text-centered">Navigation 2</figcaption>
+</figure>
+<figure class="real-navigation-example">
+<p class="real-navigation-speed has-text-centered">4× speed</p>
+<div class="media-frame real-navigation-media">
+<video aria-label="Navigation 3" controls="" data-poster="./static/images/real-navigation/3.jpg" height="1280" muted="" playsinline="" preload="none" width="720">
+<source src="./static/video/real-navigation/3.mp4" type="video/mp4"/>
+</video>
+</div>
+<figcaption class="has-text-centered">Navigation 3</figcaption>
+</figure>
+<figure class="real-navigation-example">
+<p class="real-navigation-speed has-text-centered">4× speed</p>
+<div class="media-frame real-navigation-media">
+<video aria-label="Navigation and Manipulation" controls="" data-poster="./static/images/real-navigation/4.jpg" height="1280" muted="" playsinline="" preload="none" width="720">
+<source src="./static/video/real-navigation/4.mp4" type="video/mp4"/>
+</video>
+</div>
+<figcaption class="has-text-centered">Navigation and Manipulation</figcaption>
+</figure>
+</div>
+</div>
 </section>
-
 <section class="section demo-section">
-  <div class="container demo-container--compact">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">Mobile Manipulation Rollouts</h2><p>Navigation and dexterous manipulation in simulation (4× speed).</p><br>
-    </div></div>
-    <div id="mobile-manipulation-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="4" role="region" aria-roledescription="carousel" aria-label="Mobile Manipulation Rollouts" tabindex="0">
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="mobile-manipulation-1" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="mobile-manipulation-2" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 2">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 2" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="mobile-manipulation-3" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 3">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 3" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="mobile-manipulation-4" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 4">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 4" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="mobile-manipulation-5" style="--media-aspect: 640 / 480;" aria-label="Mobile Manipulation Rollout 5">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Mobile Manipulation Rollout 5" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
+<div class="container demo-container--compact">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">Mobile Manipulation Rollouts</h2><p>Navigation and dexterous manipulation in simulation (4× speed).</p><br/>
+</div></div>
+<div aria-label="Mobile Manipulation Rollouts" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="4" id="mobile-manipulation-carousel" role="region" tabindex="0">
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Mobile Manipulation Rollout 1" class="demo-media" data-media-slot="mobile-manipulation-1" style="--media-aspect: 640 / 480;">
+<img alt="Mobile Manipulation Rollout 1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Mobile Manipulation Rollout 2" class="demo-media" data-media-slot="mobile-manipulation-2" style="--media-aspect: 640 / 480;">
+<img alt="Mobile Manipulation Rollout 2" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Mobile Manipulation Rollout 3" class="demo-media" data-media-slot="mobile-manipulation-3" style="--media-aspect: 640 / 480;">
+<img alt="Mobile Manipulation Rollout 3" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Mobile Manipulation Rollout 4" class="demo-media" data-media-slot="mobile-manipulation-4" style="--media-aspect: 640 / 480;">
+<img alt="Mobile Manipulation Rollout 4" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Mobile Manipulation Rollout 5" class="demo-media" data-media-slot="mobile-manipulation-5" style="--media-aspect: 640 / 480;">
+<img alt="Mobile Manipulation Rollout 5" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="hero demo-section has-background-white">
-  <div class="container demo-container--wide">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">Navigation Rollouts</h2><p>First-person navigation rollouts, including instruction following and object-goal navigation.</p><br>
-    </div></div>
-    <div id="navigation-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="6" role="region" aria-roledescription="carousel" aria-label="Navigation Rollouts" tabindex="0">
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-instruction-1" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 1" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-instruction-2" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 2">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 2" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-object-1" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 3">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 3" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-object-2" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 4">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 4" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-5" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 5">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 5" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-6" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 6">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 6" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-7" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 7">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 7" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-8" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 8">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 8" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-9" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 9">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 9" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="navigation-10" style="--media-aspect: 640 / 632;" aria-label="Navigation Rollout 10">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-navigation.svg" alt="Navigation Rollout 10" width="640" height="632" draggable="false">
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
+<div class="container demo-container--wide">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">Navigation Rollouts</h2><p>First-person navigation rollouts, including instruction following and object-goal navigation.</p><br/>
+</div></div>
+<div aria-label="Navigation Rollouts" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="6" id="navigation-carousel" role="region" tabindex="0">
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 1" class="demo-media" data-media-slot="navigation-instruction-1" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 1" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 2" class="demo-media" data-media-slot="navigation-instruction-2" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 2" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 3" class="demo-media" data-media-slot="navigation-object-1" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 3" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 4" class="demo-media" data-media-slot="navigation-object-2" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 4" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 5" class="demo-media" data-media-slot="navigation-5" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 5" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 6" class="demo-media" data-media-slot="navigation-6" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 6" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 7" class="demo-media" data-media-slot="navigation-7" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 7" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 8" class="demo-media" data-media-slot="navigation-8" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 8" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 9" class="demo-media" data-media-slot="navigation-9" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 9" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Navigation Rollout 10" class="demo-media" data-media-slot="navigation-10" style="--media-aspect: 640 / 632;">
+<img alt="Navigation Rollout 10" decoding="async" draggable="false" height="632" loading="lazy" src="./static/images/placeholders/video-navigation.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="section demo-section">
-  <div class="container demo-container--wide">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">Manipulation Rollouts</h2><p>First-person manipulation rollouts in simulation.</p><br>
-    </div></div>
-    <div id="grasping-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="6" role="region" aria-roledescription="carousel" aria-label="Manipulation Rollouts" tabindex="0">
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-1" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-2" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 2">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 2" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-3" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 3">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 3" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-4" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 4">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 4" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-5" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 5">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 5" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-6" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 6">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 6" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-7" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 7">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 7" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-8" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 8">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 8" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-9" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 9">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 9" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-      <div class="carousel-panel">
-          <div class="item">
-            <div class="demo-media" data-media-slot="grasping-10" style="--media-aspect: 640 / 480;" aria-label="Manipulation Rollout 10">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="Manipulation Rollout 10" width="640" height="480" draggable="false">
-            </div>
-          </div>
-      </div>
-    </div>
-  </div>
+<div class="container demo-container--wide">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">Manipulation Rollouts</h2><p>First-person manipulation rollouts in simulation.</p><br/>
+</div></div>
+<div aria-label="Manipulation Rollouts" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="rollouts" data-slides-to-show="6" id="grasping-carousel" role="region" tabindex="0">
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 1" class="demo-media" data-media-slot="grasping-1" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 2" class="demo-media" data-media-slot="grasping-2" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 2" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 3" class="demo-media" data-media-slot="grasping-3" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 3" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 4" class="demo-media" data-media-slot="grasping-4" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 4" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 5" class="demo-media" data-media-slot="grasping-5" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 5" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 6" class="demo-media" data-media-slot="grasping-6" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 6" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 7" class="demo-media" data-media-slot="grasping-7" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 7" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 8" class="demo-media" data-media-slot="grasping-8" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 8" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 9" class="demo-media" data-media-slot="grasping-9" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 9" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="carousel-panel">
+<div class="item">
+<div aria-label="Manipulation Rollout 10" class="demo-media" data-media-slot="grasping-10" style="--media-aspect: 640 / 480;">
+<img alt="Manipulation Rollout 10" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="section is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">R2R Navigation Comparisons</h2><p>Navigation rollouts on R2R.</p><br>
-    </div></div>
-    <div id="comparison-r2r-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" role="region" aria-roledescription="carousel" aria-label="R2R navigation comparisons" tabindex="0">
-      <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="R2R comparison group 1 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Walk until you reach the brown dresser with the vase on top of it, turn right, take a left  and walk through the first doorway, stop immediatly after the doorway.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 1, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="R2R comparison group 2 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Exit the laundry room and turn left. Walk towards the curio cabinet and turn left again. Enter the bedroom and walk past the dresser. Exit through the door to the left and wait near the sink.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-2-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-2-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 2, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="R2R comparison group 3 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Go straight until you get to the frame on the wall of the teddy bear with the balloons saying "welcome" then turn right and go straight until you get to the room and wait in the entrance.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-3-model" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-3-internvla" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-r2r-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="R2R comparison group 3, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="R2R comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container is-max-desktop">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">R2R Navigation Comparisons</h2><p>Navigation rollouts on R2R.</p><br/>
+</div></div>
+<div aria-label="R2R navigation comparisons" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" id="comparison-r2r-carousel" role="region" tabindex="0">
+<div aria-label="R2R comparison group 1 of 3" class="carousel-panel" data-comparison-group="1" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Walk until you reach the brown dresser with the vase on top of it, turn right, take a left  and walk through the first doorway, stop immediatly after the doorway.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="R2R comparison group 1, Nav4Manip-N" class="demo-media" data-media-slot="comparison-r2r-model" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 1, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="R2R comparison group 1, InternVLA-N1" class="demo-media" data-media-slot="comparison-r2r-internvla" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 1, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="R2R comparison group 1, Uni-NaVid" class="demo-media" data-media-slot="comparison-r2r-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 1, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="R2R comparison group 2 of 3" class="carousel-panel" data-comparison-group="2" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Exit the laundry room and turn left. Walk towards the curio cabinet and turn left again. Enter the bedroom and walk past the dresser. Exit through the door to the left and wait near the sink.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="R2R comparison group 2, Nav4Manip-N" class="demo-media" data-media-slot="comparison-r2r-2-model" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 2, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="R2R comparison group 2, InternVLA-N1" class="demo-media" data-media-slot="comparison-r2r-2-internvla" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 2, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="R2R comparison group 2, Uni-NaVid" class="demo-media" data-media-slot="comparison-r2r-2-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 2, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="R2R comparison group 3 of 3" class="carousel-panel" data-comparison-group="3" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Go straight until you get to the frame on the wall of the teddy bear with the balloons saying "welcome" then turn right and go straight until you get to the room and wait in the entrance.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="R2R comparison group 3, Nav4Manip-N" class="demo-media" data-media-slot="comparison-r2r-3-model" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 3, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="R2R comparison group 3, InternVLA-N1" class="demo-media" data-media-slot="comparison-r2r-3-internvla" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 3, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="R2R comparison group 3, Uni-NaVid" class="demo-media" data-media-slot="comparison-r2r-3-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="R2R comparison group 3, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="section is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">RxR Navigation Comparisons</h2><p>Navigation rollouts on RxR.</p><br>
-    </div></div>
-    <div id="comparison-rxr-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" role="region" aria-roledescription="carousel" aria-label="RxR navigation comparisons" tabindex="0">
-      <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="RxR comparison group 1 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> We're facing some armchairs and a couch. Let's turn to our right and go straight. And go down the stairs. On this floor we should be able to see a white open door. Go through the open door. We are in a bathroom and we can stop here.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 1, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="RxR comparison group 2 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> We're going to start by looking at some paintings and a white sofa. We're going to turn out heads slightly to the right, and see a clock. Let's walk towards the clock. As we're now standing in front of the clock, let's turn our heads slightly to the right, and walk towards the small pathway between the kitchen and the living room. Now, as we're standing between the living room and the kitchen area, we're going to walk to the large cabinets that are in the corner of the room below some paintings. As we're standing in front of it, we're going to turn our heads to the right, all the way, and we're going to walk towards the small chair with some cushions that's in front of us. We should now be standing in the living room in front of the mat. We're going to turn to the right and walk towards the middle of the entire room: the kitchen, the living room, and the dining area. This will be our destination.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-2-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-2-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 2, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="RxR comparison group 3 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> You are facing a fireplace.  You are going to turn around and you are going to hop over the left side of the couch going towards the picture on the wall.  Once there you are going to take a step towards the corner of the island on your right.  And then you are going to turn left and go thru the walkway.  You are going to move forward down this hallway.  You are going to pass a window on your right.  And then you are going to turn into the last room on your left, you will see a washer and dryer.  You are going to step onto the rug in there and then you are done.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-3-model" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-3-internvla" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-rxr-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="RxR comparison group 3, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="RxR comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container is-max-desktop">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">RxR Navigation Comparisons</h2><p>Navigation rollouts on RxR.</p><br/>
+</div></div>
+<div aria-label="RxR navigation comparisons" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" id="comparison-rxr-carousel" role="region" tabindex="0">
+<div aria-label="RxR comparison group 1 of 3" class="carousel-panel" data-comparison-group="1" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> We're facing some armchairs and a couch. Let's turn to our right and go straight. And go down the stairs. On this floor we should be able to see a white open door. Go through the open door. We are in a bathroom and we can stop here.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="RxR comparison group 1, Nav4Manip-N" class="demo-media" data-media-slot="comparison-rxr-model" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 1, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="RxR comparison group 1, InternVLA-N1" class="demo-media" data-media-slot="comparison-rxr-internvla" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 1, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="RxR comparison group 1, Uni-NaVid" class="demo-media" data-media-slot="comparison-rxr-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 1, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="RxR comparison group 2 of 3" class="carousel-panel" data-comparison-group="2" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> We're going to start by looking at some paintings and a white sofa. We're going to turn out heads slightly to the right, and see a clock. Let's walk towards the clock. As we're now standing in front of the clock, let's turn our heads slightly to the right, and walk towards the small pathway between the kitchen and the living room. Now, as we're standing between the living room and the kitchen area, we're going to walk to the large cabinets that are in the corner of the room below some paintings. As we're standing in front of it, we're going to turn our heads to the right, all the way, and we're going to walk towards the small chair with some cushions that's in front of us. We should now be standing in the living room in front of the mat. We're going to turn to the right and walk towards the middle of the entire room: the kitchen, the living room, and the dining area. This will be our destination.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="RxR comparison group 2, Nav4Manip-N" class="demo-media" data-media-slot="comparison-rxr-2-model" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 2, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="RxR comparison group 2, InternVLA-N1" class="demo-media" data-media-slot="comparison-rxr-2-internvla" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 2, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="RxR comparison group 2, Uni-NaVid" class="demo-media" data-media-slot="comparison-rxr-2-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 2, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="RxR comparison group 3 of 3" class="carousel-panel" data-comparison-group="3" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> You are facing a fireplace.  You are going to turn around and you are going to hop over the left side of the couch going towards the picture on the wall.  Once there you are going to take a step towards the corner of the island on your right.  And then you are going to turn left and go thru the walkway.  You are going to move forward down this hallway.  You are going to pass a window on your right.  And then you are going to turn into the last room on your left, you will see a washer and dryer.  You are going to step onto the rug in there and then you are done.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="RxR comparison group 3, Nav4Manip-N" class="demo-media" data-media-slot="comparison-rxr-3-model" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 3, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="RxR comparison group 3, InternVLA-N1" class="demo-media" data-media-slot="comparison-rxr-3-internvla" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 3, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="RxR comparison group 3, Uni-NaVid" class="demo-media" data-media-slot="comparison-rxr-3-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="RxR comparison group 3, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="section is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
-      <br><h2 class="title is-3">VLNVerse Navigation Comparisons</h2><p>Navigation rollouts on VLNVerse.</p><br>
-    </div></div>
-    <div id="comparison-vlnverse-carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" role="region" aria-roledescription="carousel" aria-label="VLNVerse navigation comparisons" tabindex="0">
-      <div class="carousel-panel" data-comparison-group="1" role="group" aria-label="VLNVerse comparison group 1 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Walk forward through the doorway, out of the bathroom area and past the washing machine on your left and the double vanity on your right. Continue straight through the narrow passage lined with white cabinets on both your left and right sides. Turn right at the end of the passage, entering a long hallway with the cabinets now on your left. Walk straight down the hallway, passing a large framed picture on your right. Continue straight, passing an ornate mirror on your right, and then enter the open area, keeping the white cabinet with glass doors on your right. Turn left to enter the living room, passing a white console on your left, and stop in front of the TV console with the large window and two chairs directly ahead of you.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 1, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 1, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="2" role="group" aria-label="VLNVerse comparison group 2 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Walk forward into the hallway, leaving the bedroom area on your left. Walk straight down the hallway. Turn left into the doorway to enter the closet. Walk straight through the closet, with the dark shelves and cabinets on your right. At the end of the closet, turn left to enter the bathroom. Walk straight into the bathroom, passing the toilet and vanity on your right, and stop inside the shower stall in front of the window.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-2-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-2-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-2-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 2, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 2, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-panel" data-comparison-group="3" role="group" aria-label="VLNVerse comparison group 3 of 3">
-        <p class="comparison-prompt"><strong>Prompt:</strong> Enter the living room through the doorway, keeping the sofa on your left and the TV on your right. Turn right into the adjacent hallway. Walk straight down the hallway with patterned wallpaper, then turn right at the end to enter the bedroom. Walk past the bed on your left and stop in front of the window.</p>
-        <div class="comparison-group has-text-centered">
-          <div class="comparison-model">
-            <h3 class="title is-4" data-navigation-name>Nav4Manip-N</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-3-model" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, Nav4Manip-N">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Nav4Manip-N" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">InternVLA-N1</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-3-internvla" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, InternVLA-N1">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, InternVLA-N1" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-          <div class="comparison-model">
-            <h3 class="title is-4">Uni-NaVid</h3>
-            <div class="item">
-            <div class="demo-media" data-media-slot="comparison-vlnverse-3-uninavid" style="--media-aspect: 640 / 480;" aria-label="VLNVerse comparison group 3, Uni-NaVid">
-              <img loading="lazy" decoding="async" src="./static/images/placeholders/video-standard.svg" alt="VLNVerse comparison group 3, Uni-NaVid" width="640" height="480" draggable="false">
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container is-max-desktop">
+<div class="columns is-centered has-text-centered" style="margin-left:0; margin-right:0;"><div class="column is-four-fifths">
+<br/><h2 class="title is-3">VLNVerse Navigation Comparisons</h2><p>Navigation rollouts on VLNVerse.</p><br/>
+</div></div>
+<div aria-label="VLNVerse navigation comparisons" aria-roledescription="carousel" class="carousel results-carousel demo-carousel" data-demo-carousel="comparison" data-slides-to-show="1" id="comparison-vlnverse-carousel" role="region" tabindex="0">
+<div aria-label="VLNVerse comparison group 1 of 3" class="carousel-panel" data-comparison-group="1" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Walk forward through the doorway, out of the bathroom area and past the washing machine on your left and the double vanity on your right. Continue straight through the narrow passage lined with white cabinets on both your left and right sides. Turn right at the end of the passage, entering a long hallway with the cabinets now on your left. Walk straight down the hallway, passing a large framed picture on your right. Continue straight, passing an ornate mirror on your right, and then enter the open area, keeping the white cabinet with glass doors on your right. Turn left to enter the living room, passing a white console on your left, and stop in front of the TV console with the large window and two chairs directly ahead of you.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 1, Nav4Manip-N" class="demo-media" data-media-slot="comparison-vlnverse-model" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 1, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 1, InternVLA-N1" class="demo-media" data-media-slot="comparison-vlnverse-internvla" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 1, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 1, Uni-NaVid" class="demo-media" data-media-slot="comparison-vlnverse-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 1, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="VLNVerse comparison group 2 of 3" class="carousel-panel" data-comparison-group="2" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Walk forward into the hallway, leaving the bedroom area on your left. Walk straight down the hallway. Turn left into the doorway to enter the closet. Walk straight through the closet, with the dark shelves and cabinets on your right. At the end of the closet, turn left to enter the bathroom. Walk straight into the bathroom, passing the toilet and vanity on your right, and stop inside the shower stall in front of the window.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 2, Nav4Manip-N" class="demo-media" data-media-slot="comparison-vlnverse-2-model" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 2, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 2, InternVLA-N1" class="demo-media" data-media-slot="comparison-vlnverse-2-internvla" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 2, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 2, Uni-NaVid" class="demo-media" data-media-slot="comparison-vlnverse-2-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 2, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-label="VLNVerse comparison group 3 of 3" class="carousel-panel" data-comparison-group="3" role="group">
+<p class="comparison-prompt"><strong>Prompt:</strong> Enter the living room through the doorway, keeping the sofa on your left and the TV on your right. Turn right into the adjacent hallway. Walk straight down the hallway with patterned wallpaper, then turn right at the end to enter the bedroom. Walk past the bed on your left and stop in front of the window.</p>
+<div class="comparison-group has-text-centered">
+<div class="comparison-model">
+<h3 class="title is-4" data-navigation-name="">Nav4Manip-N</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 3, Nav4Manip-N" class="demo-media" data-media-slot="comparison-vlnverse-3-model" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 3, Nav4Manip-N" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">InternVLA-N1</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 3, InternVLA-N1" class="demo-media" data-media-slot="comparison-vlnverse-3-internvla" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 3, InternVLA-N1" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+<div class="comparison-model">
+<h3 class="title is-4">Uni-NaVid</h3>
+<div class="item">
+<div aria-label="VLNVerse comparison group 3, Uni-NaVid" class="demo-media" data-media-slot="comparison-vlnverse-3-uninavid" style="--media-aspect: 640 / 480;">
+<img alt="VLNVerse comparison group 3, Uni-NaVid" decoding="async" draggable="false" height="480" loading="lazy" src="./static/images/placeholders/video-standard.svg" width="640"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
+<div class="container">
+<div class="content has-text-centered">
+<p>
         
         Website template based on the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page</a>.
       </p>
-    </div>
-  </div>
+</div>
+</div>
 </footer>
-
-
 </body>
 </html>
