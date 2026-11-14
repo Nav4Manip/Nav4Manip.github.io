@@ -29,3 +29,5 @@
 @media(min-width:701px){.navigation-response-grid{grid-template-columns:repeat(12,minmax(0,1fr))}.navigation-response-grid>.cross-wam-card:nth-child(-n+3){grid-column:span 4}.navigation-response-grid>.cross-wam-card:nth-child(n+4){grid-column:span 3}}
 
 .qa-answer-compact>summary{justify-content:space-between}.qa-answer-compact>summary .qa-answer-preview{display:none}
+
+.response-references{margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid #dbe5ee}.response-references>p:first-child{font-size:1.15rem}
