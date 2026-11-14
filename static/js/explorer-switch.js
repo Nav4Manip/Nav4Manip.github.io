@@ -41,5 +41,6 @@
     if (event.origin !== location.origin || ![...frames.values()].some(frame => frame.contentWindow === event.source)) return;
     if (event.data?.type === 'grasp-ready') sync();
   });
+  document.querySelectorAll("[data-explorer-jump]").forEach(link => link.addEventListener("click", () => select(link.dataset.explorerJump)));
   select(selected);
 })();
