@@ -31,3 +31,5 @@
 .qa-answer-compact>summary{justify-content:space-between}.qa-answer-compact>summary .qa-answer-preview{display:none}
 
 .response-references{margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid #dbe5ee}.response-references>p:first-child{font-size:1.15rem}
+
+.recording-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:1rem;padding:.8rem;background:#eaf3fb;border:1px solid #b9d3e8;border-radius:8px}.recording-toolbar label{display:flex;align-items:center;gap:.5rem}.response-media select{font-size:1rem;padding:.4rem;border:1px solid #abc8df;border-radius:5px;color:#254f6e;background:white}.response-media [data-recording-note]{font:500 1rem/1.5 system-ui;color:#254f6e}

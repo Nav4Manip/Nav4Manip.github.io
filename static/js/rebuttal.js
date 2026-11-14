@@ -43,6 +43,41 @@
     selectTask();
   });
 
+
+  const recordings = {"snack-bag": {"original": {"individual": ["./static/rebuttal-videos/individual/snack-bag-original-01.mp4", "./static/rebuttal-videos/individual/snack-bag-original-02.mp4", "./static/rebuttal-videos/individual/snack-bag-original-03.mp4", "./static/rebuttal-videos/individual/snack-bag-original-04.mp4", "./static/rebuttal-videos/individual/snack-bag-original-05.mp4", "./static/rebuttal-videos/individual/snack-bag-original-06.mp4", "./static/rebuttal-videos/individual/snack-bag-original-07.mp4", "./static/rebuttal-videos/individual/snack-bag-original-08.mp4", "./static/rebuttal-videos/individual/snack-bag-original-09.mp4", "./static/rebuttal-videos/individual/snack-bag-original-10.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/snack-bag-fixed-failure.mp4", "success": "./static/rebuttal-videos/co-evolution/snack-bag-fixed-success.mp4"}}, "fine-tuned": {"individual": ["./static/rebuttal-videos/individual/snack-bag-fine-tuned-01.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-02.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-03.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-04.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-05.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-06.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-07.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-08.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-09.mp4", "./static/rebuttal-videos/individual/snack-bag-fine-tuned-10.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/snack-bag-navigation-failure.mp4", "success": "./static/rebuttal-videos/cross-wam/snack-bag.mp4"}}}, "snack-can": {"original": {"individual": ["./static/rebuttal-videos/individual/snack-can-original-01.mp4", "./static/rebuttal-videos/individual/snack-can-original-02.mp4", "./static/rebuttal-videos/individual/snack-can-original-03.mp4", "./static/rebuttal-videos/individual/snack-can-original-04.mp4", "./static/rebuttal-videos/individual/snack-can-original-05.mp4", "./static/rebuttal-videos/individual/snack-can-original-06.mp4", "./static/rebuttal-videos/individual/snack-can-original-07.mp4", "./static/rebuttal-videos/individual/snack-can-original-08.mp4", "./static/rebuttal-videos/individual/snack-can-original-09.mp4", "./static/rebuttal-videos/individual/snack-can-original-10.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/snack-can-fixed-failure.mp4"}}, "fine-tuned": {"individual": ["./static/rebuttal-videos/individual/snack-can-fine-tuned-01.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-02.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-03.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-04.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-05.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-06.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-07.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-08.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-09.mp4", "./static/rebuttal-videos/individual/snack-can-fine-tuned-10.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/snack-can-navigation-failure.mp4", "success": "./static/rebuttal-videos/cross-wam/snack-can.mp4"}}}, "yogurt": {"original": {"individual": ["./static/rebuttal-videos/individual/yogurt-original-01.mp4", "./static/rebuttal-videos/individual/yogurt-original-02.mp4", "./static/rebuttal-videos/individual/yogurt-original-03.mp4", "./static/rebuttal-videos/individual/yogurt-original-04.mp4", "./static/rebuttal-videos/individual/yogurt-original-05.mp4", "./static/rebuttal-videos/individual/yogurt-original-06.mp4", "./static/rebuttal-videos/individual/yogurt-original-07.mp4", "./static/rebuttal-videos/individual/yogurt-original-08.mp4", "./static/rebuttal-videos/individual/yogurt-original-09.mp4", "./static/rebuttal-videos/individual/yogurt-original-10.mp4", "./static/rebuttal-videos/individual/yogurt-original-11.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/yogurt-fixed-failure.mp4", "success": "./static/rebuttal-videos/co-evolution/yogurt-fixed-success.mp4"}}, "fine-tuned": {"individual": ["./static/rebuttal-videos/individual/yogurt-fine-tuned-01.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-02.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-03.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-04.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-05.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-06.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-07.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-08.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-09.mp4", "./static/rebuttal-videos/individual/yogurt-fine-tuned-10.mp4"], "overlap": {"failure": "./static/rebuttal-videos/co-evolution/yogurt-navigation-failure.mp4", "success": "./static/rebuttal-videos/cross-wam/yogurt.mp4"}}}};
+  document.querySelectorAll('[data-recordings]').forEach(section => {
+    const mode=section.querySelector('[data-recording-mode]'), task=section.querySelector('[data-recording-task]');
+    const cards=[...section.querySelectorAll('[data-recording-model]')];
+    function load(card) {
+      const video=card.querySelector('video'); video.pause();video.removeAttribute('poster');video.removeAttribute('data-poster');
+      video.src=card.querySelector('[data-recording-choice]').value;video.preload='metadata';video.load();
+    }
+    function update() {
+      section.querySelector('[data-recording-note]').textContent=mode.value==='individual'
+        ? 'Individual trials · One recorded attempt per video. Play both starts both clips together.'
+        : 'Overlap · Multiple recorded attempts superimposed. Ghosting is intentional.';
+      cards.forEach(card=>{
+        const entry=recordings[task.value][card.dataset.recordingModel];
+        const values=mode.value==='individual' ? entry.individual.map((url,i)=>[url,`Trial ${String(i+1).padStart(2,'0')}`]) : Object.entries(entry.overlap).map(([result,url])=>[url,result==='success'?'Success':'Failure']);
+        const select=card.querySelector('[data-recording-choice]');select.replaceChildren(...values.map(([url,label])=>{const o=document.createElement('option');o.value=url;o.textContent=label;return o;}));load(card);
+      });
+    }
+    cards.forEach(card=>card.querySelector('[data-recording-choice]').addEventListener('change',()=>load(card)));
+    mode.addEventListener('change',update);task.addEventListener('change',update);
+    // Do not fetch media until this answer is opened or a control is used.
+    cards.forEach(card=>{const e=recordings[task.value][card.dataset.recordingModel];const sel=card.querySelector('[data-recording-choice]');e.individual.forEach((url,i)=>{const o=document.createElement('option');o.value=url;o.textContent=`Trial ${String(i+1).padStart(2,'0')}`;sel.append(o);});card.querySelector('video').src=e.individual[0];});
+  });
+
+
+  document.querySelectorAll('[data-task-recording]').forEach(card=>{
+    const entry=recordings[card.dataset.taskRecording]['fine-tuned'],select=card.querySelector('[data-task-clip]'),video=card.querySelector('video');
+    const options=entry.individual.map((url,i)=>[url,`Individual · Trial ${String(i+1).padStart(2,'0')}`]);
+    options.push([entry.overlap.success,'Overlap · Success']);
+    options.forEach(([url,label])=>{const o=document.createElement('option');o.value=url;o.textContent=label;select.append(o);});
+    function load(){video.pause();video.removeAttribute('poster');video.removeAttribute('data-poster');video.querySelectorAll('source').forEach(x=>x.remove());video.src=select.value;video.load();}
+    select.addEventListener('change',load);video.preload='none';load();
+  });
+
   const groups = [...document.querySelectorAll('[data-video-group]')].map(group => {
     const section = group.closest('section');
     const videos = [...group.querySelectorAll('video')];
