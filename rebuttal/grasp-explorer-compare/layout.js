@@ -16,7 +16,20 @@
   choice.append(select); modebar.append(choice);
   const overlay = document.createElement('label');
   overlay.id = 'oracle-overlay-label'; overlay.className = 'loop-option'; overlay.hidden = true;
-  overlay.innerHTML = '<input id="oracle-overlay" type="checkbox" checked> Oracle overlay';
+  overlay.innerHTML = '<input id="oracle-overlay" type="checkbox" checked hidden><span class="motion-view-switch" role="group" aria-label="Simulation display"><button type="button" data-motion-view="single" aria-pressed="false">WAM only</button><button type="button" data-motion-view="overlap" aria-pressed="true">Overlap</button></span>';
+  // Keep the existing replay/ghost pipeline and expose its toggle as prominent buttons.
+  overlay.addEventListener('click', event => {
+    const button = event.target.closest('[data-motion-view]');
+    if (!button) return;
+    event.preventDefault();
+    const input = overlay.querySelector('input');
+    input.checked = button.dataset.motionView === 'overlap';
+    overlay.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    input.dispatchEvent(new Event('change', {bubbles:true}));
+  });
+  const switchStyle = document.createElement('style');
+  switchStyle.textContent = '.motion-view-switch{display:inline-flex;border:1px solid #8ab5d5;border-radius:7px;overflow:hidden}.motion-view-switch button{padding:10px 18px!important;font-size:17px!important;font-weight:700!important;border:0!important;border-radius:0!important;background:#edf5fc;color:#28506b}.motion-view-switch button[aria-pressed="true"]{background:#317bac!important;color:#fff!important}.motion-view-switch button+button{border-left:1px solid #8ab5d5!important}';
+  document.head.append(switchStyle);
   overlay.title = 'Translucent Oracle and solid WAM: recorded motions aligned by playback progress.';
   const oracleChoice = document.createElement('label');
   oracleChoice.id = 'oracle-choice-label'; oracleChoice.className = 'replay-choice'; oracleChoice.hidden = true;
@@ -24,7 +37,7 @@
   const overlayNote = document.createElement('p');
   overlayNote.id = 'oracle-overlay-note'; overlayNote.className = 'oracle-overlay-note'; overlayNote.hidden = true;
   overlayNote.setAttribute('role', 'note');
-  overlayNote.innerHTML = '<strong>Success · Intentional overlay for motion comparison</strong><span>Solid: WAM · Translucent: Oracle · Progress-aligned</span>';
+  overlayNote.innerHTML = '<strong>Simulation · Overlap for motion comparison</strong><span>Solid: WAM · Translucent: Oracle · Progress-aligned</span>';
   modebar.append(overlay, oracleChoice); app.insertBefore(modebar, workspace);
   for (const id of ['reachability-transport','comparison-transport','single-transport']) app.insertBefore(document.getElementById(id), workspace);
   app.insertBefore(overlayNote, workspace);
