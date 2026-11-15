@@ -41,3 +41,7 @@
 .affordance-equation {display:flex;align-items:center;gap:1rem;overflow-x:auto;padding:1.5rem 0;font-size:1.15em;}
 .affordance-equation math {flex:1;min-width:440px;}
 .equation-number {margin-left:auto;}
+
+.review-panel .explorer-link{display:flex;align-items:center;gap:1rem;font:600 1.25rem/1.5 system-ui,sans-serif;color:#214e72;}
+.explorer-link .explorer-cta{display:inline-flex;justify-content:center;flex:0 0 60px;min-height:60px;padding:.5rem;box-sizing:border-box;}
+@media(max-width:550px){.review-panel .explorer-link{font-size:1.1rem;}.explorer-link .explorer-cta{padding:.5rem;}}
