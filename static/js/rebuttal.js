@@ -95,7 +95,7 @@
     track.addEventListener('scroll',sync);new ResizeObserver(sync).observe(track);
     section.querySelectorAll('video').forEach(video=>{
       let speed=Number(video.dataset.defaultSpeed);const button=video.closest('figure').querySelector('[data-sim-speed]');
-      const apply=()=>{video.defaultPlaybackRate=speed;video.playbackRate=speed;button.textContent=speed+'×';};
+      const apply=()=>{video.defaultPlaybackRate=speed/Number(video.dataset.encodedSpeed||1);video.playbackRate=video.defaultPlaybackRate;button.textContent=speed+'×';};
       video.addEventListener('loadedmetadata',apply);button.addEventListener('click',()=>{const rates=[1,2.5,5];speed=rates[(rates.indexOf(speed)+1)%rates.length];apply();});apply();
     });
   });

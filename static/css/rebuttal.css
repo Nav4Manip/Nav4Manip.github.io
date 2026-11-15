@@ -60,3 +60,5 @@
 .explorer-link .explorer-cta{display:flex;width:100%;box-sizing:border-box;justify-content:space-between;gap:1rem;min-height:76px;padding:1rem 1.25rem;font:600 1.25rem/1.5 system-ui,sans-serif;}
 .explorer-cta-text{flex:1;}.explorer-cta svg{flex:0 0 32px;}
 @media(max-width:550px){.explorer-link .explorer-cta{font-size:1.1rem;padding:.85rem 1rem;}}
+
+.real-to-sim-media .trial-carousel-item video{aspect-ratio:auto;height:auto;width:100%;display:block;}
