@@ -45,3 +45,13 @@
 .review-panel .explorer-link{display:flex;align-items:center;gap:1rem;font:600 1.25rem/1.5 system-ui,sans-serif;color:#214e72;}
 .explorer-link .explorer-cta{display:inline-flex;justify-content:center;flex:0 0 60px;min-height:60px;padding:.5rem;box-sizing:border-box;}
 @media(max-width:550px){.review-panel .explorer-link{font-size:1.1rem;}.explorer-link .explorer-cta{padding:.5rem;}}
+
+.trial-carousel-viewport{position:relative;}
+.trial-carousel-viewport .trial-carousel-nav{position:absolute;inset:0;display:block;padding:0;pointer-events:none;z-index:2;}
+.trial-carousel-viewport .trial-carousel-nav button{position:absolute;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:48px;height:48px;min-height:0;padding:0;border:0;border-radius:50%;background:#fff;color:#494949;box-shadow:0 2px 8px #0002;pointer-events:auto;}
+.trial-carousel-nav button:first-child{left:6px;}.trial-carousel-nav button:last-child{right:6px;}
+.trial-carousel-nav button span{display:block;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;}
+.trial-carousel-nav button:first-child span{border-right:11px solid currentColor;margin-right:3px;}
+.trial-carousel-nav button:last-child span{border-left:11px solid currentColor;margin-left:3px;}
+.trial-carousel-viewport .trial-carousel-nav button:hover{background:#f5f5f5;}
+.trial-carousel-viewport .trial-carousel-nav button:disabled{opacity:.4;}
