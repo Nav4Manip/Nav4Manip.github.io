@@ -72,14 +72,21 @@
   });
 
   document.querySelectorAll('[data-task-recording]').forEach(card=>{
-    const entry=recordings[card.dataset.taskRecording]['fine-tuned'],select=card.querySelector('[data-task-clip]'),video=card.querySelector('video');
-    const options=entry.outcomes.success.map((url,i)=>[url,`Individual · Trial ${String(i+1).padStart(2,'0')}`]);
-    options.push([entry.overlap.success,'Overlap · Success']);
-    options.forEach(([url,label])=>{const o=document.createElement('option');o.value=url;o.textContent=label;select.append(o);});
-    function load(){video.pause();video.removeAttribute('poster');video.removeAttribute('data-poster');video.querySelectorAll('source').forEach(x=>x.remove());video.src=select.value;video.load();}
-    select.addEventListener('change',load);video.preload='none';load();
+    const entry=recordings[card.dataset.taskRecording]['fine-tuned'];
+    const clips=[[entry.overlap.success,'Overlap · Multiple attempts'],...entry.outcomes.success.map((url,i)=>[url,`Individual · Trial ${String(i+1).padStart(2,'0')}`])];
+    const track=card.querySelector('.trial-carousel-track');
+    clips.forEach(([url,label])=>{
+      const item=document.createElement('figure');item.className='trial-carousel-item';
+      const caption=document.createElement('figcaption');caption.textContent=label;
+      const video=document.createElement('video');video.controls=true;video.muted=true;video.playsInline=true;video.preload='none';video.src=url;
+      video.setAttribute('aria-label',card.querySelector('h3').textContent+' · '+label);
+      item.append(caption,video);track.append(item);
+    });
+    const arrows=[...card.querySelectorAll('[data-trial-arrow]')];
+    const sync=()=>{arrows[0].disabled=track.scrollLeft<=1;arrows[1].disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;};
+    arrows.forEach(button=>button.addEventListener('click',()=>{track.querySelectorAll('video').forEach(v=>v.pause());track.scrollBy({left:(button.dataset.trialArrow==='next'?1:-1)*track.clientWidth,behavior:'smooth'});}));
+    track.addEventListener('scroll',sync);new ResizeObserver(sync).observe(track);requestAnimationFrame(sync);
   });
-
 
   document.querySelectorAll('.real-to-sim-media').forEach(section=>{
     const track=section.querySelector('.trial-carousel-track'),prev=section.querySelector('[data-sim-prev]'),next=section.querySelector('[data-sim-next]');
