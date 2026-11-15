@@ -62,3 +62,7 @@
 @media(max-width:550px){.explorer-link .explorer-cta{font-size:1.1rem;padding:.85rem 1rem;}}
 
 .real-to-sim-media .trial-carousel-item video{aspect-ratio:auto;height:auto;width:100%;display:block;}
+
+/* Three complete videos per carousel viewport. */
+.trial-carousel-track{box-sizing:border-box;}
+.trial-carousel-track>.trial-carousel-item{flex:0 0 calc((100% - 24px)/3);min-width:0;}
