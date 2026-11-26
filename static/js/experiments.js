@@ -20,8 +20,16 @@
           item.append(caption,video);track.append(item);
         });
         const arrows=[...card.querySelectorAll('[data-trial-arrow]')];
-        function sync(){arrows[0].disabled=track.scrollLeft<=1;arrows[1].disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;}
-        arrows.forEach(button=>button.onclick=()=>{track.querySelectorAll('video').forEach(v=>v.pause());track.scrollBy({left:(button.dataset.trialArrow==='next'?1:-1)*track.clientWidth,behavior:'smooth'});});
+        card.querySelector('.trial-carousel-dots')?.remove();
+        const dots=document.createElement('div');dots.className='trial-carousel-dots';dots.setAttribute('aria-label','Video pages');
+        const pageCount=Math.ceil(clips.length/3);
+        function positions(){const item=track.querySelector('.trial-carousel-item');const step=item?item.getBoundingClientRect().width+20:0;return Array.from({length:pageCount},(_,i)=>Math.min(i*3*step,Math.max(0,track.scrollWidth-track.clientWidth)));}
+        function current(){const ps=positions();return ps.reduce((best,p,i)=>Math.abs(p-track.scrollLeft)<Math.abs(ps[best]-track.scrollLeft)?i:best,0);}
+        function go(i){track.querySelectorAll('video').forEach(v=>v.pause());track.scrollTo({left:positions()[Math.max(0,Math.min(pageCount-1,i))]||0,behavior:'smooth'});}
+        for(let i=0;i<pageCount;i++){const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Video page ${i+1}`);dot.onclick=()=>go(i);dots.append(dot);}
+        dots.hidden=pageCount<2;card.append(dots);
+        function sync(){const index=current();arrows[0].disabled=track.scrollLeft<=1;arrows[1].disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;[...dots.children].forEach((d,i)=>d.setAttribute('aria-current',String(i===index)));const video=track.querySelector('video');if(video){const vr=video.getBoundingClientRect(),tr=track.getBoundingClientRect();arrows.forEach(a=>a.style.top=(vr.top-tr.top+vr.height/2)+'px');}}
+        arrows.forEach(button=>button.onclick=()=>go(current()+(button.dataset.trialArrow==='next'?1:-1)));
         track.onscroll=sync;if(card._trialResizeObserver) card._trialResizeObserver.disconnect();card._trialResizeObserver=new ResizeObserver(sync);card._trialResizeObserver.observe(track);requestAnimationFrame(sync);
       });
     }
