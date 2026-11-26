@@ -38,9 +38,15 @@
 
   document.querySelectorAll('.real-to-sim-media').forEach(section=>{
     const track=section.querySelector('.trial-carousel-track'),prev=section.querySelector('[data-sim-prev]'),next=section.querySelector('[data-sim-next]');
-    const sync=()=>{prev.disabled=track.scrollLeft<=1;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;};
-    [prev,next].forEach((button,i)=>button.addEventListener('click',()=>{section.querySelectorAll('video').forEach(v=>v.pause());track.scrollBy({left:(i?1:-1)*track.clientWidth,behavior:'smooth'});}));
-    track.addEventListener('scroll',sync);new ResizeObserver(sync).observe(track);
+    const videos=[...track.querySelectorAll('video')],pageCount=Math.ceil(videos.length/3);
+    const dots=document.createElement('div');dots.className='trial-carousel-dots';dots.setAttribute('aria-label','Video pages');section.append(dots);
+    function positions(){const item=track.querySelector('.trial-carousel-item');return Array.from({length:pageCount},(_,i)=>Math.min(i*3*(item.getBoundingClientRect().width+20),Math.max(0,track.scrollWidth-track.clientWidth)));}
+    function current(){const ps=positions();return ps.reduce((best,p,i)=>Math.abs(p-track.scrollLeft)<Math.abs(ps[best]-track.scrollLeft)?i:best,0);}
+    function go(i){videos.forEach(v=>v.pause());track.scrollTo({left:positions()[Math.max(0,Math.min(pageCount-1,i))],behavior:'smooth'});}
+    for(let i=0;i<pageCount;i++){const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Video page ${i+1}`);dot.onclick=()=>go(i);dots.append(dot);}
+    const sync=()=>{prev.disabled=track.scrollLeft<=1;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;[...dots.children].forEach((d,i)=>d.setAttribute('aria-current',String(i===current())));const vr=videos[0].getBoundingClientRect(),tr=track.getBoundingClientRect();[prev,next].forEach(a=>a.style.top=(vr.top-tr.top+vr.height/2)+'px');};
+    [prev,next].forEach((button,i)=>button.addEventListener('click',()=>go(current()+(i?1:-1))));
+    track.addEventListener('scroll',sync);new ResizeObserver(sync).observe(track);videos.forEach(v=>v.addEventListener('loadedmetadata',sync));requestAnimationFrame(sync);
     section.querySelectorAll('video').forEach(video=>{
       let speed=Number(video.dataset.defaultSpeed);const button=video.closest('figure').querySelector('[data-sim-speed]');
       const apply=()=>{video.defaultPlaybackRate=speed/Number(video.dataset.encodedSpeed||1);video.playbackRate=video.defaultPlaybackRate;button.textContent=speed+'×';};
