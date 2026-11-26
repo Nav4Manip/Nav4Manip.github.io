@@ -9,6 +9,8 @@
         const clips=[];
         if(entry.overlap[outcome]) clips.push([entry.overlap[outcome],'Overlap · Multiple attempts']);
         entry.outcomes[outcome].forEach((url,i)=>clips.push([url,`Individual · Trial ${String(i+1).padStart(2,'0')}`]));
+        card.hidden = clips.length === 0;
+        card.style.display = clips.length ? '' : 'none';
         const track=card.querySelector('.trial-carousel-track');track.replaceChildren();track.scrollLeft=0;
         if(!clips.length){const p=document.createElement('p');p.textContent='No recording available';track.append(p);}
         clips.forEach(([url,label])=>{
